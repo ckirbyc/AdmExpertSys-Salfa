@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AdmSysWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ACCION_INFO">
+    <Key>
+      <PropertyRef Name="IdAccionInfo" />
+    </Key>
+    <Property Name="IdAccionInfo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreAccionInfo" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CIUDAD">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_ASIGNACION_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Asignando" Type="bit" Nullable="false" />
+    <Property Name="FechaMvto" Type="datetime" />
+    <Property Name="UsuarioModificacion" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ESTADO_CUENTA_USUARIO">
+    <Key>
+      <PropertyRef Name="IdEstadoCuentaUsuario" />
+    </Key>
+    <Property Name="IdEstadoCuentaUsuario" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CuentaAd" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Nombres" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Apellidos" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="200" />
+    <Property Name="Dominio" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CreadoAd" Type="bit" Nullable="false" />
+    <Property Name="Sincronizado" Type="bit" Nullable="false" />
+    <Property Name="LicenciaId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Habilitado" Type="bit" Nullable="false" />
+    <Property Name="Eliminado" Type="bit" Nullable="false" />
+    <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+    <Property Name="FechaBaja" Type="datetime" />
+    <Property Name="CodigoLicencia" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Vigente" Type="bit" Nullable="false" />
+    <Property Name="LicenciaAsignada" Type="bit" Nullable="false" />
+    <Property Name="Clave" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_REPORTE_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Procesando" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_SINCRONIZACION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Sincronizando" Type="bit" Nullable="false" />
+    <Property Name="FechaMvto" Type="datetime" />
+    <Property Name="UsuarioModificacion" Type="nvarchar" MaxLength="100" />
+    <Property Name="Modulo" Type="nvarchar" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="LICENCIAS_O365">
+    <Key>
+      <PropertyRef Name="IdLicencia" />
+    </Key>
+    <Property Name="IdLicencia" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Codigo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOG_INFO">
+    <Key>
+      <PropertyRef Name="IdInfo" />
+    </Key>
+    <Property Name="IdInfo" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MsgInfo" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="UserInfo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaInfo" Type="datetime" Nullable="false" />
+    <Property Name="AccionIdInfo" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MANTENEDOR_LICENCIA">
+    <Key>
+      <PropertyRef Name="IdMantenedorLicencia" />
+    </Key>
+    <Property Name="IdMantenedorLicencia" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Codigo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="RolCargoId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="LicenciaId" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OFICINA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ORGANIZACION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAIS_REGION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PERFIL_USUARIO">
+    <Key>
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombrePerfil" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REPORTE_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="SamAccountName" Type="nvarchar(max)" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="UpnPrefijo" Type="nvarchar(max)" />
+    <Property Name="InfoString" Type="nvarchar(max)" />
+    <Property Name="Licenses" Type="nvarchar(max)" />
+    <Property Name="DistinguishedName" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ROL_CARGO">
+    <Key>
+      <PropertyRef Name="IdRolCargo" />
+    </Key>
+    <Property Name="IdRolCargo" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Vigente" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Usuario" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PerfilId" Type="int" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+    <Property Name="EsAdm" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365">
+    <End Role="LICENCIAS_O365" Type="Self.LICENCIAS_O365" Multiplicity="1" />
+    <End Role="ESTADO_CUENTA_USUARIO" Type="Self.ESTADO_CUENTA_USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LICENCIAS_O365">
+        <PropertyRef Name="IdLicencia" />
+      </Principal>
+      <Dependent Role="ESTADO_CUENTA_USUARIO">
+        <PropertyRef Name="LicenciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOG_INFO_ACCION_INFO">
+    <End Role="ACCION_INFO" Type="Self.ACCION_INFO" Multiplicity="1" />
+    <End Role="LOG_INFO" Type="Self.LOG_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION_INFO">
+        <PropertyRef Name="IdAccionInfo" />
+      </Principal>
+      <Dependent Role="LOG_INFO">
+        <PropertyRef Name="AccionIdInfo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANTENEDOR_LICENCIA_LICENCIAS_O365">
+    <End Role="LICENCIAS_O365" Type="Self.LICENCIAS_O365" Multiplicity="1" />
+    <End Role="MANTENEDOR_LICENCIA" Type="Self.MANTENEDOR_LICENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LICENCIAS_O365">
+        <PropertyRef Name="IdLicencia" />
+      </Principal>
+      <Dependent Role="MANTENEDOR_LICENCIA">
+        <PropertyRef Name="LicenciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANTENEDOR_LICENCIA_ROL_CARGO">
+    <End Role="ROL_CARGO" Type="Self.ROL_CARGO" Multiplicity="1" />
+    <End Role="MANTENEDOR_LICENCIA" Type="Self.MANTENEDOR_LICENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROL_CARGO">
+        <PropertyRef Name="IdRolCargo" />
+      </Principal>
+      <Dependent Role="MANTENEDOR_LICENCIA">
+        <PropertyRef Name="RolCargoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIO_PERFIL_USUARIO">
+    <End Role="PERFIL_USUARIO" Type="Self.PERFIL_USUARIO" Multiplicity="0..1" />
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL_USUARIO">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="USUARIO">
+        <PropertyRef Name="PerfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AdmSysWebModelStoreContainer">
+    <EntitySet Name="ACCION_INFO" EntityType="Self.ACCION_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CARGO" EntityType="Self.CARGO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CIUDAD" EntityType="Self.CIUDAD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_ASIGNACION_LICENCIA" EntityType="Self.ESTADO_ASIGNACION_LICENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_CUENTA_USUARIO" EntityType="Self.ESTADO_CUENTA_USUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_REPORTE_LICENCIA" EntityType="Self.ESTADO_REPORTE_LICENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_SINCRONIZACION" EntityType="Self.ESTADO_SINCRONIZACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LICENCIAS_O365" EntityType="Self.LICENCIAS_O365" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOG_INFO" EntityType="Self.LOG_INFO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MANTENEDOR_LICENCIA" EntityType="Self.MANTENEDOR_LICENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OFICINA" EntityType="Self.OFICINA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ORGANIZACION" EntityType="Self.ORGANIZACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PAIS_REGION" EntityType="Self.PAIS_REGION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PERFIL_USUARIO" EntityType="Self.PERFIL_USUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REPORTE_LICENCIA" EntityType="Self.REPORTE_LICENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ROL_CARGO" EntityType="Self.ROL_CARGO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" Association="Self.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365">
+      <End Role="LICENCIAS_O365" EntitySet="LICENCIAS_O365" />
+      <End Role="ESTADO_CUENTA_USUARIO" EntitySet="ESTADO_CUENTA_USUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOG_INFO_ACCION_INFO" Association="Self.FK_LOG_INFO_ACCION_INFO">
+      <End Role="ACCION_INFO" EntitySet="ACCION_INFO" />
+      <End Role="LOG_INFO" EntitySet="LOG_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANTENEDOR_LICENCIA_LICENCIAS_O365" Association="Self.FK_MANTENEDOR_LICENCIA_LICENCIAS_O365">
+      <End Role="LICENCIAS_O365" EntitySet="LICENCIAS_O365" />
+      <End Role="MANTENEDOR_LICENCIA" EntitySet="MANTENEDOR_LICENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANTENEDOR_LICENCIA_ROL_CARGO" Association="Self.FK_MANTENEDOR_LICENCIA_ROL_CARGO">
+      <End Role="ROL_CARGO" EntitySet="ROL_CARGO" />
+      <End Role="MANTENEDOR_LICENCIA" EntitySet="MANTENEDOR_LICENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIO_PERFIL_USUARIO" Association="Self.FK_USUARIO_PERFIL_USUARIO">
+      <End Role="PERFIL_USUARIO" EntitySet="PERFIL_USUARIO" />
+      <End Role="USUARIO" EntitySet="USUARIO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

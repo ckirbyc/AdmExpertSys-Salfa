@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExceptionSerialize xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HResult>-2146233087</HResult>
+  <Message>El término 'Get-MsolAccountSku' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable. Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e inténtelo de nuevo.</Message>
+  <Source>System.Management.Automation</Source>
+  <StackTrace>   en System.Management.Automation.Runspaces.PipelineBase.Invoke(IEnumerable input)
+   en System.Management.Automation.Runspaces.Pipeline.Invoke()
+   en CL.AdmExpertSys.WEB.Application.OfficeOnlineClassLib.Office365.ObtenerMsolAccountSku() en E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.OfficeOnlineClassLib\Office365.cs:línea 937</StackTrace>
+  <Source>System.Management.Automation</Source>
+  <Message>El término 'Get-MsolAccountSku' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable. Compruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e inténtelo de nuevo.</Message>
+</ExceptionSerialize>

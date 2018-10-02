@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AdmSysWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="AdmSysWebEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ACCION_INFO" EntityType="AdmSysWebModel.ACCION_INFO" />
+    <EntitySet Name="CARGO" EntityType="AdmSysWebModel.CARGO" />
+    <EntitySet Name="CIUDAD" EntityType="AdmSysWebModel.CIUDAD" />
+    <EntitySet Name="DEPARTAMENTO" EntityType="AdmSysWebModel.DEPARTAMENTO" />
+    <EntitySet Name="ESTADO_ASIGNACION_LICENCIA" EntityType="AdmSysWebModel.ESTADO_ASIGNACION_LICENCIA" />
+    <EntitySet Name="ESTADO_CUENTA_USUARIO" EntityType="AdmSysWebModel.ESTADO_CUENTA_USUARIO" />
+    <EntitySet Name="ESTADO_REPORTE_LICENCIA" EntityType="AdmSysWebModel.ESTADO_REPORTE_LICENCIA" />
+    <EntitySet Name="ESTADO_SINCRONIZACION" EntityType="AdmSysWebModel.ESTADO_SINCRONIZACION" />
+    <EntitySet Name="LICENCIAS_O365" EntityType="AdmSysWebModel.LICENCIAS_O365" />
+    <EntitySet Name="LOG_INFO" EntityType="AdmSysWebModel.LOG_INFO" />
+    <EntitySet Name="MANTENEDOR_LICENCIA" EntityType="AdmSysWebModel.MANTENEDOR_LICENCIA" />
+    <EntitySet Name="OFICINA" EntityType="AdmSysWebModel.OFICINA" />
+    <EntitySet Name="ORGANIZACION" EntityType="AdmSysWebModel.ORGANIZACION" />
+    <EntitySet Name="PAIS_REGION" EntityType="AdmSysWebModel.PAIS_REGION" />
+    <EntitySet Name="PERFIL_USUARIO" EntityType="AdmSysWebModel.PERFIL_USUARIO" />
+    <EntitySet Name="REPORTE_LICENCIA" EntityType="AdmSysWebModel.REPORTE_LICENCIA" />
+    <EntitySet Name="ROL_CARGO" EntityType="AdmSysWebModel.ROL_CARGO" />
+    <EntitySet Name="USUARIO" EntityType="AdmSysWebModel.USUARIO" />
+    <AssociationSet Name="FK_LOG_INFO_ACCION_INFO" Association="AdmSysWebModel.FK_LOG_INFO_ACCION_INFO">
+      <End Role="ACCION_INFO" EntitySet="ACCION_INFO" />
+      <End Role="LOG_INFO" EntitySet="LOG_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" Association="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365">
+      <End Role="LICENCIAS_O365" EntitySet="LICENCIAS_O365" />
+      <End Role="ESTADO_CUENTA_USUARIO" EntitySet="ESTADO_CUENTA_USUARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANTENEDOR_LICENCIA_LICENCIAS_O365" Association="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_LICENCIAS_O365">
+      <End Role="LICENCIAS_O365" EntitySet="LICENCIAS_O365" />
+      <End Role="MANTENEDOR_LICENCIA" EntitySet="MANTENEDOR_LICENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MANTENEDOR_LICENCIA_ROL_CARGO" Association="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_ROL_CARGO">
+      <End Role="ROL_CARGO" EntitySet="ROL_CARGO" />
+      <End Role="MANTENEDOR_LICENCIA" EntitySet="MANTENEDOR_LICENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USUARIO_PERFIL_USUARIO" Association="AdmSysWebModel.FK_USUARIO_PERFIL_USUARIO">
+      <End Role="PERFIL_USUARIO" EntitySet="PERFIL_USUARIO" />
+      <End Role="USUARIO" EntitySet="USUARIO" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ACCION_INFO">
+    <Key>
+      <PropertyRef Name="IdAccionInfo" />
+    </Key>
+    <Property Name="IdAccionInfo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreAccionInfo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LOG_INFO" Relationship="AdmSysWebModel.FK_LOG_INFO_ACCION_INFO" FromRole="ACCION_INFO" ToRole="LOG_INFO" />
+  </EntityType>
+  <EntityType Name="CARGO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CIUDAD">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ESTADO_ASIGNACION_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Asignando" Type="Boolean" Nullable="false" />
+    <Property Name="FechaMvto" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ESTADO_CUENTA_USUARIO">
+    <Key>
+      <PropertyRef Name="IdEstadoCuentaUsuario" />
+    </Key>
+    <Property Name="IdEstadoCuentaUsuario" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CuentaAd" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Nombres" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Correo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Dominio" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreadoAd" Type="Boolean" Nullable="false" />
+    <Property Name="Sincronizado" Type="Boolean" Nullable="false" />
+    <Property Name="LicenciaId" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Habilitado" Type="Boolean" Nullable="false" />
+    <Property Name="Eliminado" Type="Boolean" Nullable="false" />
+    <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+    <Property Name="CodigoLicencia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Vigente" Type="Boolean" Nullable="false" />
+    <Property Name="LicenciaAsignada" Type="Boolean" Nullable="false" />
+    <Property Name="Clave" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LICENCIAS_O365" Relationship="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" FromRole="ESTADO_CUENTA_USUARIO" ToRole="LICENCIAS_O365" />
+  </EntityType>
+  <EntityType Name="ESTADO_REPORTE_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Procesando" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_SINCRONIZACION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Sincronizando" Type="Boolean" Nullable="false" />
+    <Property Name="FechaMvto" Type="DateTime" Precision="3" />
+    <Property Name="UsuarioModificacion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Modulo" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="LICENCIAS_O365">
+    <Key>
+      <PropertyRef Name="IdLicencia" />
+    </Key>
+    <Property Name="IdLicencia" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Vigente" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="ESTADO_CUENTA_USUARIO" Relationship="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" FromRole="LICENCIAS_O365" ToRole="ESTADO_CUENTA_USUARIO" />
+    <NavigationProperty Name="MANTENEDOR_LICENCIA" Relationship="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_LICENCIAS_O365" FromRole="LICENCIAS_O365" ToRole="MANTENEDOR_LICENCIA" />
+  </EntityType>
+  <EntityType Name="LOG_INFO">
+    <Key>
+      <PropertyRef Name="IdInfo" />
+    </Key>
+    <Property Name="IdInfo" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MsgInfo" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="UserInfo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FechaInfo" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="AccionIdInfo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ACCION_INFO" Relationship="AdmSysWebModel.FK_LOG_INFO_ACCION_INFO" FromRole="LOG_INFO" ToRole="ACCION_INFO" />
+  </EntityType>
+  <EntityType Name="MANTENEDOR_LICENCIA">
+    <Key>
+      <PropertyRef Name="IdMantenedorLicencia" />
+    </Key>
+    <Property Name="IdMantenedorLicencia" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RolCargoId" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="LicenciaId" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Vigente" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="LICENCIAS_O365" Relationship="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_LICENCIAS_O365" FromRole="MANTENEDOR_LICENCIA" ToRole="LICENCIAS_O365" />
+    <NavigationProperty Name="ROL_CARGO" Relationship="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_ROL_CARGO" FromRole="MANTENEDOR_LICENCIA" ToRole="ROL_CARGO" />
+  </EntityType>
+  <EntityType Name="OFICINA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ORGANIZACION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PAIS_REGION">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="PERFIL_USUARIO">
+    <Key>
+      <PropertyRef Name="IdPerfil" />
+    </Key>
+    <Property Name="IdPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombrePerfil" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Vigente" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="USUARIO" Relationship="AdmSysWebModel.FK_USUARIO_PERFIL_USUARIO" FromRole="PERFIL_USUARIO" ToRole="USUARIO" />
+  </EntityType>
+  <EntityType Name="REPORTE_LICENCIA">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SamAccountName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UpnPrefijo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InfoString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Licenses" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DistinguishedName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ROL_CARGO">
+    <Key>
+      <PropertyRef Name="IdRolCargo" />
+    </Key>
+    <Property Name="IdRolCargo" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Vigente" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="MANTENEDOR_LICENCIA" Relationship="AdmSysWebModel.FK_MANTENEDOR_LICENCIA_ROL_CARGO" FromRole="ROL_CARGO" ToRole="MANTENEDOR_LICENCIA" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Usuario1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PerfilId" Type="Int32" />
+    <Property Name="Visible" Type="Boolean" Nullable="false" />
+    <Property Name="EsAdm" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="PERFIL_USUARIO" Relationship="AdmSysWebModel.FK_USUARIO_PERFIL_USUARIO" FromRole="USUARIO" ToRole="PERFIL_USUARIO" />
+  </EntityType>
+  <Association Name="FK_LOG_INFO_ACCION_INFO">
+    <End Type="AdmSysWebModel.ACCION_INFO" Role="ACCION_INFO" Multiplicity="1" />
+    <End Type="AdmSysWebModel.LOG_INFO" Role="LOG_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ACCION_INFO">
+        <PropertyRef Name="IdAccionInfo" />
+      </Principal>
+      <Dependent Role="LOG_INFO">
+        <PropertyRef Name="AccionIdInfo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365">
+    <End Type="AdmSysWebModel.LICENCIAS_O365" Role="LICENCIAS_O365" Multiplicity="1" />
+    <End Type="AdmSysWebModel.ESTADO_CUENTA_USUARIO" Role="ESTADO_CUENTA_USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LICENCIAS_O365">
+        <PropertyRef Name="IdLicencia" />
+      </Principal>
+      <Dependent Role="ESTADO_CUENTA_USUARIO">
+        <PropertyRef Name="LicenciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANTENEDOR_LICENCIA_LICENCIAS_O365">
+    <End Type="AdmSysWebModel.LICENCIAS_O365" Role="LICENCIAS_O365" Multiplicity="1" />
+    <End Type="AdmSysWebModel.MANTENEDOR_LICENCIA" Role="MANTENEDOR_LICENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LICENCIAS_O365">
+        <PropertyRef Name="IdLicencia" />
+      </Principal>
+      <Dependent Role="MANTENEDOR_LICENCIA">
+        <PropertyRef Name="LicenciaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MANTENEDOR_LICENCIA_ROL_CARGO">
+    <End Type="AdmSysWebModel.ROL_CARGO" Role="ROL_CARGO" Multiplicity="1" />
+    <End Type="AdmSysWebModel.MANTENEDOR_LICENCIA" Role="MANTENEDOR_LICENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ROL_CARGO">
+        <PropertyRef Name="IdRolCargo" />
+      </Principal>
+      <Dependent Role="MANTENEDOR_LICENCIA">
+        <PropertyRef Name="RolCargoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USUARIO_PERFIL_USUARIO">
+    <End Type="AdmSysWebModel.PERFIL_USUARIO" Role="PERFIL_USUARIO" Multiplicity="0..1" />
+    <End Type="AdmSysWebModel.USUARIO" Role="USUARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PERFIL_USUARIO">
+        <PropertyRef Name="IdPerfil" />
+      </Principal>
+      <Dependent Role="USUARIO">
+        <PropertyRef Name="PerfilId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

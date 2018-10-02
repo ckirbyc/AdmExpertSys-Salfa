@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExceptionSerialize xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HResult>-2147024885</HResult>
+  <Message>No se puede cargar el archivo o ensamblado 'file:///C:\Program Files\WindowsPowerShell\Modules\MSOnline\1.1.183.17\Microsoft.Online.Administration.Automation.PSModule.dll' ni una de sus dependencias. Se ha intentado cargar un programa con un formato incorrecto.</Message>
+  <Source>System.Management.Automation</Source>
+  <StackTrace>   en System.Management.Automation.Runspaces.InitialSessionState.Bind_LoadAssemblies(ExecutionContext context)
+   en System.Management.Automation.Runspaces.InitialSessionState.Bind(ExecutionContext context, Boolean updateOnly, PSModuleInfo module, Boolean noClobber, Boolean local)
+   en System.Management.Automation.Runspaces.InitialSessionState.Bind(ExecutionContext context, Boolean updateOnly)
+   en Microsoft.PowerShell.Commands.ModuleCmdletBase.LoadModuleManifest(String moduleManifestPath, ExternalScriptInfo manifestScriptInfo, Hashtable data, Hashtable localizedData, ManifestProcessingFlags manifestProcessingFlags, Version minimumVersion, Version maximumVersion, Version requiredVersion, Nullable`1 requiredModuleGuid, ImportModuleOptions&amp; options, Boolean&amp; containedErrors)</StackTrace>
+  <Source>System.Management.Automation</Source>
+  <Message>No se puede cargar el archivo o ensamblado 'file:///C:\Program Files\WindowsPowerShell\Modules\MSOnline\1.1.183.17\Microsoft.Online.Administration.Automation.PSModule.dll' ni una de sus dependencias. Se ha intentado cargar un programa con un formato incorrecto.</Message>
+  <Inner>   en System.Management.Automation.Runspaces.InitialSessionState.Bind_LoadAssemblies(ExecutionContext context)
+   en System.Management.Automation.Runspaces.InitialSessionState.Bind(ExecutionContext context, Boolean updateOnly, PSModuleInfo module, Boolean noClobber, Boolean local)
+   en System.Management.Automation.Runspaces.InitialSessionState.Bind(ExecutionContext context, Boolean updateOnly)
+   en Microsoft.PowerShell.Commands.ModuleCmdletBase.LoadModuleManifest(String moduleManifestPath, ExternalScriptInfo manifestScriptInfo, Hashtable data, Hashtable localizedData, ManifestProcessingFlags manifestProcessingFlags, Version minimumVersion, Version maximumVersion, Version requiredVersion, Nullable`1 requiredModuleGuid, ImportModuleOptions&amp; options, Boolean&amp; containedErrors)</Inner>
+</ExceptionSerialize>
