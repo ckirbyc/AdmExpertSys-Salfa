@@ -64,6 +64,28 @@
           <Property Name="Vigente" Type="bit" Nullable="false" />
           <Property Name="LicenciaAsignada" Type="bit" Nullable="false" />
           <Property Name="Clave" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Anexo" Type="numeric" Precision="10" Scale="0" />
+          <Property Name="Cumpleanos" Type="nvarchar" MaxLength="50" />
+          <Property Name="CentroCosto" Type="nvarchar" MaxLength="50" />
+          <Property Name="Oficina" Type="nvarchar" MaxLength="150" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="150" />
+          <Property Name="PaisRegion" Type="nvarchar" MaxLength="150" />
+          <Property Name="DireccionSucursal" Type="nvarchar(max)" />
+          <Property Name="Ingreso" Type="date" />
+          <Property Name="Cargo" Type="nvarchar" MaxLength="150" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="150" />
+          <Property Name="Organizacion" Type="nvarchar" MaxLength="150" />
+          <Property Name="Jefatura" Type="nvarchar" MaxLength="200" />
+          <Property Name="Movil" Type="nvarchar" MaxLength="50" />
+          <Property Name="PinHp" Type="nvarchar" MaxLength="50" />
+          <Property Name="TelefIp" Type="nvarchar" MaxLength="50" />
+          <Property Name="Notas" Type="nvarchar(max)" />
+          <Property Name="Rut" Type="nvarchar" MaxLength="10" />
+          <Property Name="UsrCambiaClaveSesion" Type="bit" />
+          <Property Name="UsrNoCambiaClave" Type="bit" />
+          <Property Name="ClaveNoExpira" Type="bit" />
+          <Property Name="AlmacenarClave" Type="bit" />
+          <Property Name="JefaturaCn" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ESTADO_REPORTE_LICENCIA">
           <Key>
@@ -131,6 +153,7 @@
           </Key>
           <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Abreviatura" Type="nvarchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <EntityType Name="PERFIL_USUARIO">
           <Key>
@@ -375,6 +398,28 @@
           <Property Name="Vigente" Type="Boolean" Nullable="false" />
           <Property Name="LicenciaAsignada" Type="Boolean" Nullable="false" />
           <Property Name="Clave" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Anexo" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="Cumpleanos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CentroCosto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Oficina" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="PaisRegion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DireccionSucursal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ingreso" Type="DateTime" Precision="0" />
+          <Property Name="Cargo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Departamento" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Organizacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Jefatura" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PinHp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TelefIp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rut" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UsrCambiaClaveSesion" Type="Boolean" />
+          <Property Name="UsrNoCambiaClave" Type="Boolean" />
+          <Property Name="ClaveNoExpira" Type="Boolean" />
+          <Property Name="AlmacenarClave" Type="Boolean" />
+          <Property Name="JefaturaCn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LICENCIAS_O365" Relationship="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" FromRole="ESTADO_CUENTA_USUARIO" ToRole="LICENCIAS_O365" />
         </EntityType>
         <EntityType Name="ESTADO_REPORTE_LICENCIA">
@@ -448,6 +493,7 @@
           </Key>
           <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Abreviatura" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PERFIL_USUARIO">
           <Key>
@@ -602,6 +648,28 @@
           <EntitySetMapping Name="ESTADO_CUENTA_USUARIO">
             <EntityTypeMapping TypeName="AdmSysWebModel.ESTADO_CUENTA_USUARIO">
               <MappingFragment StoreEntitySet="ESTADO_CUENTA_USUARIO">
+                <ScalarProperty Name="JefaturaCn" ColumnName="JefaturaCn" />
+                <ScalarProperty Name="AlmacenarClave" ColumnName="AlmacenarClave" />
+                <ScalarProperty Name="ClaveNoExpira" ColumnName="ClaveNoExpira" />
+                <ScalarProperty Name="UsrNoCambiaClave" ColumnName="UsrNoCambiaClave" />
+                <ScalarProperty Name="UsrCambiaClaveSesion" ColumnName="UsrCambiaClaveSesion" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="Notas" ColumnName="Notas" />
+                <ScalarProperty Name="TelefIp" ColumnName="TelefIp" />
+                <ScalarProperty Name="PinHp" ColumnName="PinHp" />
+                <ScalarProperty Name="Movil" ColumnName="Movil" />
+                <ScalarProperty Name="Jefatura" ColumnName="Jefatura" />
+                <ScalarProperty Name="Organizacion" ColumnName="Organizacion" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="Ingreso" ColumnName="Ingreso" />
+                <ScalarProperty Name="DireccionSucursal" ColumnName="DireccionSucursal" />
+                <ScalarProperty Name="PaisRegion" ColumnName="PaisRegion" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Oficina" ColumnName="Oficina" />
+                <ScalarProperty Name="CentroCosto" ColumnName="CentroCosto" />
+                <ScalarProperty Name="Cumpleanos" ColumnName="Cumpleanos" />
+                <ScalarProperty Name="Anexo" ColumnName="Anexo" />
                 <ScalarProperty Name="Clave" ColumnName="Clave" />
                 <ScalarProperty Name="LicenciaAsignada" ColumnName="LicenciaAsignada" />
                 <ScalarProperty Name="Vigente" ColumnName="Vigente" />
@@ -693,6 +761,7 @@
           <EntitySetMapping Name="PAIS_REGION">
             <EntityTypeMapping TypeName="AdmSysWebModel.PAIS_REGION">
               <MappingFragment StoreEntitySet="PAIS_REGION">
+                <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

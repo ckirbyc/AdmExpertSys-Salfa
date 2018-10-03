@@ -479,6 +479,139 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             return GetUser(sUserName);
         }
 
+        public UserPrincipal CreateNewUser(HomeSysWebAd model)
+        {
+            CommonServices = new Common();
+            var nombres = CommonServices.UppercaseWords(model.Nombres.Trim().ToLower());
+            var apellidos = CommonServices.UppercaseWords(model.Apellidos.Trim().ToLower());
+            var username = model.NombreUsuario.ToLower().Trim();
+            var pwd = model.Clave.Trim();
+            //var descripcion = model.Descripcion.Trim();            
+
+            string ldapOu = model.PatchOu;
+            string sUserName = username;
+            string sPassword = pwd;
+            string sGivenName = nombres;
+            string sSurname = apellidos;
+            string prefijoUpn = model.UpnPrefijo;
+            string passWord = pwd;
+            bool existeUsr = model.ExisteUsuario;
+            bool info = model.Info;
+
+            string upn = sUserName + prefijoUpn;
+
+            if (existeUsr == false)
+            {
+                var sOu = ldapOu.Replace(_sLdapServer, string.Empty);
+                PrincipalContext oPrincipalContext = GetPrincipalContext(sOu);
+
+                var oUserPrincipal = new UserPrincipal
+                   (oPrincipalContext, sUserName, sPassword, true)
+                { Enabled = true, PasswordNeverExpires = false };
+
+                //Proxy Addresses                
+                string emailOnmicrosoft = sUserName + "@" + _sTenantDomain;
+                //string emailTransporte = "SMTP:"+ sUserName + "@agrosuper.mail.onmicrosoft.com";
+                string emailTransporte = "SMTP:" + sUserName + '@' + _sTenantDomainSmtp;
+                //string emailSecundario = sUserName + "@agrosuper.cl";
+                string emailSecundario = sUserName + "@" + _sTenantDomainSmtpSecundario;
+
+                string[] proxyaddresses = { "", "", "" };
+                proxyaddresses[0] = "smtp:" + emailOnmicrosoft;
+                proxyaddresses[1] = "SMTP:" + upn;
+                proxyaddresses[2] = "smtp:" + emailSecundario;
+
+                //User Log on Name
+                oUserPrincipal.SamAccountName = sUserName;
+                oUserPrincipal.UserPrincipalName = upn;
+                oUserPrincipal.GivenName = sGivenName;
+                oUserPrincipal.Surname = sSurname;
+                oUserPrincipal.Name = sSurname + ", " + sGivenName;
+                oUserPrincipal.MiddleName = sSurname;
+                oUserPrincipal.DisplayName = sSurname + ", " + sGivenName;
+                oUserPrincipal.EmailAddress = upn;
+                oUserPrincipal.ExpirePasswordNow();
+                oUserPrincipal.UnlockAccount();
+                oUserPrincipal.Description = model.CentroCosto.Trim();
+                oUserPrincipal.Save();
+
+                using (DirectoryEntry ent = (DirectoryEntry)oUserPrincipal.GetUnderlyingObject())
+                {
+                    var infoString = string.Empty;
+                    if (info)
+                    {
+                        infoString = @"Cuenta Genérica";
+                    }
+                    else
+                    {
+                        infoString = @"Cuenta Persona";
+                    }
+
+                    //Datos principales de la cuenta                    
+                    ent.Invoke("SetPassword", passWord);
+                    //Propiedades que son necesarias problar en AD para crear un usuario en Office 365
+                    ent.Properties["proxyAddresses"].Add(proxyaddresses[0]);
+                    ent.Properties["proxyAddresses"].Add(proxyaddresses[1]);
+                    ent.Properties["proxyAddresses"].Add(proxyaddresses[2]);
+                    ent.Properties["mailnickname"].Value = sUserName;
+                    ent.Properties["targetAddress"].Value = emailTransporte;
+                    ent.Properties["pwdLastSet"].Value = 0;
+                    ent.Properties["info"].Value = infoString;
+                    if (model.Anexo != null)
+                    {
+                        ent.Properties["telephoneNumber"].Value = model.Anexo.ToString();
+                    }
+                    if (!string.IsNullOrEmpty(model.Oficina))
+                    {
+                        ent.Properties["physicalDeliveryOfficeName"].Value = model.Oficina;
+                    }
+                    if (!string.IsNullOrEmpty(model.Cumpleanos))
+                    {
+                        ent.Properties["wWWHomePage"].Value = model.Cumpleanos;
+                    }
+                    if (!string.IsNullOrEmpty(model.DireccionSucursal))
+                    {
+                        ent.Properties["streetAddress"].Value = model.DireccionSucursal;
+                    }
+                    if (!string.IsNullOrEmpty(model.Ciudad))
+                    {
+                        ent.Properties["l"].Value = model.Ciudad;
+                    }
+                    if (!string.IsNullOrEmpty(model.PaisRegion))
+                    {
+                        ent.Properties["c"].Value = model.PaisRegion;
+                    }
+                    if (!string.IsNullOrEmpty(model.Ingreso))
+                    {
+                        ent.Properties["postOfficeBox"].Value = model.Ingreso;
+                    }
+                    if (!string.IsNullOrEmpty(model.Cargo))
+                    {
+                        ent.Properties["title"].Value = model.Cargo;
+                    }
+                    if (!string.IsNullOrEmpty(model.Departamento))
+                    {
+                        ent.Properties["department"].Value = model.Departamento;
+                    }
+                    if (!string.IsNullOrEmpty(model.Organizacion))
+                    {
+                        ent.Properties["company"].Value = model.Organizacion;
+                    }
+                    if (!string.IsNullOrEmpty(model.JefaturaCn))
+                    {
+                        ent.Properties["manager"].Value = model.JefaturaCn;
+                    }
+
+                    ent.CommitChanges();
+                    ent.Close();
+                };
+
+                return oUserPrincipal;
+            }
+
+            return GetUser(sUserName);
+        }
+
         public bool UpdateUser(HomeSysWebVm usrData)
         {                        
             using (UserPrincipal oUserPrincipalAux = GetUser(usrData.NombreUsuario))
@@ -1214,6 +1347,44 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     }
                 }
             }
+        }
+
+        public List<UsuarioAd> SearchUsersByDisplayName(string nameUser)
+        {
+            var listaUser = new List<UsuarioAd>();
+            using (PrincipalContext oPrincipalContext = GetPrincipalContext(_sRutaAllDominio))
+            {
+                using (UserPrincipal objUser = new UserPrincipal(oPrincipalContext))
+                {
+                    var paramSearchUsers = nameUser + @"*";
+                    objUser.Enabled = true;
+                    objUser.DisplayName = paramSearchUsers;
+                    using (PrincipalSearcher pSearch = new PrincipalSearcher(objUser))
+                    {
+                        foreach (UserPrincipal oUserPrincipal in pSearch.FindAll())
+                        {
+                            var usuarioAd = new UsuarioAd
+                            {
+                                AccountExpirationDate = oUserPrincipal.AccountExpirationDate,
+                                Description = oUserPrincipal.Description,
+                                DisplayName = oUserPrincipal.DisplayName,
+                                DistinguishedName = oUserPrincipal.DistinguishedName,
+                                EmailAddress = oUserPrincipal.EmailAddress,
+                                GivenName = oUserPrincipal.GivenName,
+                                Guid = oUserPrincipal.Guid,
+                                MiddleName = oUserPrincipal.MiddleName,
+                                Name = oUserPrincipal.Name,
+                                SamAccountName = oUserPrincipal.SamAccountName,
+                                Surname = oUserPrincipal.Surname,
+                                Enabled = oUserPrincipal.Enabled,
+                                EstadoCuenta = oUserPrincipal.Enabled != null && oUserPrincipal.Enabled == true ? "Habilitado" : "No habilitado"                                
+                            };
+                            listaUser.Add(usuarioAd);
+                        }
+                    }
+                };
+                return listaUser;
+            };            
         }
     }
 }

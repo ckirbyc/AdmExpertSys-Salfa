@@ -1,5 +1,4 @@
-﻿
-using CL.AdmExpertSys.Web.Infrastructure.LogTransaccional;
+﻿using CL.AdmExpertSys.Web.Infrastructure.LogTransaccional;
 using CL.AdmExpertSys.WEB.Application.ADClassLib;
 using CL.AdmExpertSys.WEB.Application.CommonLib;
 using CL.AdmExpertSys.WEB.Application.Contracts.Services;
@@ -45,7 +44,13 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                 Ous = ObtenerTipoOus(),
                 UpnPrefijoLista = ObtenerUpnPrefijo(),
                 ListaAccountSkus = GetLicenciasDisponibles(),
-                CodigoLicenciaLista = ObtenerSelectMantenedorLicencia()
+                CodigoLicenciaLista = ObtenerSelectMantenedorLicencia(),
+                Oficinas = ObtenerSelectOficina(),
+                Ciudades = ObtenerSelectCiudad(),
+                PaisesRegiones = ObtenerSelectPaisRegion(),
+                Organizaciones = ObtenerSelectOrganizacion(),
+                Cargos = ObtenerSelectCargo(),
+                Departamentos = ObtenerSelectDepartamento()
             };
             return homeSys;
         }
@@ -112,8 +117,152 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
             return upn.Select(item => new SelectListItem { Text = item.Value, Value = item.Key }).ToList();
         }
 
+        private List<SelectListItem> ObtenerSelectOficina()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.OFICINA.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
+                    }).ToList();
 
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
 
+        private List<SelectListItem> ObtenerSelectCiudad()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.CIUDAD.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
+                    }).ToList();
+
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
+
+        private List<SelectListItem> ObtenerSelectPaisRegion()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.PAIS_REGION.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Abreviatura,
+                        Text = x.Nombre
+                    }).ToList();
+
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
+        private List<SelectListItem> ObtenerSelectOrganizacion()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.ORGANIZACION.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
+                    }).ToList();
+
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
+        private List<SelectListItem> ObtenerSelectCargo()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.CARGO.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
+                    }).ToList();
+
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
+        private List<SelectListItem> ObtenerSelectDepartamento()
+        {
+            try
+            {
+                using (var entityContext = new AdmSysWebEntities())
+                {
+                    var lista = (from a in entityContext.DEPARTAMENTO.ToList()
+                                 orderby a.Nombre
+                                 select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
+                    }).ToList();
+
+                    return lista;
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return null;
+            }
+        }
         public UsuarioAd ObtenerUsuarioExistente(string nombreUsuario)
         {
             try
@@ -149,23 +298,57 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
         {
             try
             {
-                CommonFactory = new Common();
-                AdFactory = new AdLib();
-
-                var nombres = CommonFactory.UppercaseWords(model.Nombres.Trim().ToLower());
-                var apellidos = CommonFactory.UppercaseWords(model.Apellidos.Trim().ToLower());
-                var username = model.NombreUsuario.ToLower().Trim();
-                var pwd = model.Clave.Trim();
-                var descripcion = model.Descripcion.Trim();               
+                //CommonFactory = new Common();
+                AdFactory = new AdLib();                
+                var objAd = new HomeSysWebAd {
+                    AlmacenarClave = model.AlmacenarClave,
+                    Anexo = model.Anexo,
+                    Apellidos = model.Apellidos,
+                    CambioPatchOu = model.CambioPatchOu,
+                    Cargo = model.Cargo,
+                    CentroCosto = model.CentroCosto,
+                    Ciudad = model.Ciudad,
+                    Clave = model.Clave,
+                    ClaveNoExpira = model.ClaveNoExpira,
+                    CodigoLicencia = model.CodigoLicencia,
+                    Correo = model.Correo,
+                    Cumpleanos = model.Cumpleanos,
+                    Departamento = model.Departamento,
+                    Descripcion = model.Descripcion,
+                    DireccionSucursal = model.DireccionSucursal,
+                    ExisteUsuario = model.ExisteUsuario,
+                    Info = model.Info,
+                    Ingreso = model.Ingreso,
+                    Jefatura = model.Jefatura,
+                    JefaturaCn = model.JefaturaCn,
+                    Licencia = model.Licencia,
+                    ListaAccountSkus = model.ListaAccountSkus,
+                    Movil = model.Movil,
+                    NombreCompleto = model.NombreCompleto,
+                    NombreGrupo = model.NombreGrupo,
+                    Nombres = model.Nombres,
+                    NombreUsuario = model.NombreUsuario,
+                    Notas = model.Notas,
+                    Oficina = model.Oficina,
+                    Organizacion = model.Organizacion,
+                    Ou = model.Ou,
+                    PaisRegion = model.PaisRegion,
+                    PatchOu = model.PatchOu,
+                    PinHp = model.PinHp,
+                    Rut = model.Rut,
+                    TelefIp = model.TelefIp,
+                    UpnPrefijo = model.UpnPrefijo,
+                    UsrCambiaClaveSesion = model.UsrCambiaClaveSesion,
+                    UsrNoCambiaClave = model.UsrNoCambiaClave                    
+                };                              
 
                 //Creo el usuario en AD
                 if (model.ExisteUsuario)
                 {
                     return true;
                 }
-                using (
-                    UserPrincipal sUserPrincipal = AdFactory.CreateNewUser(model.PatchOu, username, pwd, nombres,
-                        apellidos, model.UpnPrefijo, pwd, model.ExisteUsuario, descripcion, model.Info))
+                
+                using (UserPrincipal sUserPrincipal = AdFactory.CreateNewUser(objAd))
                 {
                     //Si el usuario se creó correctamente, continuo con DirSync y Asignacion de licencia
                     if (sUserPrincipal != null)
@@ -1081,6 +1264,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
             {
                 Utils.LogErrores(ex);
                 throw;
+            }
+        }
+
+        public List<UsuarioAd> ObtenerBusquedaUsuariosXNombreCompleto(string nombreBusqueda)
+        {
+            var listaAccount = new List<UsuarioAd>();
+            try
+            {
+                AdFactory = new AdLib();
+                listaAccount = AdFactory.SearchUsersByDisplayName(nombreBusqueda);
+                return listaAccount;
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return listaAccount;
             }
         }
     }

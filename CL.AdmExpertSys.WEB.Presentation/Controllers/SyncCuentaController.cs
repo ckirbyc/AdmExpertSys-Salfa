@@ -1,5 +1,6 @@
 ﻿using CL.AdmExpertSys.Web.Infrastructure.LogTransaccional;
 using CL.AdmExpertSys.WEB.Application.CommonLib;
+using CL.AdmExpertSys.WEB.Core.Domain.Enums;
 using CL.AdmExpertSys.WEB.Presentation.Mapping.Factories;
 using CL.AdmExpertSys.WEB.Presentation.Mapping.Thread;
 using CL.AdmExpertSys.WEB.Presentation.Models;
@@ -21,14 +22,17 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
 
         protected EstadoCuentaUsuarioFactory EstadoCuentaUsuarioFactory;
         protected HomeSysWebFactory HomeSysWebFactory;
+        protected LogInfoFactory LogInfoFactory;
 
         public SyncCuentaController()
         {
         }
 
-        public SyncCuentaController(EstadoCuentaUsuarioFactory estadoCuentaUsuarioFactory)
+        public SyncCuentaController(EstadoCuentaUsuarioFactory estadoCuentaUsuarioFactory,
+            LogInfoFactory logInfoFactory)
         {
             EstadoCuentaUsuarioFactory = estadoCuentaUsuarioFactory;
+            LogInfoFactory = logInfoFactory;
         }
         
         public ActionResult Index()
@@ -59,6 +63,23 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     listaEstUsr,
                     usuarioModificacion
                 };
+
+                var logSync = new LogInfoVm
+                {
+                    MsgInfo = @"Sincroniza Usuario entre el AD y el O365",
+                    UserInfo = SessionViewModel.Usuario.Nombre,
+                    FechaInfo = DateTime.Now,
+                    AccionIdInfo = EnumAccionInfo.Sincronizar.GetHashCode()
+                };
+
+                try
+                {
+                    LogInfoFactory.CrearLogInfo(logSync);
+                }
+                catch (Exception ex)
+                {
+                    Utils.LogErrores(ex);
+                }
 
                 _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta);
                 _hiloEjecucion.Start(listaEstCuentaVmHilo);

@@ -53,6 +53,7 @@
     <Compile Include="Services\LicenciaO365Service.cs" />
     <Compile Include="Services\LogInfoService.cs" />
     <Compile Include="Services\MantenedorLicenciaService.cs" />
+    <Compile Include="Services\OficinaService.cs" />
     <Compile Include="Services\PerfilUsuarioService.cs" />
     <Compile Include="Services\RolCargoService.cs" />
     <Compile Include="Services\TransversalService.cs" />

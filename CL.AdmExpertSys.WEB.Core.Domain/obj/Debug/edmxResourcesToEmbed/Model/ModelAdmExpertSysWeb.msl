@@ -46,6 +46,28 @@
     <EntitySetMapping Name="ESTADO_CUENTA_USUARIO">
       <EntityTypeMapping TypeName="AdmSysWebModel.ESTADO_CUENTA_USUARIO">
         <MappingFragment StoreEntitySet="ESTADO_CUENTA_USUARIO">
+          <ScalarProperty Name="JefaturaCn" ColumnName="JefaturaCn" />
+          <ScalarProperty Name="AlmacenarClave" ColumnName="AlmacenarClave" />
+          <ScalarProperty Name="ClaveNoExpira" ColumnName="ClaveNoExpira" />
+          <ScalarProperty Name="UsrNoCambiaClave" ColumnName="UsrNoCambiaClave" />
+          <ScalarProperty Name="UsrCambiaClaveSesion" ColumnName="UsrCambiaClaveSesion" />
+          <ScalarProperty Name="Rut" ColumnName="Rut" />
+          <ScalarProperty Name="Notas" ColumnName="Notas" />
+          <ScalarProperty Name="TelefIp" ColumnName="TelefIp" />
+          <ScalarProperty Name="PinHp" ColumnName="PinHp" />
+          <ScalarProperty Name="Movil" ColumnName="Movil" />
+          <ScalarProperty Name="Jefatura" ColumnName="Jefatura" />
+          <ScalarProperty Name="Organizacion" ColumnName="Organizacion" />
+          <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="Ingreso" ColumnName="Ingreso" />
+          <ScalarProperty Name="DireccionSucursal" ColumnName="DireccionSucursal" />
+          <ScalarProperty Name="PaisRegion" ColumnName="PaisRegion" />
+          <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+          <ScalarProperty Name="Oficina" ColumnName="Oficina" />
+          <ScalarProperty Name="CentroCosto" ColumnName="CentroCosto" />
+          <ScalarProperty Name="Cumpleanos" ColumnName="Cumpleanos" />
+          <ScalarProperty Name="Anexo" ColumnName="Anexo" />
           <ScalarProperty Name="Clave" ColumnName="Clave" />
           <ScalarProperty Name="LicenciaAsignada" ColumnName="LicenciaAsignada" />
           <ScalarProperty Name="Vigente" ColumnName="Vigente" />
@@ -137,6 +159,7 @@
     <EntitySetMapping Name="PAIS_REGION">
       <EntityTypeMapping TypeName="AdmSysWebModel.PAIS_REGION">
         <MappingFragment StoreEntitySet="PAIS_REGION">
+          <ScalarProperty Name="Abreviatura" ColumnName="Abreviatura" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

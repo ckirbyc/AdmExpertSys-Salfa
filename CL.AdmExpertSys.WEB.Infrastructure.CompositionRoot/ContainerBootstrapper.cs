@@ -49,6 +49,7 @@ namespace CL.AdmExpertSys.WEB.Infrastructure.CompositionRoot
             container.RegisterType<IEstadoCuentaUsuarioService, EstadoCuentaUsuarioService>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             container.RegisterType<ITransversalService, TransversalService>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             container.RegisterType<IUsuarioService, UsuarioService>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
+            container.RegisterType<IOficinaService, OficinaService>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
 
             container.RegisterType<ILogInfoRepository, LogInfoRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             container.RegisterType<IAccionInfoRepository, AccionInfoRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
@@ -58,6 +59,7 @@ namespace CL.AdmExpertSys.WEB.Infrastructure.CompositionRoot
             container.RegisterType<IMantenedorLicenciaRepository, MantenedorLicenciaRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             container.RegisterType<IEstadoCuentaUsuarioRepository, EstadoCuentaUsuarioRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             container.RegisterType<IUsuarioRepository, UsuarioRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
+            container.RegisterType<IOficinaRepository, OficinaRepository>(new HierarchicalLifetimeManager(), new InterceptionBehavior<PolicyInjectionBehavior>());
             #endregion
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

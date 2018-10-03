@@ -16,5 +16,6 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Model
     {
         public decimal Id { get; set; }
         public string Nombre { get; set; }
+        public string Abreviatura { get; set; }
     }
 }

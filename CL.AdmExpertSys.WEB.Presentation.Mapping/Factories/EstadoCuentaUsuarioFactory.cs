@@ -116,7 +116,29 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                             Sincronizado = tipo.Sincronizado,
                             Vigente = true,
                             LicenciaAsignada = tipo.LicenciaAsignada,
-                            Clave = tipo.Clave.Trim()
+                            Clave = tipo.Clave.Trim(),
+                            AlmacenarClave = tipo.AlmacenarClave,
+                            Anexo = tipo.Anexo,
+                            Cargo = tipo.Cargo,
+                            CentroCosto = tipo.CentroCosto,
+                            Ciudad = tipo.Ciudad,
+                            ClaveNoExpira = tipo.ClaveNoExpira,
+                            Cumpleanos = tipo.Cumpleanos,
+                            Departamento = tipo.Departamento,
+                            DireccionSucursal = tipo.DireccionSucursal,
+                            Ingreso = tipo.Ingreso,
+                            Jefatura = tipo.Jefatura,
+                            JefaturaCn = tipo.JefaturaCn,
+                            Movil = tipo.Movil,
+                            Notas = tipo.Notas,
+                            Oficina = tipo.Oficina,
+                            Organizacion = tipo.Organizacion,
+                            PaisRegion = tipo.PaisRegion,
+                            PinHp = tipo.PinHp,
+                            Rut = tipo.Rut,
+                            TelefIp = tipo.TelefIp,
+                            UsrCambiaClaveSesion = tipo.UsrCambiaClaveSesion,
+                            UsrNoCambiaClave = tipo.UsrNoCambiaClave                            
                         };
                         entityContext.ESTADO_CUENTA_USUARIO.Add(tip);
                         entityContext.SaveChanges();

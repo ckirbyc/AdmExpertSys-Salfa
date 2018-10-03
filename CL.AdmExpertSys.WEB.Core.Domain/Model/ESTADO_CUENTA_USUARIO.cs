@@ -32,6 +32,28 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Model
         public bool Vigente { get; set; }
         public bool LicenciaAsignada { get; set; }
         public string Clave { get; set; }
+        public Nullable<decimal> Anexo { get; set; }
+        public string Cumpleanos { get; set; }
+        public string CentroCosto { get; set; }
+        public string Oficina { get; set; }
+        public string Ciudad { get; set; }
+        public string PaisRegion { get; set; }
+        public string DireccionSucursal { get; set; }
+        public Nullable<System.DateTime> Ingreso { get; set; }
+        public string Cargo { get; set; }
+        public string Departamento { get; set; }
+        public string Organizacion { get; set; }
+        public string Jefatura { get; set; }
+        public string Movil { get; set; }
+        public string PinHp { get; set; }
+        public string TelefIp { get; set; }
+        public string Notas { get; set; }
+        public string Rut { get; set; }
+        public Nullable<bool> UsrCambiaClaveSesion { get; set; }
+        public Nullable<bool> UsrNoCambiaClave { get; set; }
+        public Nullable<bool> ClaveNoExpira { get; set; }
+        public Nullable<bool> AlmacenarClave { get; set; }
+        public string JefaturaCn { get; set; }
     
         public virtual LICENCIAS_O365 LICENCIAS_O365 { get; set; }
     }

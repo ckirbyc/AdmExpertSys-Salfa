@@ -10,15 +10,18 @@ namespace CL.AdmExpertSys.WEB.Application.Services
     {
         protected IRolCargoService RolCargoService;
         protected ILicenciaO365Service LicenciaO365Service;
-        protected IPerfilUsuarioService PerfilUsuarioService;        
+        protected IPerfilUsuarioService PerfilUsuarioService;
+        protected IOficinaService OficinaService;
 
         public TransversalService(IRolCargoService rolCargoService,
             ILicenciaO365Service licenciaO365Service,
-            IPerfilUsuarioService perfilUsuarioService)
+            IPerfilUsuarioService perfilUsuarioService,
+            IOficinaService oficinaService)
         {
             RolCargoService = rolCargoService;
             LicenciaO365Service = licenciaO365Service;
             PerfilUsuarioService = perfilUsuarioService;
+            OficinaService = oficinaService;
         }
 
         public List<SelectListItem> GetSelectRolCarga()
@@ -60,6 +63,20 @@ namespace CL.AdmExpertSys.WEB.Application.Services
                     {
                         Value = x.IdPerfil.ToString(CultureInfo.InvariantCulture),
                         Text = x.NombrePerfil
+                    }).ToList();
+
+            return lista;
+        }
+
+        public List<SelectListItem> GetSelectOficina()
+        {
+            var lista = (from a in OficinaService.FindAll()
+                         orderby a.Nombre
+                         select a).AsEnumerable()
+                    .Select(x => new SelectListItem
+                    {
+                        Value = x.Nombre,
+                        Text = x.Nombre
                     }).ToList();
 
             return lista;

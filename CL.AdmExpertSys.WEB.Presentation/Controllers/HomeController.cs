@@ -301,7 +301,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 if (string.IsNullOrEmpty(model.NombreUsuario)) throw new ArgumentException("Ingresar ID del usuario");
                 if (string.IsNullOrEmpty(model.Correo)) throw new ArgumentException("Asignar correo");
                 if (string.IsNullOrEmpty(model.UpnPrefijo)) throw new ArgumentException("Ingresar Dominio");
-                if (string.IsNullOrEmpty(model.Descripcion)) throw new ArgumentException("Ingresar Descripción");
+                if (string.IsNullOrEmpty(model.CentroCosto)) throw new ArgumentException("Ingresar Centro Costo");
                 if (string.IsNullOrEmpty(model.CodigoLicencia)) throw new ArgumentException("Ingresar Código Licencia");
                 if (model.ExisteUsuario == false)
                 {
@@ -340,24 +340,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 catch (Exception ex)
                 {
                     Utils.LogErrores(ex);
-                }
-
-                var logSync = new LogInfoVm
-                {
-                    MsgInfo = @"Sincroniza Usuario entre el AD y el O365",
-                    UserInfo = SessionViewModel.Usuario.Nombre,
-                    FechaInfo = DateTime.Now,
-                    AccionIdInfo = EnumAccionInfo.Sincronizar.GetHashCode()
-                };
-
-                try
-                {
-                    LogInfoFactory.CrearLogInfo(logSync);
-                }
-                catch (Exception ex)
-                {
-                    Utils.LogErrores(ex);
-                }
+                }                
 
                 HomeSysWebFactory = new HomeSysWebFactory();
                 var exitoProceso = false;
@@ -369,6 +352,12 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     decimal licenciaId = mantLicObjVm.LicenciaId;
 
                     //Ingresa datos usuarios a base de datos
+                    DateTime? ingreso = null;
+                    if (!string.IsNullOrEmpty(model.Ingreso))
+                    {
+                        ingreso = Convert.ToDateTime(model.Ingreso);
+                    }
+
                     var estadoUsr = new EstadoCuentaUsuarioVm {
                         Apellidos = model.Apellidos,
                         CodigoLicencia = !string.IsNullOrEmpty(model.CodigoLicencia.Trim()) ? model.CodigoLicencia.Trim() : string.Empty,
@@ -383,14 +372,35 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                         LicenciaId = licenciaId, 
                         Nombres = model.Nombres,
                         Sincronizado = false,
-                        Clave = model.Clave
+                        Clave = model.Clave,
+                        Anexo = model.Anexo,
+                        Cumpleanos = model.Cumpleanos,
+                        CentroCosto = model.CentroCosto,
+                        Oficina = model.Oficina,
+                        Ciudad = model.Ciudad,
+                        PaisRegion = model.PaisRegion,
+                        DireccionSucursal = model.DireccionSucursal,
+                        Ingreso = ingreso,
+                        Cargo = model.Cargo,
+                        Departamento = model.Departamento,
+                        Organizacion = model.Organizacion,
+                        Jefatura = model.Jefatura,
+                        JefaturaCn = model.JefaturaCn,
+                        Movil = model.Movil,
+                        PinHp = model.PinHp,
+                        TelefIp = model.TelefIp,
+                        Notas = model.Notas,
+                        Rut = model.Rut,
+                        UsrCambiaClaveSesion = model.UsrCambiaClaveSesion,
+                        UsrNoCambiaClave = model.UsrNoCambiaClave,
+                        ClaveNoExpira = model.ClaveNoExpira,
+                        AlmacenarClave = model.AlmacenarClave
                     };
 
                     try
                     {
                         EstadoCuentaUsuarioFactory = new EstadoCuentaUsuarioFactory();
-                        EstadoCuentaUsuarioFactory.CrearEstadoCuentaUsuarioDirecto(estadoUsr);
-                        //HiloEstadoCuentaUsuario.CrearEstadoCuentaUsuario(estadoUsr);                            
+                        EstadoCuentaUsuarioFactory.CrearEstadoCuentaUsuarioDirecto(estadoUsr);                                                    
                         exitoProceso = true;
                     }
                     catch (Exception ex)
@@ -1228,6 +1238,60 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     Data = new
                     {
                         Validar = false,
+                        Error = ex.Message,
+                        Session = varSession
+                    }
+                };
+            }
+        }
+
+        public ActionResult VerPopupAsignarJefatura(string cuentaId)
+        {
+            ViewBag.CuentaId = cuentaId;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ObtenerCuentasxNombreCompleto(string nombreCuenta)
+        {
+            var varSession = true;
+            try
+            {
+                //Verifica que sesiones no sean nulas, si lo es redirecciona a página login                
+                if (System.Web.HttpContext.Current.Session["UsuarioVM"] == null || System.Web.HttpContext.Current.Session["EstructuraArbol"] == null)
+                {
+                    varSession = false;
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            DatosUsuario = string.Empty,
+                            Error = string.Empty,
+                            Session = varSession
+                        }
+                    };
+                }
+
+                HomeSysWebFactory = new HomeSysWebFactory();
+
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        DatosUsuario = HomeSysWebFactory.ObtenerBusquedaUsuariosXNombreCompleto(nombreCuenta),                        
+                        Error = string.Empty,
+                        Session = varSession
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        DatosUsuario = string.Empty,
                         Error = ex.Message,
                         Session = varSession
                     }

@@ -100,6 +100,28 @@
     <Property Name="Vigente" Type="Boolean" Nullable="false" />
     <Property Name="LicenciaAsignada" Type="Boolean" Nullable="false" />
     <Property Name="Clave" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Anexo" Type="Decimal" Precision="10" Scale="0" />
+    <Property Name="Cumpleanos" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="CentroCosto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Oficina" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Ciudad" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="PaisRegion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="DireccionSucursal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Ingreso" Type="DateTime" Precision="0" />
+    <Property Name="Cargo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Departamento" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Organizacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Jefatura" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Movil" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PinHp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TelefIp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Notas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Rut" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="UsrCambiaClaveSesion" Type="Boolean" />
+    <Property Name="UsrNoCambiaClave" Type="Boolean" />
+    <Property Name="ClaveNoExpira" Type="Boolean" />
+    <Property Name="AlmacenarClave" Type="Boolean" />
+    <Property Name="JefaturaCn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="LICENCIAS_O365" Relationship="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" FromRole="ESTADO_CUENTA_USUARIO" ToRole="LICENCIAS_O365" />
   </EntityType>
   <EntityType Name="ESTADO_REPORTE_LICENCIA">
@@ -173,6 +195,7 @@
     </Key>
     <Property Name="Id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Nombre" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Abreviatura" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="PERFIL_USUARIO">
     <Key>

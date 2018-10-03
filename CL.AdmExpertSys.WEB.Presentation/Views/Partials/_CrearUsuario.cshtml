@@ -18,23 +18,24 @@
         <h1 class="page-header colorOrange col-md-7">Crear usuario y asignar licencia O365</h1>
         <div class="form-inline col-md-5">
             @*<div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
-                <span class="glyphicon glyphicon-save"></span>
-                <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
-            </div>
-            <div id="btnSync" class="btn btn-primary pull-right btn-sm">
-                <span class="glyphicon glyphicon-save"></span>
-                <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
-            </div>
-            <div id="btnSubmit" class="btn btn-primary pull-right btn-sm">
-                <span class="glyphicon glyphicon-save"></span>
-                <input type="button" value="Guardar" class="btnInput" id="Guardar" />
-            </div>*@
+                    <span class="glyphicon glyphicon-save"></span>
+                    <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
+                </div>
+                <div id="btnSync" class="btn btn-primary pull-right btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>
+                    <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
+                </div>
+                <div id="btnSubmit" class="btn btn-primary pull-right btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>
+                    <input type="button" value="Guardar" class="btnInput" id="Guardar" />
+                </div>*@
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
+            @Html.HiddenFor(m => m.JefaturaCn)
             <table class="table table-secondary">
                 <tbody>
                     <tr>
@@ -93,18 +94,158 @@
                             @Html.ValidationMessageFor(m => m.Correo)
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
-                        <td colspan="2">
-                            @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
-                            @Html.ValidationMessageFor(m => m.Descripcion)
-                        </td>
-                    </tr>
+                    @*<tr>
+                    <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
+                    <td colspan="2">
+                        @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(m => m.Descripcion)
+                    </td>
+                </tr>*@
                     <tr>
                         <th scope="row">@Html.DisplayNameFor(m => m.CodigoLicencia)</th>
                         <td colspan="2">
                             @Html.DropDownListFor(m => m.CodigoLicencia, Model.CodigoLicenciaLista, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
                             @Html.ValidationMessageFor(m => m.CodigoLicencia)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Anexo)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Anexo, new { @maxlength = "10", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Cumpleanos)</th>
+                        <td>
+                            <div class="fechaContainerDiaMes">
+                                <div class="input-group date fechaDiaMes">
+                                    @Html.TextBoxFor(m => m.Cumpleanos, new { @class = "form-control fechaDiaMes", maxlength = "5" })
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.CentroCosto)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.CentroCosto, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Oficina)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Oficina, Model.Oficinas, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Ciudad)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Ciudad, Model.Ciudades, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.PaisRegion)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.PaisRegion, Model.PaisesRegiones, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.DireccionSucursal)</th>
+                        <td>
+                            @Html.TextAreaFor(m => m.DireccionSucursal, new { cols = "20", rows = "5", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Ingreso)</th>
+                        <td>
+                            <div class="fechaContainer">
+                                <div class="input-group date fecha">
+                                    @Html.TextBoxFor(m => m.Ingreso, new { @class = "form-control fecha", maxlength = "10" })
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Cargo)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Cargo, Model.Cargos, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Departamento)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Departamento, Model.Departamentos, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Organizacion)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Organizacion, Model.Organizaciones, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Jefatura)</th>
+                        <td colspan="2">
+                            @Html.TextBoxFor(m => m.Jefatura, new { @maxlength = "200", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                        <td colspan="2">
+                            <div id="btnAsignarJefatura" class="btn btn-primary pull-right btn-sm">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <input type="button" value="Busar Jefe" class="btnInput" id="AsignarJefatura" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Movil)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Movil, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.PinHp)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.PinHp, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.TelefIp)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.TelefIp, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Notas)</th>
+                        <td>
+                            @Html.TextAreaFor(m => m.Notas, new { cols = "20", rows = "5", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Rut)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Rut, new { @maxlength = "10", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.UsrCambiaClaveSesion)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.UsrCambiaClaveSesion, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.UsrNoCambiaClave)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.UsrNoCambiaClave, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.ClaveNoExpira)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.ClaveNoExpira, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.AlmacenarClave)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.AlmacenarClave, new { @class = "form-control" })
                         </td>
                     </tr>
                     <tr>
@@ -137,9 +278,9 @@
                                 <input type="button" value="Guardar Usuario en AD" class="btnInput" id="Guardar" />
                             </div>
                             @*<div id="btnSync" class="btn btn-primary pull-right btn-sm">
-                    <span class="glyphicon glyphicon-save"></span>
-                    <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
-                </div>*@
+                            <span class="glyphicon glyphicon-save"></span>
+                            <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
+                        </div>*@
                         </td>
                     </tr>
                     <tr>
@@ -177,20 +318,20 @@
                         </td>
                     </tr>
                     @*<tr>
-            <td>
-                <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
-                    <span class="glyphicon glyphicon-save"></span>
-                    <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
-                </div>
-            </td>
-        </tr>*@
+                    <td>
+                        <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
+                            <span class="glyphicon glyphicon-save"></span>
+                            <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
+                        </div>
+                    </td>
+                </tr>*@
                 </tbody>
             </table>
         </div>
     </div>
     <div class="row" id="SeccionGrupo" style="display: none;">
         <div class="col-md-12">
-            <h2 class="page-header colorSky col-md-12">Agregar Usuarios a Grupos</h2> 
+            <h2 class="page-header colorSky col-md-12">Agregar Usuarios a Grupos</h2>
             <div class="form-horizontal">
                 <div class="panel-group">
                     <div class="form-group col-md-12">
@@ -228,7 +369,7 @@
                         <div id="btnGuardarGrupo" class="btn btn-primary pull-right btn-sm" style="display: none;">
                             <span class="glyphicon glyphicon-save"></span>
                             <input type="button" value="Guardar" class="btnInput" id="GuardarGrupo" />
-                        </div>                                
+                        </div>
                     </div>
                 </div>
             </div>
@@ -257,24 +398,89 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title" id="myModalLabel">Buscar y asignar Jefatura</h2>
+                </div>
+                <div class="modal-body">
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm" id="btnCerrar" data-dismiss="modal"><strong>Cerrar</strong></button>
+                </div>
+            </div>
+        </div>
+    </div>
     @Html.HiddenFor(m => m.PatchOu)
-    @Html.HiddenFor(m => m.ExisteUsuario)    
+    @Html.HiddenFor(m => m.ExisteUsuario)
     <input type="hidden" id="LicenciaSel" value="" />
     <input type="hidden" id="NombreGrupoSel" value="" />
-    }
+}
+<script src="~/Scripts/Fechas/ConfiguracionFecha.js"></script>
+<script src="~/Scripts/FuncionesGenerales.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnAsignarJefatura').off('click').click(function () {
+            VerPopupAsignarJefatura();            
+        });
 
-    <script>
-        $(document).ready(function () {
+        function VerPopupAsignarJefatura()
+        {
+            $("#loading-modal").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("VerPopupAsignarJefatura", "Home")?cuentaId=' + $("#NombreUsuario").val(),
+                success: function (data) {
+                    $('.modal-body').empty();
+                    $('.modal-body').append(data);
+                    $('#myModal').find('.modal').css('width', '90%');
+                    $('#myModal').find('.modal-dialog').css('width', '90%');
+                    $('#myModal').modal('show');
+                    $("#loading-modal").hide();
+                },
+                error: function (jqXHR, textStatus, errorThown) {
+                    $("#loading-modal").hide();
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThown);
+                }
+            });
+        }
+
             $("#btnSubmit").attr("disabled", true);
             $("#btnLicE1").attr("disabled", true);
             $("#btnLicE3").attr("disabled", true);
-            $("#btnLicExO").attr("disabled", true);                        
+            $("#btnLicExO").attr("disabled", true);
             $("#UpnPrefijo").attr("disabled", false);
             $("#UpnPrefijo").prop('disabled', 'disabled');
             $("#CodigoLicencia").attr("disabled", false);
             $("#CodigoLicencia").prop('disabled', 'disabled');
             $("#Info").attr("disabled", false);
             $("#Info").prop('disabled', 'disabled');
+            $("#Oficina").attr("disabled", false);
+            $("#Oficina").prop('disabled', 'disabled');
+            $("#Ciudad").attr("disabled", false);
+            $("#Ciudad").prop('disabled', 'disabled');
+            $("#PaisRegion").attr("disabled", false);
+            $("#PaisRegion").prop('disabled', 'disabled');
+            $("#Organizacion").attr("disabled", false);
+            $("#Organizacion").prop('disabled', 'disabled');
+            $("#Cargo").attr("disabled", false);
+            $("#Cargo").prop('disabled', 'disabled');
+            $("#Departamento").attr("disabled", false);
+            $("#Departamento").prop('disabled', 'disabled');
+            $("#UsrCambiaClaveSesion").attr("disabled", false);
+            $("#UsrCambiaClaveSesion").prop('disabled', 'disabled');
+            $("#UsrNoCambiaClave").attr("disabled", false);
+            $("#UsrNoCambiaClave").prop('disabled', 'disabled');
+            $("#ClaveNoExpira").attr("disabled", false);
+            $("#ClaveNoExpira").prop('disabled', 'disabled');
+            $("#AlmacenarClave").attr("disabled", false);
+            $("#AlmacenarClave").prop('disabled', 'disabled');
 
             $('#jstree').jstree();
 
@@ -286,8 +492,8 @@
                 $("#PatchOu").val(ldap);
                 //if (ldap != null) {
                 //    listaGruposAdByOu(ldap);
-                //}                
-            });            
+                //}
+            });
 
             $("#Apellidos").off('blur').blur(function () {
                 var nombreCompleto = $("#Apellidos").val() + ", " + $("#Nombres").val();
@@ -298,30 +504,6 @@
                 var correo = $("#NombreUsuario").val() + $("#UpnPrefijo").val();
                 $("#Correo").val(correo);
             });
-
-            //$("#ENTERPRISEPACK").off('click').click(function () {
-            //    $("#loading-modal").show();
-            //    $("#LicenciaSel").val("agrosuper:ENTERPRISEPACK");
-            //    setTimeout(function () {
-            //        asignarLicenciaUsuario();
-            //    }, 1000);
-            //});
-
-            //$("#STANDARDPACK").off('click').click(function () {
-            //    $("#loading-modal").show();
-            //    $("#LicenciaSel").val("agrosuper:STANDARDPACK");
-            //    setTimeout(function () {
-            //        asignarLicenciaUsuario();
-            //    }, 1000);
-            //});
-
-            //$("#EXCHANGESTANDARD").off('click').click(function () {
-            //    $("#loading-modal").show();
-            //    $("#LicenciaSel").val("agrosuper:EXCHANGESTANDARD");
-            //    setTimeout(function () {
-            //        asignarLicenciaUsuario();
-            //    }, 1000);
-            //});
 
             $("#btnVerificar").off('click').click(function () {
                 $("#loading-modal").show();
@@ -365,44 +547,78 @@
                             return;
                         }
                         if (data.Validar) {
-                            //Seleccionar nodo existente                            
+                            //Seleccionar nodo existente
                             var ubicGrupo = data.DatosUsuario.DistinguishedName;
                             var myLiId = '#' + ubicGrupo;
                             $("#jstree").jstree("select_node", myLiId);
                             $("#PatchOu").val(ubicGrupo);
-
                             $("#btnSubmit").attr("disabled", true);
-                            //$("#btnLicE1").attr("disabled", true);
-                            //$("#btnLicE3").attr("disabled", true);
-                            //$("#btnLicExO").attr("disabled", true);
                             $("#UpnPrefijo").attr("disabled", true);
-                            $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);                            
+                            $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);
                             $("#Nombres").attr("disabled", true);
                             $("#Nombres").val(data.DatosUsuario.GivenName);
                             $("#Apellidos").attr("disabled", true);
                             $("#Apellidos").val(data.DatosUsuario.Surname);
                             $("#NombreCompleto").attr("disabled", true);
                             $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
-                            $("#Descripcion").attr("disabled", true);
-                            $("#Descripcion").val(data.DatosUsuario.Description);
+                            $("#CentroCosto").attr("disabled", true);
+                            $("#CentroCosto").val(data.DatosUsuario.Description);
                             $("#Clave").attr("disabled", true);
                             $("#Clave").val(data.Clave);
                             $("#Correo").attr("disabled", true);
-                            $("#Correo").val(data.DatosUsuario.EmailAddress);                            
+                            $("#Correo").val(data.DatosUsuario.EmailAddress);
                             $("#ExisteUsuario").val(true);
                             $("#CodigoLicencia").attr("disabled", true);
-                            $("#CodigoLicencia").val(data.CodigoLicencia);                            
+                            $("#CodigoLicencia").val(data.CodigoLicencia);
                             if (data.DatosUsuario.Info == true) {
                                 $("#Info").prop("checked");
                                 $("#Info").attr("checked", true);
                                 $("#Info")[0].checked = true;
                             }
-                            else {                                
+                            else {
                                 $("#Info").attr("checked", false);
-                            }            
+                            }
                             $("#Info").attr("disabled", true);
+
+                            //Nuevos campos
+                            $("#Anexo").val("");
+                            $("#Anexo").attr("disabled", true);
+                            $("#Cumpleanos").val("");
+                            $("#Cumpleanos").attr("disabled", true);
+                            $("#Oficina").attr("disabled", true);
+                            $("#Ciudad").attr("disabled", true);
+                            $("#PaisRegion").attr("disabled", true);
+                            $("#DireccionSucursal").val("");
+                            $("#DireccionSucursal").attr("disabled", true);
+                            $("#Ingreso").val("");
+                            $("#Ingreso").attr("disabled", true);
+                            $("#Cargo").attr("disabled", true);
+                            $("#Departamento").attr("disabled", true);
+                            $("#Organizacion").attr("disabled", true);
+                            $("#Jefatura").val("");
+                            $("#JefaturaCn").val("");
+                            //$("#Jefatura").attr("disabled", true);
+                            $("#Movil").val("");
+                            $("#Movil").attr("disabled", true);
+                            $("#PinHp").val("");
+                            $("#PinHp").attr("disabled", true);
+                            $("#TelefIp").val("");
+                            $("#TelefIp").attr("disabled", true);
+                            $("#Notas").val("");
+                            $("#Notas").attr("disabled", true);
+                            $("#Rut").val("");
+                            $("#Rut").attr("disabled", true);
+                            $("#UsrCambiaClaveSesion").attr("checked", false);
+                            $("#UsrCambiaClaveSesion").attr("disabled", true);
+                            $("#UsrNoCambiaClave").attr("checked", false);
+                            $("#UsrNoCambiaClave").attr("disabled", true);
+                            $("#ClaveNoExpira").attr("checked", false);
+                            $("#ClaveNoExpira").attr("disabled", true);
+                            $("#AlmacenarClave").attr("checked", false);
+                            $("#AlmacenarClave").attr("disabled", true);
+
                             $("#SeccionGrupo").hide();
-                            $("#SeccionAsociarGrupo").hide();                            
+                            $("#SeccionAsociarGrupo").hide();
 
                             BootstrapDialog.alert({
                                 title: '¡Verificación Exitosa!',
@@ -411,32 +627,68 @@
                             });
                         } else {
                             $("#btnSubmit").attr("disabled", false);
-                            //$("#btnLicE1").attr("disabled", true);
-                            //$("#btnLicE3").attr("disabled", true);
-                            //$("#btnLicExO").attr("disabled", true);                            
-                            $("#UpnPrefijo").attr("disabled", false);                            
+                            $("#UpnPrefijo").attr("disabled", false);
                             $("#Nombres").val("");
                             $("#Nombres").removeAttr("disabled");
                             $("#Apellidos").val("");
                             $("#Apellidos").removeAttr("disabled");
-                            $("#Rut").attr("disabled", "disabled");
-                            $("#Dv").attr("disabled", "disabled");
+                            //$("#Rut").attr("disabled", "disabled");
+                            //$("#Dv").attr("disabled", "disabled");
                             $("#Clave").val("");
                             $("#Clave").removeAttr("disabled");
                             $("#Licencia").attr("disabled", "disabled");
                             $("#Ou").attr("disabled", "disabled");
                             $("#NombreCompleto").val("");
                             $("#NombreCompleto").attr("disabled", "disabled");
-                            $("#Descripcion").removeAttr("disabled");
-                            $("#Descripcion").val("");
+                            //$("#Descripcion").removeAttr("disabled");
+                            //$("#Descripcion").val("");
                             $("#Correo").val("");
                             $("#Correo").attr("disabled", "disabled");
                             $("#ExisteUsuario").val(false);
                             $("#CodigoLicencia").attr("disabled", false);
-                            $("#CodigoLicencia").val(data.CodigoLicencia);                                                        
-                            $("#Info").attr("checked", false);                            
+                            $("#CodigoLicencia").val(data.CodigoLicencia);
+                            $("#Info").attr("checked", false);
                             $("#Info").attr("disabled", false);
-                            //$("#SeccionGrupo").show();
+
+                            //Nuevos campos
+                            $("#Anexo").val("");
+                            $("#Anexo").attr("disabled", false);
+                            $("#Cumpleanos").val("");
+                            $("#Cumpleanos").attr("disabled", false);
+                            $("#CentroCosto").val("");
+                            $("#CentroCosto").attr("disabled", false);
+                            $("#Oficina").attr("disabled", false);
+                            $("#Ciudad").attr("disabled", false);
+                            $("#PaisRegion").attr("disabled", false);
+                            $("#DireccionSucursal").val("");
+                            $("#DireccionSucursal").attr("disabled", false);
+                            $("#Ingreso").val("");
+                            $("#Ingreso").attr("disabled", false);
+                            $("#Cargo").attr("disabled", false);
+                            $("#Departamento").attr("disabled", false);
+                            $("#Organizacion").attr("disabled", false);
+                            $("#Jefatura").val("");
+                            $("#JefaturaCn").val("");
+                            //$("#Jefatura").attr("disabled", false);
+                            $("#Movil").val("");
+                            $("#Movil").attr("disabled", false);
+                            $("#PinHp").val("");
+                            $("#PinHp").attr("disabled", false);
+                            $("#TelefIp").val("");
+                            $("#TelefIp").attr("disabled", false);
+                            $("#Notas").val("");
+                            $("#Notas").attr("disabled", false);
+                            $("#Rut").val("");
+                            $("#Rut").attr("disabled", false);
+                            $("#UsrCambiaClaveSesion").attr("checked", false);
+                            $("#UsrCambiaClaveSesion").attr("disabled", false);
+                            $("#UsrNoCambiaClave").attr("checked", false);
+                            $("#UsrNoCambiaClave").attr("disabled", false);
+                            $("#ClaveNoExpira").attr("checked", false);
+                            $("#ClaveNoExpira").attr("disabled", false);
+                            $("#AlmacenarClave").attr("checked", false);
+                            $("#AlmacenarClave").attr("disabled", false);
+
                             BootstrapDialog.alert({
                                 title: '¡Verificación Exitosa!',
                                 message: '<strong>Usuario No Existe</strong>',
@@ -449,27 +701,62 @@
                     },
                     error: function () {
                         $("#btnSubmit").attr("disabled", true);
-                        //$("#btnLicE1").attr("disabled", true);
-                        //$("#btnLicE3").attr("disabled", true);
-                        //$("#btnLicExO").attr("disabled", true);
-                        $("#UpnPrefijo").attr("disabled", true);                                                
+                        $("#UpnPrefijo").attr("disabled", true);
                         $("#Nombres").attr("disabled", true);
                         $("#Nombres").val(data.DatosUsuario.GivenName);
                         $("#Apellidos").attr("disabled", true);
                         $("#Apellidos").val(data.DatosUsuario.Surname);
                         $("#NombreCompleto").attr("disabled", true);
                         $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
-                        $("#Descripcion").attr("disabled", true);
-                        $("#Descripcion").val(data.DatosUsuario.Description);
+                        $("#CentroCosto").attr("disabled", true);
+                        $("#CentroCosto").val(data.DatosUsuario.Description);
                         $("#Correo").attr("disabled", true);
-                        $("#Correo").val(data.DatosUsuario.EmailAddress);                        
+                        $("#Correo").val(data.DatosUsuario.EmailAddress);
                         $("#ExisteUsuario").val(true);
                         $("#CodigoLicencia").val(true);
-                        $("#CodigoLicencia").val(data.CodigoLicencia);                        
-                        $("#Info").attr("checked", false);                        
+                        $("#CodigoLicencia").val(data.CodigoLicencia);
+                        $("#Info").attr("checked", false);
                         $("#Info").attr("disabled", true);
                         $("#SeccionGrupo").hide();
                         $("#SeccionAsociarGrupo").hide();
+
+                        //Nuevos campos
+                        $("#Anexo").val("");
+                        $("#Anexo").attr("disabled", true);
+                        $("#Cumpleanos").val("");
+                        $("#Cumpleanos").attr("disabled", true);
+                        $("#Oficina").attr("disabled", true);
+                        $("#Ciudad").attr("disabled", true);
+                        $("#PaisRegion").attr("disabled", true);
+                        $("#DireccionSucursal").val("");
+                        $("#DireccionSucursal").attr("disabled", true);
+                        $("#Ingreso").val("");
+                        $("#Ingreso").attr("disabled", true);
+                        $("#Cargo").attr("disabled", true);
+                        $("#Departamento").attr("disabled", true);
+                        $("#Organizacion").attr("disabled", true);
+                        $("#Jefatura").val("");
+                        $("#JefaturaCn").val("");
+                        //$("#Jefatura").attr("disabled", true);
+                        $("#Movil").val("");
+                        $("#Movil").attr("disabled", true);
+                        $("#PinHp").val("");
+                        $("#PinHp").attr("disabled", true);
+                        $("#TelefIp").val("");
+                        $("#TelefIp").attr("disabled", true);
+                        $("#Notas").val("");
+                        $("#Notas").attr("disabled", true);
+                        $("#Rut").val("");
+                        $("#Rut").attr("disabled", true);
+                        $("#UsrCambiaClaveSesion").attr("checked", false);
+                        $("#UsrCambiaClaveSesion").attr("disabled", true);
+                        $("#UsrNoCambiaClave").attr("checked", false);
+                        $("#UsrNoCambiaClave").attr("disabled", true);
+                        $("#ClaveNoExpira").attr("checked", false);
+                        $("#ClaveNoExpira").attr("disabled", true);
+                        $("#AlmacenarClave").attr("checked", false);
+                        $("#AlmacenarClave").attr("disabled", true);
+
                         BootstrapDialog.alert({
                             title: '¡Verificación Erronea!',
                             message: '<strong>Error en la verificación.</strong>',
@@ -484,16 +771,32 @@
                 $("#Correo").val($("#NombreUsuario").val() + $("#UpnPrefijo").val())
                 setTimeout(function () {
                     guardarSincronizarUsuario();
-                    //sincronizarUsuario(); mantener comentado
                 }, 1000);
             });
 
-            function guardarSincronizarUsuario() {                
+            function guardarSincronizarUsuario() {
                 var infoBool = false;
+                var usrCambiaClaveSesion = false;
+                var usrNoCambiaClave = false;
+                var claveNoExpira = false;
+                var almacenarClave = false;
                 if ($('#Info').is(":checked"))
                 {
                     infoBool = true;
                 }
+                if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                    usrCambiaClaveSesion = true;
+                }
+                if ($('#UsrNoCambiaClave').is(":checked")) {
+                    usrNoCambiaClave = true;
+                }
+                if ($('#ClaveNoExpira').is(":checked")) {
+                    claveNoExpira = true;
+                }
+                if ($('#AlmacenarClave').is(":checked")) {
+                    almacenarClave = true;
+                }
+
                 var objEnvio =
                 {
                     model:
@@ -508,9 +811,31 @@
                         'Correo': $('#Correo').val(),
                         'PatchOu': $('#PatchOu').val(),
                         'ExisteUsuario': $("#ExisteUsuario").val(),
-                        'Descripcion': $("#Descripcion").val(),
+                        //'Descripcion': $("#Descripcion").val(),
                         'CodigoLicencia': $("#CodigoLicencia").val(),
-                        'Info': infoBool
+                        'Info': infoBool,
+                        'Anexo': $("#Anexo").val(),
+                        'Cumpleanos': $("#Cumpleanos").val(),
+                        'CentroCosto': $("#CentroCosto").val(),
+                        'Oficina': $("#Oficina").val(),
+                        'Ciudad': $("#Ciudad").val(),
+                        'PaisRegion': $("#PaisRegion").val(),
+                        'DireccionSucursal': $("#DireccionSucursal").val(),
+                        'Ingreso': $("#Ingreso").val(),
+                        'Cargo': $("#Cargo").val(),
+                        'Departamento': $("#Departamento").val(),
+                        'Organizacion': $("#Organizacion").val(),
+                        'Jefatura': $("#Jefatura").val(),
+                        'JefaturaCn': $("#JefaturaCn").val(),
+                        'Movil': $("#Movil").val(),
+                        'PinHp': $("#PinHp").val(),
+                        'TelefIp': $("#TelefIp").val(),
+                        'Notas': $("#Notas").val(),
+                        'Rut': $("#Rut").val(),
+                        'UsrCambiaClaveSesion': usrCambiaClaveSesion,
+                        'UsrNoCambiaClave': usrNoCambiaClave,
+                        'ClaveNoExpira': claveNoExpira,
+                        'AlmacenarClave': almacenarClave
                     }
                 };
 
@@ -530,13 +855,10 @@
 			                        type: BootstrapDialog.TYPE_WARNING
 		                        });
                             return;
-                        }                        
+                        }
 
                         if (data.Error != '') {
                             $("#btnSubmit").attr("disabled", false);
-                            //$("#btnLicE1").attr("disabled", true);
-                            //$("#btnLicE3").attr("disabled", true);
-                            //$("#btnLicExO").attr("disabled", true);                                                        
 
                             BootstrapDialog.show({
                                 title: 'Error al Guardar Usuario en el AD',
@@ -548,7 +870,7 @@
                                         label: 'Aceptar',
                                         cssClass: 'btn-success',
                                         action: function (dialog) {
-                                            dialog.close();                                            
+                                            dialog.close();
                                         }
                                     }
                                 ]
@@ -556,11 +878,8 @@
                         } else {
                             if (data.Validar) {
                                 $("#btnSubmit").attr("disabled", true);
-                                //$("#btnLicE1").attr("disabled", false);
-                                //$("#btnLicE3").attr("disabled", false);
-                                //$("#btnLicExO").attr("disabled", false);                                                                                               
                                 $("#SeccionAsociarGrupo").show();
-                                
+
                                 BootstrapDialog.show({
                                     title: '¡Proceso Exitoso!',
                                     message: '<strong>Usuario creado correctamente. Favor asignar Grupo(s) al usuario.</strong>',
@@ -570,18 +889,15 @@
                                         {
                                             label: 'Aceptar',
                                             cssClass: 'btn-success',
-                                            action: function (dialog) {                                                
-                                                dialog.close();                                                                                                                                                                                                
+                                            action: function (dialog) {
+                                                dialog.close();
                                             }
                                         }
                                     ]
                                 });
                             } else {
                                 $("#btnSubmit").attr("disabled", false);
-                                //$("#btnLicE1").attr("disabled", true);
-                                //$("#btnLicE3").attr("disabled", true);
-                                //$("#btnLicExO").attr("disabled", true);
-                                
+
                                 BootstrapDialog.show({
                                     title: 'Error al Guardar Usuario en el AD',
                                     message: '<strong>' + data.Error + '</strong>',
@@ -592,7 +908,7 @@
                                             label: 'Aceptar',
                                             cssClass: 'btn-success',
                                             action: function (dialog) {
-                                                dialog.close();                                                
+                                                dialog.close();
                                             }
                                         }
                                     ]
@@ -607,10 +923,7 @@
                     },
                     error: function (data) {
                         $("#btnSubmit").attr("disabled", false);
-                        //$("#btnLicE1").attr("disabled", true);
-                        //$("#btnLicE3").attr("disabled", true);
-                        //$("#btnLicExO").attr("disabled", true);                        
-                        $("#loading-modal").hide();                        
+                        $("#loading-modal").hide();
 
                         BootstrapDialog.show({
                             title: 'Error al Guardar Usuario en el AD',
@@ -622,7 +935,7 @@
                                     label: 'Aceptar',
                                     cssClass: 'btn-success',
                                     action: function (dialog) {
-                                        dialog.close();                                        
+                                        dialog.close();
                                     }
                                 }
                             ]
@@ -630,199 +943,6 @@
                     }
                 });
             }
-
-            function reCargarPagina()
-            {
-                $("#loading-modal").show();
-                window.location = '@Url.Action("HomeSysWeb", "Home")';
-            }
-
-            //$("#btnSync").off('click').click(function () {
-            //    $("#loading-modal").show();
-            //    setTimeout(function () {
-            //        sincronizarUsuario();
-            //    }, 1000);
-            //});
-
-            function sincronizarUsuario() {
-                var objEnvio =
-                {
-                    model:
-                    {
-                        'Nombres': $('#Nombres').val(),
-                        'Apellidos': $('#Apellidos').val(),
-                        'NombreUsuario': $('#NombreUsuario').val(),
-                        'Clave': $('#Clave').val(),
-                        'Licencia': $('#LicenciaSel').val(),
-                        'UpnPrefijo': $('#UpnPrefijo').val(),
-                        'NombreCompleto': $('#NombreCompleto').val(),
-                        'Correo': $('#Correo').val(),
-                        'PatchOu': $('#PatchOu').val(),
-                        'ExisteUsuario': $("#ExisteUsuario").val()
-                    }
-                };
-                $.ajax({
-                    url: '@Url.Action("SincronizarUsuario", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ model: objEnvio.model }),
-                    success: function (data) {
-                        if (data.Error != '') {
-                            $("#btnSubmit").attr("disabled", true);
-                            //$("#btnLicE1").attr("disabled", false);
-                            //$("#btnLicE3").attr("disabled", false);
-                            //$("#btnLicExO").attr("disabled", false);
-                            
-                            BootstrapDialog.alert({
-                                title: '¡Error al Sincronizar!',
-                                message: '<strong>' + data.Error + '</strong>',
-                                type: BootstrapDialog.TYPE_DANGER
-                            });
-                        } else {
-                            if (data.Validar) {
-                                $("#btnSubmit").attr("disabled", true);
-                                //$("#btnLicE1").attr("disabled", false);
-                                //$("#btnLicE3").attr("disabled", false);
-                                //$("#btnLicExO").attr("disabled", false);
-                                
-                                BootstrapDialog.alert({
-                                    title: '¡Proceso Exitoso!',
-                                    message: '<strong>Usuario guardado o modificado correctamente, proceso de sincronización iniciado.</strong>',
-                                    type: BootstrapDialog.TYPE_SUCCESS
-                                });
-                            } else {
-                                $("#btnSubmit").attr("disabled", true);
-                                $("#btnSync").attr("disabled", false);
-                                $("#btnAsignarLic").attr("disabled", true);
-                                BootstrapDialog.alert({
-                                    title: '¡Error al Sincronizar!',
-                                    message: '<strong>' + data.Error + '</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
-                                });
-                            }
-                        }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                    },
-                    error: function (data) {
-                        $("#btnSubmit").attr("disabled", true);
-                        $("#btnSync").attr("disabled", false);
-                        $("#btnAsignarLic").attr("disabled", true);
-                        $("#loading-modal").hide();
-
-                        BootstrapDialog.alert({
-                            title: '¡Error al Sincronizar!',
-                            message: '<strong>Error ' + data.Error + '</strong>',
-                            type: BootstrapDialog.TYPE_DANGER
-                        });
-                    }
-                });
-
-            }
-
-            //$("#btnAsignarLic").off('click').click(function () {
-            //    $("#loading-modal").show();
-            //    setTimeout(function () {
-            //        asignarLicenciaUsuario();
-            //    }, 1000);
-            //});
-
-            function asignarLicenciaUsuario() {
-                var objEnvio =
-                {
-                    model:
-                    {
-                        'Nombres': $('#Nombres').val(),
-                        'Apellidos': $('#Apellidos').val(),
-                        'NombreUsuario': $('#NombreUsuario').val(),
-                        'Clave': $('#Clave').val(),
-                        'Licencia': $('#LicenciaSel').val(),
-                        'UpnPrefijo': $('#UpnPrefijo').val(),
-                        'NombreCompleto': $('#NombreCompleto').val(),
-                        'Correo': $('#Correo').val(),
-                        'PatchOu': $('#PatchOu').val(),
-                        'ExisteUsuario': $("#ExisteUsuario").val(),
-                        'Descripcion': $("#Descripcion").val()
-                    }
-                };
-                $.ajax({
-                    url: '@Url.Action("AsignarLicenciaUsuario", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ model: objEnvio.model }),
-                    success: function (data) {
-                        if (data.Error != '') {
-                            $("#btnSubmit").attr("disabled", false);
-                            //$("#btnLicE1").attr("disabled", false);
-                            //$("#btnLicE3").attr("disabled", false);
-                            //$("#btnLicExO").attr("disabled", false);
-                            
-                            var msgError = data.Error.indexOf('Usuario consultado no existe en el portal Office 365');
-                            if (msgError > -1) {
-                                BootstrapDialog.alert({
-                                    title: '¡Advertencia al Asignar Licencia a Usuario!',
-                                    message: '<strong>' + data.Error + '</strong>',
-                                    type: BootstrapDialog.TYPE_WARNING
-                                });
-                            } else {
-                                BootstrapDialog.alert({
-                                    title: '¡Error al Asignar Licencia a Usuario!',
-                                    message: '<strong>' + data.Error + '</strong>',
-                                    type: BootstrapDialog.TYPE_WARNING
-                                });
-                            }
-                        } else {
-                            if (data.Validar) {
-                                $("#btnSubmit").attr("disabled", true);
-                                //$("#btnLicE1").attr("disabled", true);
-                                //$("#btnLicE3").attr("disabled", true);
-                                //$("#btnLicExO").attr("disabled", true);
-                                
-                                BootstrapDialog.alert({
-                                    title: '¡Proceso Exitoso!',
-                                    message: '<strong>Licencia usuario asignado correctamente</strong>',
-                                    type: BootstrapDialog.TYPE_SUCCESS
-                                });
-                            } else {
-                                $("#btnSubmit").attr("disabled", true);
-                                //$("#btnLicE1").attr("disabled", true);
-                                //$("#btnLicE3").attr("disabled", true);
-                                //$("#btnLicExO").attr("disabled", true);
-                                
-                                BootstrapDialog.alert({
-                                    title: '¡Error al Asignar Licencia!',
-                                    message: '<strong>No se pudo asignar licencias al usuario, favor intente más tarde.</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
-                                });
-                            }
-                        }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                    },
-                    error: function (data) {
-                        $("#btnSubmit").attr("disabled", false);
-                        //$("#btnLicE1").attr("disabled", false);
-                        //$("#btnLicE3").attr("disabled", false);
-                        //$("#btnLicExO").attr("disabled", false);
-                        
-                        $("#loading-modal").hide();
-
-                        BootstrapDialog.alert({
-                            title: '¡Error al Asignar Licencia!',
-                            message: '<strong>' + data.Error + '</strong>',
-                            type: BootstrapDialog.TYPE_DANGER
-                        });
-                    }
-                });
-            }            
 
             $("#btnAgregarGrupo").off('click').click(function () {
                 var nombreGrupo = $("#NombreGrupo").val();
@@ -864,7 +984,7 @@
             });
 
             function listaGruposAdByOu(sOu)
-            {                
+            {
                 $.ajax({
                     url: '@Url.Action("ObtenerListaGruposAdOu", "Home")',
                     type: 'POST',
@@ -925,7 +1045,7 @@
                                 });
                             }
                         }
-                    },                    
+                    },
                     error: function (data) {
                         $("#loading-modal").hide();
                         BootstrapDialog.alert({
@@ -1104,9 +1224,32 @@
                     }
                 });
             }
+
+            $('#Rut').on('blur', function () {
+                var rut = $("#Rut").val();
+                if (rutValido(rut)) {
+                    formateaRut(this, 'XXXXXXX-X');
+                }
+                else {
+                    BootstrapDialog.show({
+                        title: '¡Validación!',
+                        message: '<strong>Rut Incorrecto</strong>',
+                        type: BootstrapDialog.TYPE_DANGER,
+                        buttons: [{
+                            label: 'Aceptar',
+                            cssClass: 'btn-default btn-sm',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }]
+                    });
+                    $('#Rut').focus();
+                    $("#Rut").val("");
+                }
+            });
         });
-    </script>
-    <script language="javascript" type="text/javascript">
+</script>
+<script language="javascript" type="text/javascript">
         function eliminarGrupo(idTrGrupo, nombreGrupoElm, tipo) {
             var nomGrupoSel = $("#NombreGrupoSel").val();
             var nomGrupoSelFinal = '';
@@ -1181,7 +1324,7 @@
                                     title: '¡Proceso Exitoso!',
                                     message: '<strong>Grupo asociado exitosamente al Usuario.</strong>',
                                     type: BootstrapDialog.TYPE_SUCCESS
-                                });                                
+                                });
                             } else {
                                 BootstrapDialog.alert({
                                     title: '¡Error al asociar Grupo a Usuario en el AD!',
@@ -1203,10 +1346,10 @@
                         });
                     }
                 });
-            }            
+            }
         }
 
         function MostrarCargando() {
-            $("#loading-modal").show();            
+            $("#loading-modal").show();
         }
-    </script>
+</script>

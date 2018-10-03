@@ -57,6 +57,7 @@
     <Compile Include="Repository\Implementation\LicenciaO365Repository.cs" />
     <Compile Include="Repository\Implementation\LogInfoRepository.cs" />
     <Compile Include="Repository\Implementation\MantenedorLicenciaRepository.cs" />
+    <Compile Include="Repository\Implementation\OficinaRepository.cs" />
     <Compile Include="Repository\Implementation\PerfilUsuarioRepository.cs" />
     <Compile Include="Repository\Implementation\RolCargoRepository.cs" />
     <Compile Include="Repository\Implementation\UsuarioRepository.cs" />

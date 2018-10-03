@@ -59,6 +59,28 @@
     <Property Name="Vigente" Type="bit" Nullable="false" />
     <Property Name="LicenciaAsignada" Type="bit" Nullable="false" />
     <Property Name="Clave" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Anexo" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="Cumpleanos" Type="nvarchar" MaxLength="10" />
+    <Property Name="CentroCosto" Type="nvarchar" MaxLength="50" />
+    <Property Name="Oficina" Type="nvarchar" MaxLength="150" />
+    <Property Name="Ciudad" Type="nvarchar" MaxLength="150" />
+    <Property Name="PaisRegion" Type="nvarchar" MaxLength="150" />
+    <Property Name="DireccionSucursal" Type="nvarchar(max)" />
+    <Property Name="Ingreso" Type="date" />
+    <Property Name="Cargo" Type="nvarchar" MaxLength="150" />
+    <Property Name="Departamento" Type="nvarchar" MaxLength="150" />
+    <Property Name="Organizacion" Type="nvarchar" MaxLength="150" />
+    <Property Name="Jefatura" Type="nvarchar" MaxLength="200" />
+    <Property Name="Movil" Type="nvarchar" MaxLength="50" />
+    <Property Name="PinHp" Type="nvarchar" MaxLength="50" />
+    <Property Name="TelefIp" Type="nvarchar" MaxLength="50" />
+    <Property Name="Notas" Type="nvarchar(max)" />
+    <Property Name="Rut" Type="nvarchar" MaxLength="10" />
+    <Property Name="UsrCambiaClaveSesion" Type="bit" />
+    <Property Name="UsrNoCambiaClave" Type="bit" />
+    <Property Name="ClaveNoExpira" Type="bit" />
+    <Property Name="AlmacenarClave" Type="bit" />
+    <Property Name="JefaturaCn" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="ESTADO_REPORTE_LICENCIA">
     <Key>
@@ -126,6 +148,7 @@
     </Key>
     <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Abreviatura" Type="nvarchar" MaxLength="3" Nullable="false" />
   </EntityType>
   <EntityType Name="PERFIL_USUARIO">
     <Key>
