@@ -81,5 +81,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.ViewModel
         public bool ClaveNoExpira { get; set; }
         [DisplayName(@"Almacenar clave")]
         public bool AlmacenarClave { get; set; }
+        [DisplayName(@"Domicilio")]
+        public string Domicilio { get; set; }
     }
 }

@@ -138,7 +138,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                             Rut = tipo.Rut,
                             TelefIp = tipo.TelefIp,
                             UsrCambiaClaveSesion = tipo.UsrCambiaClaveSesion,
-                            UsrNoCambiaClave = tipo.UsrNoCambiaClave                            
+                            UsrNoCambiaClave = tipo.UsrNoCambiaClave,
+                            Domicilio = tipo.Domicilio
                         };
                         entityContext.ESTADO_CUENTA_USUARIO.Add(tip);
                         entityContext.SaveChanges();

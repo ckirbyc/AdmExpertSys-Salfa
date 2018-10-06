@@ -344,6 +344,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
 
                 HomeSysWebFactory = new HomeSysWebFactory();
                 var exitoProceso = false;
+                model.Descripcion = model.CentroCosto;
                 var exitoGuardar = HomeSysWebFactory.CrearUsuario(model);
                 if (exitoGuardar)
                 {
@@ -394,7 +395,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                         UsrCambiaClaveSesion = model.UsrCambiaClaveSesion,
                         UsrNoCambiaClave = model.UsrNoCambiaClave,
                         ClaveNoExpira = model.ClaveNoExpira,
-                        AlmacenarClave = model.AlmacenarClave
+                        AlmacenarClave = model.AlmacenarClave,
+                        Domicilio = model.Domicilio
                     };
 
                     try
@@ -473,7 +475,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 if (string.IsNullOrEmpty(model.NombreUsuario)) throw new ArgumentException("Ingresar ID del usuario");
                 if (string.IsNullOrEmpty(model.Correo)) throw new ArgumentException("Asignar correo");
                 if (string.IsNullOrEmpty(model.UpnPrefijo)) throw new ArgumentException("Ingresar Dominio");
-                if (string.IsNullOrEmpty(model.Descripcion)) throw new ArgumentException("Ingresar Descripción");
+                if (string.IsNullOrEmpty(model.CentroCosto)) throw new ArgumentException("Ingresar Centro Costo");
                 if (string.IsNullOrEmpty(model.CodigoLicencia)) throw new ArgumentException("Ingresar Código Licencia");
                 //if (string.IsNullOrEmpty(model.Clave)) throw new ArgumentException("Ingresar clave del usuario");                                
                 if (string.IsNullOrEmpty(model.Clave)) model.Clave = @"***";
@@ -488,6 +490,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     throw new ArgumentException("El código licencia ingresado no existe en la base de datos.");
                 }
 
+                model.Descripcion = model.CentroCosto;
                 HomeSysWebFactory = new HomeSysWebFactory();
                 var exitoProceso = HomeSysWebFactory.ActualizarCuentaUsuario(model);
 
@@ -498,6 +501,12 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     decimal licenciaId = mantLicObjVm.LicenciaId;
 
                     //Ingresa datos usuarios a base de datos
+                    DateTime? ingreso = null;
+                    if (!string.IsNullOrEmpty(model.Ingreso))
+                    {
+                        ingreso = Convert.ToDateTime(model.Ingreso);
+                    }
+
                     var estadoUsr = EstadoCuentaUsuarioFactory.GetObjetoEstadoCuentaUsuarioAllByCuenta(model.NombreUsuario.Trim());
                     if (estadoUsr != null)
                     {
@@ -509,7 +518,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                             if (ctaSync)
                             {
                                 ctaLic = HomeSysWebFactory.ExisteLicenciaUsuarioPortal(model.Correo.Trim());
-                            }
+                            }                           
+
                             estadoUsr.Apellidos = model.Apellidos.Trim();
                             estadoUsr.Clave = model.Clave.Trim();
                             estadoUsr.CodigoLicencia = model.CodigoLicencia.Trim();
@@ -524,6 +534,29 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                             estadoUsr.Vigente = true;
                             estadoUsr.Sincronizado = ctaSync;
                             estadoUsr.LicenciaAsignada = ctaLic;
+                            estadoUsr.Anexo = model.Anexo;
+                            estadoUsr.Cumpleanos = model.Cumpleanos;
+                            estadoUsr.CentroCosto = model.CentroCosto;
+                            estadoUsr.Oficina = model.Oficina;
+                            estadoUsr.Ciudad = model.Ciudad;
+                            estadoUsr.PaisRegion = model.PaisRegion;
+                            estadoUsr.DireccionSucursal = model.DireccionSucursal;
+                            estadoUsr.Ingreso = ingreso;
+                            estadoUsr.Cargo = model.Cargo;
+                            estadoUsr.Departamento = model.Departamento;
+                            estadoUsr.Organizacion = model.Organizacion;
+                            estadoUsr.Jefatura = model.Jefatura;
+                            estadoUsr.JefaturaCn = model.JefaturaCn;
+                            estadoUsr.Movil = model.Movil;
+                            estadoUsr.PinHp = model.PinHp;
+                            estadoUsr.TelefIp = model.TelefIp;
+                            estadoUsr.Notas = model.Notas;
+                            estadoUsr.Rut = model.Rut;
+                            estadoUsr.UsrCambiaClaveSesion = model.UsrCambiaClaveSesion;
+                            estadoUsr.UsrNoCambiaClave = model.UsrNoCambiaClave;
+                            estadoUsr.ClaveNoExpira = model.ClaveNoExpira;
+                            estadoUsr.AlmacenarClave = model.AlmacenarClave;
+                            estadoUsr.Domicilio = model.Domicilio;
 
                             EstadoCuentaUsuarioFactory.ActualizaEstadoCuentaUsuario(estadoUsr);
                         }
@@ -558,7 +591,30 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                             Sincronizado = ctaSync,
                             Clave = model.Clave,
                             Vigente = true,
-                            LicenciaAsignada = ctaLic
+                            LicenciaAsignada = ctaLic,
+                            Anexo = model.Anexo,
+                            Cumpleanos = model.Cumpleanos,
+                            CentroCosto = model.CentroCosto,
+                            Oficina = model.Oficina,
+                            Ciudad = model.Ciudad,
+                            PaisRegion = model.PaisRegion,
+                            DireccionSucursal = model.DireccionSucursal,
+                            Ingreso = ingreso,
+                            Cargo = model.Cargo,
+                            Departamento = model.Departamento,
+                            Organizacion = model.Organizacion,
+                            Jefatura = model.Jefatura,
+                            JefaturaCn = model.JefaturaCn,
+                            Movil = model.Movil,
+                            PinHp = model.PinHp,
+                            TelefIp = model.TelefIp,
+                            Notas = model.Notas,
+                            Rut = model.Rut,
+                            UsrCambiaClaveSesion = model.UsrCambiaClaveSesion,
+                            UsrNoCambiaClave = model.UsrNoCambiaClave,
+                            ClaveNoExpira = model.ClaveNoExpira,
+                            AlmacenarClave = model.AlmacenarClave,
+                            Domicilio = model.Domicilio
                         };
 
                         try

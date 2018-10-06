@@ -43,5 +43,6 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Dto
         public bool UsrNoCambiaClave { get; set; }        
         public bool ClaveNoExpira { get; set; }
         public bool AlmacenarClave { get; set; }
+        public string Domicilio { get; set; }
     }
 }

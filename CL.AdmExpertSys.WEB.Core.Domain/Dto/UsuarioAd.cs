@@ -27,6 +27,23 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Dto
         public string Office { get; set; }
         public string TelephoneNumber { get; set; }
         public string Manager { get; set; }
+        public string ManagerCn { get; set; }
         public string EmployeeID { get; set; }
+        public string WwwHomePage { get; set; }
+        public string StreetAddress { get; set; }
+        public string L { get; set; }
+        public string C { get; set; }
+        public string PostOfficeBox { get; set; }
+        public string Title { get; set; }
+        public string Company { get; set; }
+        public string Mobile { get; set; }
+        public string FacsimileTelephoneNumber { get; set; }
+        public string IpPhone { get; set; }
+        public string InfoNote { get; set; }
+        public bool UserCannotChangePassword { get; set; }
+        public bool PasswordNeverExpires { get; set; }
+        public bool AllowReversiblePasswordEncryption { get; set; } 
+        public bool LastPasswordSet { get; set; }
+        public string HomePhone { get; set; }
     }
 }

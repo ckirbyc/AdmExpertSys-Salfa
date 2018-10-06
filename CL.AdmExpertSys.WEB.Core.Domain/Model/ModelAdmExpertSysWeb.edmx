@@ -86,6 +86,7 @@
           <Property Name="ClaveNoExpira" Type="bit" />
           <Property Name="AlmacenarClave" Type="bit" />
           <Property Name="JefaturaCn" Type="nvarchar(max)" />
+          <Property Name="Domicilio" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ESTADO_REPORTE_LICENCIA">
           <Key>
@@ -420,6 +421,7 @@
           <Property Name="ClaveNoExpira" Type="Boolean" />
           <Property Name="AlmacenarClave" Type="Boolean" />
           <Property Name="JefaturaCn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Domicilio" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LICENCIAS_O365" Relationship="AdmSysWebModel.FK_ESTADO_CUENTA_USUARIO_LICENCIAS_O365" FromRole="ESTADO_CUENTA_USUARIO" ToRole="LICENCIAS_O365" />
         </EntityType>
         <EntityType Name="ESTADO_REPORTE_LICENCIA">
@@ -648,6 +650,7 @@
           <EntitySetMapping Name="ESTADO_CUENTA_USUARIO">
             <EntityTypeMapping TypeName="AdmSysWebModel.ESTADO_CUENTA_USUARIO">
               <MappingFragment StoreEntitySet="ESTADO_CUENTA_USUARIO">
+                <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
                 <ScalarProperty Name="JefaturaCn" ColumnName="JefaturaCn" />
                 <ScalarProperty Name="AlmacenarClave" ColumnName="AlmacenarClave" />
                 <ScalarProperty Name="ClaveNoExpira" ColumnName="ClaveNoExpira" />

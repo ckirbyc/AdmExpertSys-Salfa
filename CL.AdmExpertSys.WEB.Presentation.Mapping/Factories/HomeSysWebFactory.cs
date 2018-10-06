@@ -316,8 +316,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                     Departamento = model.Departamento,
                     Descripcion = model.Descripcion,
                     DireccionSucursal = model.DireccionSucursal,
-                    ExisteUsuario = model.ExisteUsuario,
-                    Info = model.Info,
+                    ExisteUsuario = model.ExisteUsuario,                    
                     Ingreso = model.Ingreso,
                     Jefatura = model.Jefatura,
                     JefaturaCn = model.JefaturaCn,
@@ -339,7 +338,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                     TelefIp = model.TelefIp,
                     UpnPrefijo = model.UpnPrefijo,
                     UsrCambiaClaveSesion = model.UsrCambiaClaveSesion,
-                    UsrNoCambiaClave = model.UsrNoCambiaClave                    
+                    UsrNoCambiaClave = model.UsrNoCambiaClave,
+                    Domicilio = model.Domicilio
                 };                              
 
                 //Creo el usuario en AD
@@ -694,24 +694,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
 
                 var j = 1;
                 foreach (GroupPrincipal objGroup in userAd.GetGroups())
-                {
-                    if (!(bool)objGroup.IsSecurityGroup)
+                {                    
+                    var correo = ((DirectoryEntry)objGroup.GetUnderlyingObject()).Properties["mail"];
+                    var grupoVm = new GrupoAdVm
                     {
-                        var correo = ((DirectoryEntry)objGroup.GetUnderlyingObject()).Properties["mail"];
-                        var grupoVm = new GrupoAdVm
-                        {
-                            NumeroGrupo = j,
-                            NombreGrupo = objGroup.Name,
-                            UbicacionGrupo = objGroup.DistinguishedName,
-                            CorreoGrupo = correo.Value != null ? correo.Value.ToString() : string.Empty,
-                            ExisteGrupo = true,
-                            DescripcionGrupo = objGroup.Description,
-                            TipoGrupo = (bool)objGroup.IsSecurityGroup ? "Grupo Seguridad - " + objGroup.GroupScope.Value : "Grupo Distribución - " + objGroup.GroupScope.Value,
-                            Asociado = true
-                        };
-                        listaGrupo.Add(grupoVm);
-                        j++;
-                    }
+                        NumeroGrupo = j,
+                        NombreGrupo = objGroup.Name,
+                        UbicacionGrupo = objGroup.DistinguishedName,
+                        CorreoGrupo = correo.Value != null ? correo.Value.ToString() : string.Empty,
+                        ExisteGrupo = true,
+                        DescripcionGrupo = objGroup.Description,
+                        TipoGrupo = (bool)objGroup.IsSecurityGroup ? "Grupo Seguridad - " + objGroup.GroupScope.Value : "Grupo Distribución - " + objGroup.GroupScope.Value,
+                        Asociado = true
+                    };
+                    listaGrupo.Add(grupoVm);
+                    j++;
+                    
                     objGroup.Dispose();
                 }
 

@@ -20,7 +20,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
             {
                 HomeSysWebFactory = new HomeSysWebFactory();
                 CommonFactory = new Common();
-                var ouAd = CommonFactory.GetAppSetting("RutaOuDominio");
+                var ouAd = CommonFactory.GetAppSetting("RutaAllDominio");
                 var listaGrupo = HomeSysWebFactory.ObtenerListadoGrupoAdByOuMantGroup(ouAd);
                 return View(listaGrupo);
             }

@@ -45,6 +45,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.ViewModel
         public bool? UsrNoCambiaClave { get; set; }
         public bool? ClaveNoExpira { get; set; }
         public bool? AlmacenarClave { get; set; }
+        public string Domicilio { get; set; }
         public LICENCIAS_O365 LICENCIAS_O365 { get; set; }
     }
 }

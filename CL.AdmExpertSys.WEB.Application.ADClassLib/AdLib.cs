@@ -113,45 +113,87 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             var oUserPrincipal = GetUser(sUserName);
             if (oUserPrincipal != null)
             {
-                var info = ((DirectoryEntry)oUserPrincipal.GetUnderlyingObject()).Properties["info"];
-                var infoString = string.Empty;
-                var infoBool = false;
-                if (info.Value != null)
+                var userCannotChangePassword = oUserPrincipal.UserCannotChangePassword;
+                var passwordNeverExpires = oUserPrincipal.PasswordNeverExpires;
+                var allowReversiblePasswordEncryption = oUserPrincipal.AllowReversiblePasswordEncryption;
+                DateTime? lastPasswordSet = oUserPrincipal.LastPasswordSet;
+
+                using (var entUserAd = ((DirectoryEntry)oUserPrincipal.GetUnderlyingObject()))
                 {
-                    infoString = info.Value.ToString();
-                    if (infoString.Equals("Cuenta Genérica"))
+                    var info = entUserAd.Properties["info"];
+                    var anexo = entUserAd.Properties["telephoneNumber"];
+                    var oficina = entUserAd.Properties["physicalDeliveryOfficeName"];
+                    var cumpleano = entUserAd.Properties["wWWHomePage"];
+                    var direccionSucursal = entUserAd.Properties["streetAddress"];
+                    var ciudad = entUserAd.Properties["l"];
+                    var paisregion = entUserAd.Properties["c"];
+                    var ingreso = entUserAd.Properties["postOfficeBox"];
+                    var cargo = entUserAd.Properties["title"];
+                    var departamento = entUserAd.Properties["department"];
+                    var organizacion = entUserAd.Properties["company"];
+                    var jefaturaCn = entUserAd.Properties["manager"];
+                    var movil = entUserAd.Properties["mobile"];
+                    var pinHp = entUserAd.Properties["facsimileTelephoneNumber"];
+                    var telefIp = entUserAd.Properties["ipPhone"];
+                    var rut = entUserAd.Properties["employeeID"];
+                    var jefatura = string.Empty;
+                    var managerCn = jefaturaCn.Value != null ? jefaturaCn.Value.ToString() : string.Empty;
+                    var domicilio = entUserAd.Properties["homePhone"];
+
+                    if (!string.IsNullOrEmpty(managerCn))
                     {
-                        infoBool = true;
+                        jefatura = GetNameClearFromCn(managerCn);
+                    }                    
+
+                    var usuarioAd = new UsuarioAd
+                    {
+                        AccountExpirationDate = oUserPrincipal.AccountExpirationDate,
+                        Description = oUserPrincipal.Description,
+                        DisplayName = oUserPrincipal.DisplayName,
+                        DistinguishedName = oUserPrincipal.DistinguishedName,
+                        EmailAddress = oUserPrincipal.EmailAddress,
+                        GivenName = oUserPrincipal.GivenName,
+                        Guid = oUserPrincipal.Guid,
+                        MiddleName = oUserPrincipal.MiddleName,
+                        Name = oUserPrincipal.Name,
+                        SamAccountName = oUserPrincipal.SamAccountName,
+                        Surname = oUserPrincipal.Surname,
+                        Enabled = oUserPrincipal.Enabled,
+                        EstadoCuenta = oUserPrincipal.Enabled != null && oUserPrincipal.Enabled == true ? "Habilitado" : "No habilitado",                        
+                        TelephoneNumber = anexo.Value != null ? anexo.Value.ToString() : string.Empty,
+                        Office = oficina.Value != null ? oficina.Value.ToString() : string.Empty,
+                        WwwHomePage = cumpleano.Value != null ? cumpleano.Value.ToString() : string.Empty,
+                        StreetAddress = direccionSucursal.Value != null ? direccionSucursal.Value.ToString() : string.Empty,
+                        L = ciudad.Value != null ? ciudad.Value.ToString() : string.Empty,
+                        C = paisregion.Value != null ? paisregion.Value.ToString() : string.Empty,
+                        PostOfficeBox = ingreso.Value != null ? ingreso.Value.ToString() : string.Empty,
+                        Title = cargo.Value != null ? cargo.Value.ToString() : string.Empty,
+                        Department = departamento.Value != null ? departamento.Value.ToString() : string.Empty,
+                        Company = organizacion.Value != null ? organizacion.Value.ToString() : string.Empty,
+                        ManagerCn = jefaturaCn.Value != null ? jefaturaCn.Value.ToString() : string.Empty,
+                        Manager = jefatura,
+                        Mobile = movil.Value != null ? movil.Value.ToString() : string.Empty,
+                        FacsimileTelephoneNumber = pinHp.Value != null ? pinHp.Value.ToString() : string.Empty,
+                        IpPhone = telefIp.Value != null ? telefIp.Value.ToString() : string.Empty,
+                        InfoNote = info.Value != null ? info.Value.ToString() : string.Empty,
+                        EmployeeID = rut.Value != null ? rut.Value.ToString() : string.Empty,
+                        UserCannotChangePassword = userCannotChangePassword,
+                        PasswordNeverExpires = passwordNeverExpires,
+                        AllowReversiblePasswordEncryption = allowReversiblePasswordEncryption,
+                        LastPasswordSet = lastPasswordSet != null ? false : true,
+                        HomePhone = domicilio.Value != null ? domicilio.Value.ToString() : string.Empty
+                    };
+
+                    if (!string.IsNullOrEmpty(oUserPrincipal.UserPrincipalName))
+                    {
+                        var upnPrefijo = oUserPrincipal.UserPrincipalName;
+                        var startIndex = upnPrefijo.IndexOf("@");
+                        var length = upnPrefijo.Length - startIndex;
+                        usuarioAd.UpnPrefijo = upnPrefijo.Substring(startIndex, length);
                     }
-                }
 
-                var usuarioAd = new UsuarioAd
-                {
-                    AccountExpirationDate = oUserPrincipal.AccountExpirationDate,
-                    Description = oUserPrincipal.Description,
-                    DisplayName = oUserPrincipal.DisplayName,
-                    DistinguishedName = oUserPrincipal.DistinguishedName,
-                    EmailAddress = oUserPrincipal.EmailAddress,
-                    GivenName = oUserPrincipal.GivenName,
-                    Guid = oUserPrincipal.Guid,
-                    MiddleName = oUserPrincipal.MiddleName,
-                    Name = oUserPrincipal.Name,
-                    SamAccountName = oUserPrincipal.SamAccountName,
-                    Surname = oUserPrincipal.Surname,
-                    Enabled = oUserPrincipal.Enabled,
-                    EstadoCuenta = oUserPrincipal.Enabled != null && oUserPrincipal.Enabled == true ? "Habilitado" : "No habilitado",
-                    Info = infoBool                    
-                };
-
-                if (!string.IsNullOrEmpty(oUserPrincipal.UserPrincipalName))
-                {
-                    var upnPrefijo = oUserPrincipal.UserPrincipalName;
-                    var startIndex = upnPrefijo.IndexOf("@");
-                    var length = upnPrefijo.Length - startIndex;
-                    usuarioAd.UpnPrefijo = upnPrefijo.Substring(startIndex, length);
-                }
-
-                return usuarioAd;
+                    return usuarioAd;
+                };                               
             }
             
             return null;
@@ -224,7 +266,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             PrincipalContext ctx = GetPrincipalContext(sOu);            
             using (GroupPrincipal objGroup = new GroupPrincipal(ctx))
             {
-                objGroup.IsSecurityGroup = false;
+                //objGroup.IsSecurityGroup = false;
 
                 using (PrincipalSearcher pSearch = new PrincipalSearcher(objGroup))
                 {
@@ -250,7 +292,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             PrincipalContext ctx = GetPrincipalContext(sOu);
             using (GroupPrincipal objGroup = new GroupPrincipal(ctx))
             {
-                objGroup.IsSecurityGroup = false;
+                //objGroup.IsSecurityGroup = false;
                 PrincipalSearcher pSearch = new PrincipalSearcher(objGroup);                                    
                 return pSearch;                
             }
@@ -495,8 +537,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             string sSurname = apellidos;
             string prefijoUpn = model.UpnPrefijo;
             string passWord = pwd;
-            bool existeUsr = model.ExisteUsuario;
-            bool info = model.Info;
+            bool existeUsr = model.ExisteUsuario;            
 
             string upn = sUserName + prefijoUpn;
 
@@ -530,23 +571,16 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 oUserPrincipal.MiddleName = sSurname;
                 oUserPrincipal.DisplayName = sSurname + ", " + sGivenName;
                 oUserPrincipal.EmailAddress = upn;
-                oUserPrincipal.ExpirePasswordNow();
+                oUserPrincipal.ExpirePasswordNow();                
+                oUserPrincipal.PasswordNeverExpires = model.ClaveNoExpira;
+                oUserPrincipal.UserCannotChangePassword = model.UsrNoCambiaClave;
+                oUserPrincipal.AllowReversiblePasswordEncryption = model.AlmacenarClave;
                 oUserPrincipal.UnlockAccount();
                 oUserPrincipal.Description = model.CentroCosto.Trim();
                 oUserPrincipal.Save();
 
                 using (DirectoryEntry ent = (DirectoryEntry)oUserPrincipal.GetUnderlyingObject())
-                {
-                    var infoString = string.Empty;
-                    if (info)
-                    {
-                        infoString = @"Cuenta Genérica";
-                    }
-                    else
-                    {
-                        infoString = @"Cuenta Persona";
-                    }
-
+                {                    
                     //Datos principales de la cuenta                    
                     ent.Invoke("SetPassword", passWord);
                     //Propiedades que son necesarias problar en AD para crear un usuario en Office 365
@@ -555,8 +589,13 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     ent.Properties["proxyAddresses"].Add(proxyaddresses[2]);
                     ent.Properties["mailnickname"].Value = sUserName;
                     ent.Properties["targetAddress"].Value = emailTransporte;
-                    ent.Properties["pwdLastSet"].Value = 0;
-                    ent.Properties["info"].Value = infoString;
+
+                    //Usuario debe cambiar contraseña en el proximo logeo                    
+                    if (model.UsrCambiaClaveSesion)
+                    {
+                        ent.Properties["pwdLastSet"].Value = 0;
+                    }                   
+                    
                     if (model.Anexo != null)
                     {
                         ent.Properties["telephoneNumber"].Value = model.Anexo.ToString();
@@ -601,6 +640,30 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     {
                         ent.Properties["manager"].Value = model.JefaturaCn;
                     }
+                    if (!string.IsNullOrEmpty(model.Movil))
+                    {
+                        ent.Properties["mobile"].Value = model.Movil;
+                    }
+                    if (!string.IsNullOrEmpty(model.PinHp))
+                    {
+                        ent.Properties["facsimileTelephoneNumber"].Value = model.PinHp;
+                    }
+                    if (!string.IsNullOrEmpty(model.TelefIp))
+                    {
+                        ent.Properties["ipPhone"].Value = model.TelefIp;
+                    }
+                    if (!string.IsNullOrEmpty(model.Notas))
+                    {
+                        ent.Properties["info"].Value = model.Notas;
+                    }
+                    if (!string.IsNullOrEmpty(model.Rut))
+                    {
+                        ent.Properties["employeeID"].Value = model.Rut;
+                    }
+                    if (!string.IsNullOrEmpty(model.Domicilio))
+                    {
+                        ent.Properties["homePhone"].Value = model.Domicilio;
+                    }
 
                     ent.CommitChanges();
                     ent.Close();
@@ -617,7 +680,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             using (UserPrincipal oUserPrincipalAux = GetUser(usrData.NombreUsuario))
             {
                 string dn = oUserPrincipalAux.DistinguishedName;
-                var sLdapAsAux = _sLdapServer + dn;
+                var sLdapAsAux = _sLdapServer + dn;                
 
                 using (var eUserActual = new DirectoryEntry(sLdapAsAux, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
                 {
@@ -650,9 +713,13 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
 
                     if (usrData.Clave != "***")
                     {
-                        eUserActual.Invoke("SetPassword", usrData.Clave.Trim());
-                        //eUserActual.Properties["pwdLastSet"].Value = 0;
-                    }                   
+                        eUserActual.Invoke("SetPassword", usrData.Clave.Trim());                        
+                    }
+
+                    if (usrData.UsrCambiaClaveSesion)
+                    {
+                        eUserActual.Properties["pwdLastSet"].Value = 0;
+                    }
 
                     eUserActual.Properties["userAccountControl"].Value = 0x200;
                     eUserActual.Properties["userPrincipalName"].Value = upn;
@@ -678,18 +745,76 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     eUserActual.Properties["proxyAddresses"].Add(proxyaddresses[1]);
                     eUserActual.Properties["proxyAddresses"].Add(proxyaddresses[2]);
 
-                    eUserActual.Properties["targetAddress"].Value = emailTransporte;
+                    eUserActual.Properties["targetAddress"].Value = emailTransporte;                    
 
-                    var infoString = string.Empty;
-                    if (usrData.Info)
+                    if (usrData.Anexo != null)
                     {
-                        infoString = @"Cuenta Genérica";
+                        eUserActual.Properties["telephoneNumber"].Value = usrData.Anexo.ToString();
                     }
-                    else
+                    if (!string.IsNullOrEmpty(usrData.Oficina))
                     {
-                        infoString = @"Cuenta Persona";
+                        eUserActual.Properties["physicalDeliveryOfficeName"].Value = usrData.Oficina;
                     }
-                    eUserActual.Properties["info"].Value = infoString;
+                    if (!string.IsNullOrEmpty(usrData.Cumpleanos))
+                    {
+                        eUserActual.Properties["wWWHomePage"].Value = usrData.Cumpleanos;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.DireccionSucursal))
+                    {
+                        eUserActual.Properties["streetAddress"].Value = usrData.DireccionSucursal;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Ciudad))
+                    {
+                        eUserActual.Properties["l"].Value = usrData.Ciudad;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.PaisRegion))
+                    {
+                        eUserActual.Properties["c"].Value = usrData.PaisRegion;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Ingreso))
+                    {
+                        eUserActual.Properties["postOfficeBox"].Value = usrData.Ingreso;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Cargo))
+                    {
+                        eUserActual.Properties["title"].Value = usrData.Cargo;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Departamento))
+                    {
+                        eUserActual.Properties["department"].Value = usrData.Departamento;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Organizacion))
+                    {
+                        eUserActual.Properties["company"].Value = usrData.Organizacion;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.JefaturaCn))
+                    {
+                        eUserActual.Properties["manager"].Value = usrData.JefaturaCn;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Movil))
+                    {
+                        eUserActual.Properties["mobile"].Value = usrData.Movil;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.PinHp))
+                    {
+                        eUserActual.Properties["facsimileTelephoneNumber"].Value = usrData.PinHp;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.TelefIp))
+                    {
+                        eUserActual.Properties["ipPhone"].Value = usrData.TelefIp;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Notas))
+                    {
+                        eUserActual.Properties["info"].Value = usrData.Notas;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Rut))
+                    {
+                        eUserActual.Properties["employeeID"].Value = usrData.Rut;
+                    }
+                    if (!string.IsNullOrEmpty(usrData.Domicilio))
+                    {
+                        eUserActual.Properties["homePhone"].Value = usrData.Domicilio;
+                    }
 
                     eUserActual.CommitChanges();
                     eUserActual.Close();                    
@@ -711,6 +836,11 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                             Task.Delay(TimeSpan.FromSeconds(15)).Wait();
                         }
                     }
+
+                    oUserPrincipalAux.PasswordNeverExpires = usrData.ClaveNoExpira;
+                    oUserPrincipalAux.UserCannotChangePassword = usrData.UsrNoCambiaClave;
+                    oUserPrincipalAux.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
+                    oUserPrincipalAux.Save();
                 }
             }
 
@@ -734,7 +864,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 DirectoryEntry ent = new DirectoryEntry("LDAP://" + _sInternalDomain + "/" + dn);
                 //if (sPropertyValue != "" && sProperty != "") ent.Properties[sProperty].Value = sPropertyValue;
                 ent.CommitChanges();
-                sMessage = "";
+                sMessage = string.Empty;
             }
             catch (Exception ex)
             {
@@ -1385,6 +1515,20 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 };
                 return listaUser;
             };            
+        }
+
+        public string GetNameClearFromCn(string cn)
+        {
+            var nameClear = string.Empty;
+            var dnCompleto = cn;
+            int startlengthAux = dnCompleto.IndexOf(",");
+            if (startlengthAux > 0)
+            {
+                var dnNew = dnCompleto.Substring(3, startlengthAux - 3);
+                nameClear = dnNew.Replace("CN=", string.Empty);
+            }
+
+            return nameClear;
         }
     }
 }

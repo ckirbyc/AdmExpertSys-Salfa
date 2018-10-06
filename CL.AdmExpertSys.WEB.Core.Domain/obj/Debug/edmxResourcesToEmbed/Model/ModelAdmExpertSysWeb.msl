@@ -46,6 +46,7 @@
     <EntitySetMapping Name="ESTADO_CUENTA_USUARIO">
       <EntityTypeMapping TypeName="AdmSysWebModel.ESTADO_CUENTA_USUARIO">
         <MappingFragment StoreEntitySet="ESTADO_CUENTA_USUARIO">
+          <ScalarProperty Name="Domicilio" ColumnName="Domicilio" />
           <ScalarProperty Name="JefaturaCn" ColumnName="JefaturaCn" />
           <ScalarProperty Name="AlmacenarClave" ColumnName="AlmacenarClave" />
           <ScalarProperty Name="ClaveNoExpira" ColumnName="ClaveNoExpira" />

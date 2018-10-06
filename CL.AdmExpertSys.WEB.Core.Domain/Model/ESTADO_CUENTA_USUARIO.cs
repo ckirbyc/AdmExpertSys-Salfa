@@ -54,6 +54,7 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Model
         public Nullable<bool> ClaveNoExpira { get; set; }
         public Nullable<bool> AlmacenarClave { get; set; }
         public string JefaturaCn { get; set; }
+        public string Domicilio { get; set; }
     
         public virtual LICENCIAS_O365 LICENCIAS_O365 { get; set; }
     }

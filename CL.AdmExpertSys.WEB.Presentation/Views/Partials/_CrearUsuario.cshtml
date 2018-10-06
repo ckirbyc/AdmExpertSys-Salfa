@@ -1,4 +1,6 @@
 ﻿@using CL.AdmExpertSys.WEB.Core.Domain.Dto
+@using CL.AdmExpertSys.WEB.Presentation.Models
+@using CL.AdmExpertSys.WEB.Core.Domain.Enums
 @model CL.AdmExpertSys.WEB.Presentation.ViewModel.HomeSysWebVm
 
 @{
@@ -95,12 +97,12 @@
                         </td>
                     </tr>
                     @*<tr>
-                    <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
-                    <td colspan="2">
-                        @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
-                        @Html.ValidationMessageFor(m => m.Descripcion)
-                    </td>
-                </tr>*@
+            <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
+            <td colspan="2">
+                @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(m => m.Descripcion)
+            </td>
+        </tr>*@
                     <tr>
                         <th scope="row">@Html.DisplayNameFor(m => m.CodigoLicencia)</th>
                         <td colspan="2">
@@ -201,6 +203,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Domicilio)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Domicilio, new { @maxlength = "100", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
                         <th scope="row">@Html.DisplayNameFor(m => m.PinHp)</th>
                         <td>
                             @Html.TextBoxFor(m => m.PinHp, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
@@ -249,12 +257,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@Html.DisplayNameFor(m => m.Info)</th>
-                        <td>
-                            @Html.CheckBoxFor(m => m.Info, new { @class = "form-control" })
-                        </td>
-                    </tr>
-                    <tr>
                         <th scope="row">@Html.DisplayName("Empresas")</th>
                         <td>
                             <div id="jstree">
@@ -278,9 +280,9 @@
                                 <input type="button" value="Guardar Usuario en AD" class="btnInput" id="Guardar" />
                             </div>
                             @*<div id="btnSync" class="btn btn-primary pull-right btn-sm">
-                            <span class="glyphicon glyphicon-save"></span>
-                            <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
-                        </div>*@
+                    <span class="glyphicon glyphicon-save"></span>
+                    <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
+                </div>*@
                         </td>
                     </tr>
                     <tr>
@@ -318,13 +320,13 @@
                         </td>
                     </tr>
                     @*<tr>
-                    <td>
-                        <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
-                            <span class="glyphicon glyphicon-save"></span>
-                            <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
-                        </div>
-                    </td>
-                </tr>*@
+            <td>
+                <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>
+                    <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
+                </div>
+            </td>
+        </tr>*@
                 </tbody>
             </table>
         </div>
@@ -425,7 +427,7 @@
 <script>
     $(document).ready(function () {
         $('#btnAsignarJefatura').off('click').click(function () {
-            VerPopupAsignarJefatura();            
+            VerPopupAsignarJefatura();
         });
 
         function VerPopupAsignarJefatura()
@@ -459,8 +461,6 @@
             $("#UpnPrefijo").prop('disabled', 'disabled');
             $("#CodigoLicencia").attr("disabled", false);
             $("#CodigoLicencia").prop('disabled', 'disabled');
-            $("#Info").attr("disabled", false);
-            $("#Info").prop('disabled', 'disabled');
             $("#Oficina").attr("disabled", false);
             $("#Oficina").prop('disabled', 'disabled');
             $("#Ciudad").attr("disabled", false);
@@ -483,6 +483,34 @@
             $("#AlmacenarClave").prop('disabled', 'disabled');
 
             $('#jstree').jstree();
+
+            $("#UsrCambiaClaveSesion").off('click').click(function () {
+                if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                    $("#UsrNoCambiaClave").attr("checked", false);
+                    $("#UsrNoCambiaClave").attr("disabled", true);
+                    $("#ClaveNoExpira").attr("checked", false);
+                    $("#ClaveNoExpira").attr("disabled", true);
+                }
+                else
+                {
+                    $("#UsrNoCambiaClave").attr("checked", false);
+                    $("#UsrNoCambiaClave").attr("disabled", false);
+                    $("#ClaveNoExpira").attr("checked", false);
+                    $("#ClaveNoExpira").attr("disabled", false);
+                }
+            });
+
+            $("#UsrNoCambiaClave,#ClaveNoExpira").off('click').click(function () {
+                if ($('#UsrNoCambiaClave').is(":checked") || $('#ClaveNoExpira').is(":checked")) {
+                    $("#UsrCambiaClaveSesion").attr("checked", false);
+                    $("#UsrCambiaClaveSesion").attr("disabled", true);
+                }
+                else
+                {
+                    $("#UsrCambiaClaveSesion").attr("checked", false);
+                    $("#UsrCambiaClaveSesion").attr("disabled", false);
+                }
+            });
 
             //Seleccionar OU desde el Arbol
             $('#jstree').on("changed.jstree", function (e, data) {
@@ -527,7 +555,10 @@
 
             function validarUsuario() {
                 var nombreUsuario = $("#NombreUsuario").val();
-                $('#jstree').jstree("deselect_all");
+                $('#jstree').jstree("deselect_all");                
+                var codAdm = '@Convert.ToInt32(EnumPerfilUsuario.ADMP)';
+                var codPerfil = '@SessionViewModel.Usuario.PerfilId';                
+
                 $.ajax({
                     url: '@Url.Action("VerificarUsuario", "Home")',
                     type: 'POST',
@@ -570,52 +601,88 @@
                             $("#ExisteUsuario").val(true);
                             $("#CodigoLicencia").attr("disabled", true);
                             $("#CodigoLicencia").val(data.CodigoLicencia);
-                            if (data.DatosUsuario.Info == true) {
-                                $("#Info").prop("checked");
-                                $("#Info").attr("checked", true);
-                                $("#Info")[0].checked = true;
-                            }
-                            else {
-                                $("#Info").attr("checked", false);
-                            }
-                            $("#Info").attr("disabled", true);
 
                             //Nuevos campos
-                            $("#Anexo").val("");
+                            $("#Anexo").val(data.DatosUsuario.TelephoneNumber);
                             $("#Anexo").attr("disabled", true);
-                            $("#Cumpleanos").val("");
+                            $("#Cumpleanos").val(data.DatosUsuario.WwwHomePage);
                             $("#Cumpleanos").attr("disabled", true);
+                            $("#CentroCosto").val(data.DatosUsuario.Description);
+                            $("#CentroCosto").attr("disabled", true);
+                            $("#Oficina").val(data.DatosUsuario.Office);
                             $("#Oficina").attr("disabled", true);
+                            $("#Ciudad").val(data.DatosUsuario.L);
                             $("#Ciudad").attr("disabled", true);
+                            $("#PaisRegion").val(data.DatosUsuario.C);
                             $("#PaisRegion").attr("disabled", true);
-                            $("#DireccionSucursal").val("");
+                            $("#DireccionSucursal").val(data.DatosUsuario.StreetAddress);
                             $("#DireccionSucursal").attr("disabled", true);
-                            $("#Ingreso").val("");
+                            $("#Ingreso").val(data.DatosUsuario.PostOfficeBox);
                             $("#Ingreso").attr("disabled", true);
+                            $("#Cargo").val(data.DatosUsuario.Title);
                             $("#Cargo").attr("disabled", true);
+                            $("#Departamento").val(data.DatosUsuario.Department);
                             $("#Departamento").attr("disabled", true);
+                            $("#Organizacion").val(data.DatosUsuario.Company);
                             $("#Organizacion").attr("disabled", true);
-                            $("#Jefatura").val("");
-                            $("#JefaturaCn").val("");
-                            //$("#Jefatura").attr("disabled", true);
-                            $("#Movil").val("");
+                            $("#Jefatura").val(data.DatosUsuario.Manager);
+                            $("#JefaturaCn").val(data.DatosUsuario.ManagerCn);
+                            $("#Movil").val(data.DatosUsuario.Mobile);
                             $("#Movil").attr("disabled", true);
-                            $("#PinHp").val("");
+                            $("#Domicilio").val(data.DatosUsuario.HomePhone);
+                            $("#Domicilio").attr("disabled", true);                            
+                            $("#PinHp").val(data.DatosUsuario.FacsimileTelephoneNumber);
                             $("#PinHp").attr("disabled", true);
-                            $("#TelefIp").val("");
+                            $("#TelefIp").val(data.DatosUsuario.IpPhone);
                             $("#TelefIp").attr("disabled", true);
-                            $("#Notas").val("");
+                            $("#Notas").val(data.DatosUsuario.InfoNote);
                             $("#Notas").attr("disabled", true);
-                            $("#Rut").val("");
+                            $("#Rut").val(data.DatosUsuario.EmployeeID);
                             $("#Rut").attr("disabled", true);
-                            $("#UsrCambiaClaveSesion").attr("checked", false);
+                            $("#UsrCambiaClaveSesion").attr("checked", true);
                             $("#UsrCambiaClaveSesion").attr("disabled", true);
-                            $("#UsrNoCambiaClave").attr("checked", false);
+                            $("#UsrNoCambiaClave").attr("checked", true);
                             $("#UsrNoCambiaClave").attr("disabled", true);
-                            $("#ClaveNoExpira").attr("checked", false);
+                            $("#ClaveNoExpira").attr("checked", true);
                             $("#ClaveNoExpira").attr("disabled", true);
-                            $("#AlmacenarClave").attr("checked", false);
+                            $("#AlmacenarClave").attr("checked", true);
                             $("#AlmacenarClave").attr("disabled", true);
+
+                            if (data.DatosUsuario.UserCannotChangePassword == true) {
+                                $("#UsrNoCambiaClave").prop("checked");
+                                $("#UsrNoCambiaClave").attr("checked", true);
+                                $("#UsrNoCambiaClave")[0].checked = true;
+                            }
+                            else {
+                                $("#UsrNoCambiaClave").attr("checked", false);
+                            }
+
+                            if (data.DatosUsuario.PasswordNeverExpires == true) {
+                                $("#ClaveNoExpira").prop("checked");
+                                $("#ClaveNoExpira").attr("checked", true);
+                                $("#ClaveNoExpira")[0].checked = true;
+                            }
+                            else {
+                                $("#ClaveNoExpira").attr("checked", false);
+                            }
+
+                            if (data.DatosUsuario.AllowReversiblePasswordEncryption == true) {
+                                $("#AlmacenarClave").prop("checked");
+                                $("#AlmacenarClave").attr("checked", true);
+                                $("#AlmacenarClave")[0].checked = true;
+                            }
+                            else {
+                                $("#AlmacenarClave").attr("checked", false);
+                            }
+
+                            if (data.DatosUsuario.LastPasswordSet == true) {
+                                $("#UsrCambiaClaveSesion").prop("checked");
+                                $("#UsrCambiaClaveSesion").attr("checked", true);
+                                $("#UsrCambiaClaveSesion")[0].checked = true;
+                            }
+                            else {
+                                $("#UsrCambiaClaveSesion").attr("checked", false);
+                            }
 
                             $("#SeccionGrupo").hide();
                             $("#SeccionAsociarGrupo").hide();
@@ -626,74 +693,79 @@
                                 type: BootstrapDialog.TYPE_SUCCESS
                             });
                         } else {
-                            $("#btnSubmit").attr("disabled", false);
-                            $("#UpnPrefijo").attr("disabled", false);
-                            $("#Nombres").val("");
-                            $("#Nombres").removeAttr("disabled");
-                            $("#Apellidos").val("");
-                            $("#Apellidos").removeAttr("disabled");
-                            //$("#Rut").attr("disabled", "disabled");
-                            //$("#Dv").attr("disabled", "disabled");
-                            $("#Clave").val("");
-                            $("#Clave").removeAttr("disabled");
-                            $("#Licencia").attr("disabled", "disabled");
-                            $("#Ou").attr("disabled", "disabled");
-                            $("#NombreCompleto").val("");
-                            $("#NombreCompleto").attr("disabled", "disabled");
-                            //$("#Descripcion").removeAttr("disabled");
-                            //$("#Descripcion").val("");
-                            $("#Correo").val("");
-                            $("#Correo").attr("disabled", "disabled");
-                            $("#ExisteUsuario").val(false);
-                            $("#CodigoLicencia").attr("disabled", false);
-                            $("#CodigoLicencia").val(data.CodigoLicencia);
-                            $("#Info").attr("checked", false);
-                            $("#Info").attr("disabled", false);
+                            if (codAdm == codPerfil)
+                            {
+                                $("#btnSubmit").attr("disabled", false);
+                                $("#UpnPrefijo").attr("disabled", false);
+                                $("#Nombres").val("");
+                                $("#Nombres").removeAttr("disabled");
+                                $("#Apellidos").val("");
+                                $("#Apellidos").removeAttr("disabled");
+                                $("#Clave").val("");
+                                $("#Clave").removeAttr("disabled");
+                                $("#Licencia").attr("disabled", "disabled");
+                                $("#Ou").attr("disabled", "disabled");
+                                $("#NombreCompleto").val("");
+                                $("#NombreCompleto").attr("disabled", "disabled");
+                                $("#Correo").val("");
+                                $("#Correo").attr("disabled", "disabled");
+                                $("#ExisteUsuario").val(false);
+                                $("#CodigoLicencia").attr("disabled", false);
+                                $("#CodigoLicencia").val(data.CodigoLicencia);
 
-                            //Nuevos campos
-                            $("#Anexo").val("");
-                            $("#Anexo").attr("disabled", false);
-                            $("#Cumpleanos").val("");
-                            $("#Cumpleanos").attr("disabled", false);
-                            $("#CentroCosto").val("");
-                            $("#CentroCosto").attr("disabled", false);
-                            $("#Oficina").attr("disabled", false);
-                            $("#Ciudad").attr("disabled", false);
-                            $("#PaisRegion").attr("disabled", false);
-                            $("#DireccionSucursal").val("");
-                            $("#DireccionSucursal").attr("disabled", false);
-                            $("#Ingreso").val("");
-                            $("#Ingreso").attr("disabled", false);
-                            $("#Cargo").attr("disabled", false);
-                            $("#Departamento").attr("disabled", false);
-                            $("#Organizacion").attr("disabled", false);
-                            $("#Jefatura").val("");
-                            $("#JefaturaCn").val("");
-                            //$("#Jefatura").attr("disabled", false);
-                            $("#Movil").val("");
-                            $("#Movil").attr("disabled", false);
-                            $("#PinHp").val("");
-                            $("#PinHp").attr("disabled", false);
-                            $("#TelefIp").val("");
-                            $("#TelefIp").attr("disabled", false);
-                            $("#Notas").val("");
-                            $("#Notas").attr("disabled", false);
-                            $("#Rut").val("");
-                            $("#Rut").attr("disabled", false);
-                            $("#UsrCambiaClaveSesion").attr("checked", false);
-                            $("#UsrCambiaClaveSesion").attr("disabled", false);
-                            $("#UsrNoCambiaClave").attr("checked", false);
-                            $("#UsrNoCambiaClave").attr("disabled", false);
-                            $("#ClaveNoExpira").attr("checked", false);
-                            $("#ClaveNoExpira").attr("disabled", false);
-                            $("#AlmacenarClave").attr("checked", false);
-                            $("#AlmacenarClave").attr("disabled", false);
+                                //Nuevos campos
+                                $("#Anexo").val("");
+                                $("#Anexo").attr("disabled", false);
+                                $("#Cumpleanos").val("");
+                                $("#Cumpleanos").attr("disabled", false);
+                                $("#CentroCosto").val("");
+                                $("#CentroCosto").attr("disabled", false);
+                                $("#Oficina").attr("disabled", false);
+                                $("#Ciudad").attr("disabled", false);
+                                $("#PaisRegion").attr("disabled", false);
+                                $("#DireccionSucursal").val("");
+                                $("#DireccionSucursal").attr("disabled", false);
+                                $("#Ingreso").val("");
+                                $("#Ingreso").attr("disabled", false);
+                                $("#Cargo").attr("disabled", false);
+                                $("#Departamento").attr("disabled", false);
+                                $("#Organizacion").attr("disabled", false);
+                                $("#Jefatura").val("");
+                                $("#JefaturaCn").val("");
+                                $("#Movil").val("");
+                                $("#Movil").attr("disabled", false);
+                                $("#Domicilio").val("");
+                                $("#Domicilio").attr("disabled", false);
+                                $("#PinHp").val("");
+                                $("#PinHp").attr("disabled", false);
+                                $("#TelefIp").val("");
+                                $("#TelefIp").attr("disabled", false);
+                                $("#Notas").val("");
+                                $("#Notas").attr("disabled", false);
+                                $("#Rut").val("");
+                                $("#Rut").attr("disabled", false);
+                                $("#UsrCambiaClaveSesion").attr("checked", false);
+                                $("#UsrCambiaClaveSesion").attr("disabled", false);
+                                $("#UsrNoCambiaClave").attr("checked", false);
+                                $("#UsrNoCambiaClave").attr("disabled", false);
+                                $("#ClaveNoExpira").attr("checked", false);
+                                $("#ClaveNoExpira").attr("disabled", false);
+                                $("#AlmacenarClave").attr("checked", false);
+                                $("#AlmacenarClave").attr("disabled", false);
 
-                            BootstrapDialog.alert({
-                                title: '¡Verificación Exitosa!',
-                                message: '<strong>Usuario No Existe</strong>',
-                                type: BootstrapDialog.TYPE_SUCCESS
-                            });
+                                BootstrapDialog.alert({
+                                    title: '¡Verificación Exitosa!',
+                                    message: '<strong>Usuario No Existe</strong>',
+                                    type: BootstrapDialog.TYPE_SUCCESS
+                                });
+                            }                            
+                            else {
+                                BootstrapDialog.alert({
+                                    title: '¡Verificación Exitosa!',
+                                    message: '<strong>Usuario No Existe. Perfil conectado no tiene acceso para crear cuentas.</strong>',
+                                    type: BootstrapDialog.TYPE_SUCCESS
+                                });
+                            }                            
                         }
                     },
                     complete: function () {
@@ -715,8 +787,6 @@
                         $("#ExisteUsuario").val(true);
                         $("#CodigoLicencia").val(true);
                         $("#CodigoLicencia").val(data.CodigoLicencia);
-                        $("#Info").attr("checked", false);
-                        $("#Info").attr("disabled", true);
                         $("#SeccionGrupo").hide();
                         $("#SeccionAsociarGrupo").hide();
 
@@ -736,10 +806,11 @@
                         $("#Departamento").attr("disabled", true);
                         $("#Organizacion").attr("disabled", true);
                         $("#Jefatura").val("");
-                        $("#JefaturaCn").val("");
-                        //$("#Jefatura").attr("disabled", true);
+                        $("#JefaturaCn").val("");                        
                         $("#Movil").val("");
                         $("#Movil").attr("disabled", true);
+                        $("#Domicilio").val("");
+                        $("#Domicilio").attr("disabled", true);
                         $("#PinHp").val("");
                         $("#PinHp").attr("disabled", true);
                         $("#TelefIp").val("");
@@ -775,15 +846,11 @@
             });
 
             function guardarSincronizarUsuario() {
-                var infoBool = false;
                 var usrCambiaClaveSesion = false;
                 var usrNoCambiaClave = false;
                 var claveNoExpira = false;
                 var almacenarClave = false;
-                if ($('#Info').is(":checked"))
-                {
-                    infoBool = true;
-                }
+
                 if ($('#UsrCambiaClaveSesion').is(":checked")) {
                     usrCambiaClaveSesion = true;
                 }
@@ -811,9 +878,7 @@
                         'Correo': $('#Correo').val(),
                         'PatchOu': $('#PatchOu').val(),
                         'ExisteUsuario': $("#ExisteUsuario").val(),
-                        //'Descripcion': $("#Descripcion").val(),
                         'CodigoLicencia': $("#CodigoLicencia").val(),
-                        'Info': infoBool,
                         'Anexo': $("#Anexo").val(),
                         'Cumpleanos': $("#Cumpleanos").val(),
                         'CentroCosto': $("#CentroCosto").val(),
@@ -828,6 +893,7 @@
                         'Jefatura': $("#Jefatura").val(),
                         'JefaturaCn': $("#JefaturaCn").val(),
                         'Movil': $("#Movil").val(),
+                        'Domicilio': $("#Domicilio").val(),
                         'PinHp': $("#PinHp").val(),
                         'TelefIp': $("#TelefIp").val(),
                         'Notas': $("#Notas").val(),
