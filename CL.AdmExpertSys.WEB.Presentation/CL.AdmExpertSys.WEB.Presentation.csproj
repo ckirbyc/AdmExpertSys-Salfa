@@ -529,6 +529,7 @@
     <Content Include="Views\Reportes\Completo.cshtml" />
     <Content Include="Views\Reportes\CentroCosto.cshtml" />
     <Content Include="Views\Home\VerPopupAsignarJefatura.cshtml" />
+    <Content Include="Views\Home\VerPopupAsignarGrupo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

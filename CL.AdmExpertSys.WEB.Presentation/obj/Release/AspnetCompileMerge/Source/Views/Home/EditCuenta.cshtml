@@ -1,4 +1,6 @@
 ﻿@using CL.AdmExpertSys.WEB.Core.Domain.Dto
+@using CL.AdmExpertSys.WEB.Presentation.Models
+@using CL.AdmExpertSys.WEB.Core.Domain.Enums
 @model CL.AdmExpertSys.WEB.Presentation.ViewModel.HomeSysWebVm
 @{
     ViewBag.Title = "Editar Cuenta Usuario";
@@ -17,7 +19,7 @@
 {
     <div class="row">
         <h1 class="page-header colorOrange col-md-9">Editar</h1>
-        <div class="form-inline col-md-3">            
+        <div class="form-inline col-md-3">
             <div id="btnSubmit" class="btn btn-primary pull-right btn-sm">
                 <span class="glyphicon glyphicon-refresh"></span>
                 <input type="button" value="Guardar" class="btnInput" id="Guardar" />
@@ -32,6 +34,7 @@
             @Html.HiddenFor(m => m.PatchOu)
             @Html.HiddenFor(m => m.ExisteUsuario)
             @Html.HiddenFor(m => m.CambioPatchOu)
+            @Html.HiddenFor(m => m.JefaturaCn)
             <input type="hidden" id="EstadoSync" value="false" />
             <input type="hidden" id="NombreGrupoSel" value="" />
             <table class="table table-secondary">
@@ -98,13 +101,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
-                        <td colspan="2">
-                            @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
-                            @Html.ValidationMessageFor(m => m.Descripcion)
-                        </td>
-                    </tr>
-                    <tr>
                         <th scope="row">@Html.DisplayNameFor(m => m.CodigoLicencia)</th>
                         <td colspan="2">
                             @Html.DropDownListFor(m => m.CodigoLicencia, Model.CodigoLicenciaLista, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
@@ -112,9 +108,149 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">@Html.DisplayNameFor(m => m.Info)</th>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Anexo)</th>
                         <td>
-                            @Html.CheckBoxFor(m => m.Info, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Anexo, new { @maxlength = "10", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Cumpleanos)</th>
+                        <td>
+                            <div class="fechaContainerDiaMes">
+                                <div class="input-group date fechaDiaMes">
+                                    @Html.TextBoxFor(m => m.Cumpleanos, new { @class = "form-control fechaDiaMes", maxlength = "5" })
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.CentroCosto)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.CentroCosto, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Oficina)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Oficina, Model.Oficinas, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Ciudad)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Ciudad, Model.Ciudades, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.PaisRegion)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.PaisRegion, Model.PaisesRegiones, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.DireccionSucursal)</th>
+                        <td>
+                            @Html.TextAreaFor(m => m.DireccionSucursal, new { cols = "20", rows = "5", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Ingreso)</th>
+                        <td>
+                            <div class="fechaContainer">
+                                <div class="input-group date fecha">
+                                    @Html.TextBoxFor(m => m.Ingreso, new { @class = "form-control fecha", maxlength = "10" })
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Cargo)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Cargo, Model.Cargos, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Departamento)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Departamento, Model.Departamentos, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Organizacion)</th>
+                        <td>
+                            @Html.DropDownListFor(m => m.Organizacion, Model.Organizaciones, "Seleccione", new { @class = "form-control", @style = "width: 100%" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Jefatura)</th>
+                        <td colspan="2">
+                            @Html.TextBoxFor(m => m.Jefatura, new { @maxlength = "200", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                        <td colspan="2">
+                            <div id="btnAsignarJefatura" class="btn btn-primary pull-right btn-sm">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <input type="button" value="Busar Jefe" class="btnInput" id="AsignarJefatura" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Movil)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Movil, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Domicilio)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Domicilio, new { @maxlength = "100", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.PinHp)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.PinHp, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.TelefIp)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.TelefIp, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Notas)</th>
+                        <td>
+                            @Html.TextAreaFor(m => m.Notas, new { cols = "20", rows = "5", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.Rut)</th>
+                        <td>
+                            @Html.TextBoxFor(m => m.Rut, new { @maxlength = "10", @class = "form-control", @disabled = "disabled" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.UsrCambiaClaveSesion)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.UsrCambiaClaveSesion, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.UsrNoCambiaClave)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.UsrNoCambiaClave, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.ClaveNoExpira)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.ClaveNoExpira, new { @class = "form-control" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">@Html.DisplayNameFor(m => m.AlmacenarClave)</th>
+                        <td>
+                            @Html.CheckBoxFor(m => m.AlmacenarClave, new { @class = "form-control" })
                         </td>
                     </tr>
                     <tr>
@@ -175,7 +311,7 @@
         </div>
     </div>
     <div class="row" id="SeccionAsociarGrupo" style="display: none;">
-        <div class="col-md-12">            
+        <div class="col-md-12">
             <h2 class="sub-header">Asociar o Desasociar Usuario a Grupos</h2>
             <div class="form-horizontal">
                 <div class="panel-group">
@@ -197,15 +333,61 @@
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title" id="myModalLabel">Buscar y asignar Jefatura</h2>
+                </div>
+                <div class="modal-body">
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm" id="btnCerrar" data-dismiss="modal"><strong>Cerrar</strong></button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 <div class="row">
     <a href="@Url.Action("Index", "UsuarioCreado")" class="btn btn-info"><span class="glyphicon glyphicon-chevron-left"></span>&nbsp;Volver</a>
 </div>
 <script src="~/Scripts/Menu/ActivaMenu.js"></script>
+<script src="~/Scripts/Fechas/ConfiguracionFecha.js"></script>
+<script src="~/Scripts/FuncionesGenerales.js"></script>
 <script>
     $('#EditarCuenta').addClass('active');
 </script>
 <script>
+    $('#btnAsignarJefatura').off('click').click(function () {
+        VerPopupAsignarJefatura();
+    });
+
+    function VerPopupAsignarJefatura()
+    {
+        $("#loading-modal").show();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("VerPopupAsignarJefatura", "Home")?cuentaId=' + $("#NombreUsuario").val(),
+            success: function (data) {
+                $('.modal-body').empty();
+                $('.modal-body').append(data);
+                $('#myModal').find('.modal').css('width', '90%');
+                $('#myModal').find('.modal-dialog').css('width', '90%');
+                $('#myModal').modal('show');
+                $("#loading-modal").hide();
+            },
+            error: function (jqXHR, textStatus, errorThown) {
+                $("#loading-modal").hide();
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThown);
+            }
+        });
+    }
+
     $("#UpnPrefijo").attr("disabled", false);
     $("#UpnPrefijo").prop('disabled', 'disabled');
     $("#btnDesUsr").attr("disabled", true);
@@ -214,15 +396,60 @@
     $("#btnLicExO").attr("disabled", true);
     $("#CodigoLicencia").attr("disabled", false);
     $("#CodigoLicencia").prop('disabled', 'disabled');
-    $("#Info").attr("disabled", false);
-    $("#Info").prop('disabled', 'disabled');
+    $("#Oficina").attr("disabled", false);
+    $("#Oficina").prop('disabled', 'disabled');
+    $("#Ciudad").attr("disabled", false);
+    $("#Ciudad").prop('disabled', 'disabled');
+    $("#PaisRegion").attr("disabled", false);
+    $("#PaisRegion").prop('disabled', 'disabled');
+    $("#Organizacion").attr("disabled", false);
+    $("#Organizacion").prop('disabled', 'disabled');
+    $("#Cargo").attr("disabled", false);
+    $("#Cargo").prop('disabled', 'disabled');
+    $("#Departamento").attr("disabled", false);
+    $("#Departamento").prop('disabled', 'disabled');
+    $("#UsrCambiaClaveSesion").attr("disabled", false);
+    $("#UsrCambiaClaveSesion").prop('disabled', 'disabled');
+    $("#UsrNoCambiaClave").attr("disabled", false);
+    $("#UsrNoCambiaClave").prop('disabled', 'disabled');
+    $("#ClaveNoExpira").attr("disabled", false);
+    $("#ClaveNoExpira").prop('disabled', 'disabled');
+    $("#AlmacenarClave").attr("disabled", false);
+    $("#AlmacenarClave").prop('disabled', 'disabled');
+
     $(document).ready(function () {
         $('#jstree').jstree();
         //Seleccionar OU desde el Arbol
-        $('#jstree').on("changed.jstree", function (e, data) {                        
-            var ldap = data.selected[0];                                       
+        $('#jstree').on("changed.jstree", function (e, data) {
+            var ldap = data.selected[0];
             $("#PatchOu").val(ldap);
             $("#CambioPatchOu").val(true);
+        });
+
+        $("#UsrCambiaClaveSesion").off('click').click(function () {
+            if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                $("#UsrNoCambiaClave").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("disabled", true);
+                $("#ClaveNoExpira").attr("checked", false);
+                $("#ClaveNoExpira").attr("disabled", true);
+            }
+            else {
+                $("#UsrNoCambiaClave").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("disabled", false);
+                $("#ClaveNoExpira").attr("checked", false);
+                $("#ClaveNoExpira").attr("disabled", false);
+            }
+        });
+
+        $("#UsrNoCambiaClave,#ClaveNoExpira").off('click').click(function () {
+            if ($('#UsrNoCambiaClave').is(":checked") || $('#ClaveNoExpira').is(":checked")) {
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+                $("#UsrCambiaClaveSesion").attr("disabled", true);
+            }
+            else {
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+                $("#UsrCambiaClaveSesion").attr("disabled", false);
+            }
         });
 
         $("#Apellidos").off('blur').blur(function () {
@@ -236,7 +463,7 @@
         });
 
         $("#btnVerificar").off('click').click(function () {
-            $("#loading-modal").show();            
+            $("#loading-modal").show();
             if ($("#NombreUsuario").val() != '') {
                 setTimeout(function () {
                     validarUsuario();
@@ -303,53 +530,187 @@
 
         function habilitarCampos(data)
         {
+            var codAdm = '@Convert.ToInt32(EnumPerfilUsuario.ADMP)';
+            var codPerfil = '@SessionViewModel.Usuario.PerfilId';
+
             var clave = data.Clave;
             if (clave == '') {
                 clave = "***";
             }
+            if (codAdm == codPerfil) {
+                $('#jstree').jstree("deselect_all");
+                $("#btnSubmit").attr("disabled", false);
+                $("#btnDesUsr").attr("disabled", false);
+                $("#UpnPrefijo").attr("disabled", false);
+                $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);
+                $("#Nombres").removeAttr("disabled");
+                $("#Nombres").val(data.DatosUsuario.GivenName);
+                $("#Apellidos").removeAttr("disabled");
+                $("#Apellidos").val(data.DatosUsuario.Surname);
+                $("#Clave").removeAttr("disabled");
+                $("#Clave").val(clave);
+                $("#Licencia").attr("disabled", "disabled");
+                $("#NombreCompleto").attr("disabled", "disabled");
+                $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
+                $("#Correo").attr("disabled", "disabled");
+                $("#Correo").val(data.DatosUsuario.EmailAddress);
+                $("#ExisteUsuario").val(true);
+                $("#CodigoLicencia").attr("disabled", false);
+                $("#CodigoLicencia").val(data.CodigoLicencia);
 
-            $('#jstree').jstree("deselect_all");
-            $("#btnSubmit").attr("disabled", false);  
-            $("#btnDesUsr").attr("disabled", false);
-            $("#UpnPrefijo").attr("disabled", false);            
-            $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);
-            $("#Nombres").removeAttr("disabled");
-            $("#Nombres").val(data.DatosUsuario.GivenName);
-            $("#Apellidos").removeAttr("disabled");
-            $("#Apellidos").val(data.DatosUsuario.Surname);
-            $("#Clave").removeAttr("disabled");
-            $("#Clave").val(clave);
-            $("#Licencia").attr("disabled", "disabled");                  
-            $("#NombreCompleto").attr("disabled", "disabled");
-            $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
-            $("#Descripcion").removeAttr("disabled");
-            $("#Descripcion").val(data.DatosUsuario.Description);
-            $("#Correo").attr("disabled", "disabled");
-            $("#Correo").val(data.DatosUsuario.EmailAddress);
-            $("#ExisteUsuario").val(true);
-            $("#CodigoLicencia").attr("disabled", false);
-            $("#CodigoLicencia").val(data.CodigoLicencia);
-            $("#Info").attr("disabled", false);                  
-            if (data.DatosUsuario.Info == true) {                
-                $("#Info").prop("checked");
-                $("#Info").attr("checked", true);
-                $("#Info")[0].checked = true;
+                //Seleccionar nodo existente
+                var ubicGrupo = data.DatosUsuario.DistinguishedName;
+                var myLiId = '#' + ubicGrupo;
+                $("#jstree").jstree("select_node", myLiId);
+                $("#PatchOu").val(ubicGrupo);
+                $("#CambioPatchOu").val(false);
+
+                //Nuevos campos
+                $("#Anexo").val(data.DatosUsuario.TelephoneNumber);
+                $("#Anexo").attr("disabled", false);
+                $("#Cumpleanos").val(data.DatosUsuario.WwwHomePage);
+                $("#Cumpleanos").attr("disabled", false);
+                $("#CentroCosto").val(data.DatosUsuario.Description);
+                $("#CentroCosto").attr("disabled", false);
+                $("#Oficina").val(data.DatosUsuario.Office);
+                $("#Oficina").attr("disabled", false);
+                $("#Ciudad").val(data.DatosUsuario.L);
+                $("#Ciudad").attr("disabled", false);
+                $("#PaisRegion").val(data.DatosUsuario.C);
+                $("#PaisRegion").attr("disabled", false);
+                $("#DireccionSucursal").val(data.DatosUsuario.StreetAddress);
+                $("#DireccionSucursal").attr("disabled", false);
+                $("#Ingreso").val(data.DatosUsuario.PostOfficeBox);
+                $("#Ingreso").attr("disabled", false);
+                $("#Cargo").val(data.DatosUsuario.Title);
+                $("#Cargo").attr("disabled", false);
+                $("#Departamento").val(data.DatosUsuario.Department);
+                $("#Departamento").attr("disabled", false);
+                $("#Organizacion").val(data.DatosUsuario.Company);
+                $("#Organizacion").attr("disabled", false);
+                $("#Jefatura").val(data.DatosUsuario.Manager);
+                $("#JefaturaCn").val(data.DatosUsuario.ManagerCn);
+                $("#Movil").val(data.DatosUsuario.Mobile);
+                $("#Movil").attr("disabled", false);
+                $("#Domicilio").val(data.DatosUsuario.HomePhone);
+                $("#Domicilio").attr("disabled", false);
+                $("#PinHp").val(data.DatosUsuario.FacsimileTelephoneNumber);
+                $("#PinHp").attr("disabled", false);
+                $("#TelefIp").val(data.DatosUsuario.IpPhone);
+                $("#TelefIp").attr("disabled", false);
+                $("#Notas").val(data.DatosUsuario.InfoNote);
+                $("#Notas").attr("disabled", false);
+                $("#Rut").val(data.DatosUsuario.EmployeeID);
+                $("#Rut").attr("disabled", false);
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+                $("#UsrCambiaClaveSesion").attr("disabled", false);
+                $("#UsrNoCambiaClave").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("disabled", false);
+                $("#ClaveNoExpira").attr("checked", false);
+                $("#ClaveNoExpira").attr("disabled", false);
+                $("#AlmacenarClave").attr("checked", false);
+                $("#AlmacenarClave").attr("disabled", false);
+            }
+            else
+            {
+                $('#jstree').jstree("deselect_all");
+                $("#btnSubmit").attr("disabled", false);                                                
+                $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);                
+                $("#Nombres").val(data.DatosUsuario.GivenName);                
+                $("#Apellidos").val(data.DatosUsuario.Surname);                
+                $("#Clave").val(clave);                                
+                $("#NombreCompleto").val(data.DatosUsuario.DisplayName);                
+                $("#Correo").val(data.DatosUsuario.EmailAddress);
+                $("#ExisteUsuario").val(true);                
+                $("#CodigoLicencia").val(data.CodigoLicencia);
+
+                //Seleccionar nodo existente
+                var ubicGrupo = data.DatosUsuario.DistinguishedName;
+                var myLiId = '#' + ubicGrupo;
+                $("#jstree").jstree("select_node", myLiId);
+                $("#PatchOu").val(ubicGrupo);
+                $("#CambioPatchOu").val(false);
+
+                //Nuevos campos
+                $("#Anexo").val(data.DatosUsuario.TelephoneNumber);
+                $("#Anexo").attr("disabled", false);
+                $("#Cumpleanos").val(data.DatosUsuario.WwwHomePage);
+                $("#Cumpleanos").attr("disabled", false);
+                $("#CentroCosto").val(data.DatosUsuario.Description);
+                $("#CentroCosto").attr("disabled", false);
+                $("#Oficina").val(data.DatosUsuario.Office);
+                $("#Oficina").attr("disabled", false);
+                $("#Ciudad").val(data.DatosUsuario.L);
+                $("#Ciudad").attr("disabled", false);  
+                $("#PaisRegion").val(data.DatosUsuario.C);
+                $("#DireccionSucursal").val(data.DatosUsuario.StreetAddress);
+                $("#DireccionSucursal").attr("disabled", false);
+                $("#Ingreso").val(data.DatosUsuario.PostOfficeBox);
+                $("#Ingreso").attr("disabled", false);
+                $("#Cargo").val(data.DatosUsuario.Title);
+                $("#Cargo").attr("disabled", false);
+                $("#Departamento").val(data.DatosUsuario.Department);
+                $("#Departamento").attr("disabled", false);
+                $("#Organizacion").val(data.DatosUsuario.Company);
+                $("#Organizacion").attr("disabled", false);
+                $("#Jefatura").val(data.DatosUsuario.Manager);
+                $("#JefaturaCn").val(data.DatosUsuario.ManagerCn);
+                $("#Movil").val(data.DatosUsuario.Mobile);
+                $("#Movil").attr("disabled", false);   
+                $("#Domicilio").val(data.DatosUsuario.HomePhone);
+                $("#Domicilio").attr("disabled", false);
+                $("#PinHp").val(data.DatosUsuario.FacsimileTelephoneNumber);
+                $("#TelefIp").val(data.DatosUsuario.IpPhone);
+                $("#TelefIp").attr("disabled", false);
+                $("#Notas").val(data.DatosUsuario.InfoNote);
+                $("#Rut").val(data.DatosUsuario.EmployeeID);
+
+                $('#jstree li').each(function () {
+                    $("#jstree").jstree().disable_node(this.id);
+                });
+            }
+
+            if (data.DatosUsuario.UserCannotChangePassword == true) {
+                $("#UsrNoCambiaClave").prop("checked");
+                $("#UsrNoCambiaClave").attr("checked", true);
+                $("#UsrNoCambiaClave")[0].checked = true;
             }
             else {
-                $("#Info").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("checked", false);
             }
-            //Seleccionar nodo existente
-            var ubicGrupo = data.DatosUsuario.DistinguishedName;                        
-            var myLiId = '#' + ubicGrupo;
-            $("#jstree").jstree("select_node", myLiId);
-            $("#PatchOu").val(ubicGrupo);
-            $("#CambioPatchOu").val(false);
+
+            if (data.DatosUsuario.PasswordNeverExpires == true) {
+                $("#ClaveNoExpira").prop("checked");
+                $("#ClaveNoExpira").attr("checked", true);
+                $("#ClaveNoExpira")[0].checked = true;
+            }
+            else {
+                $("#ClaveNoExpira").attr("checked", false);
+            }
+
+            if (data.DatosUsuario.AllowReversiblePasswordEncryption == true) {
+                $("#AlmacenarClave").prop("checked");
+                $("#AlmacenarClave").attr("checked", true);
+                $("#AlmacenarClave")[0].checked = true;
+            }
+            else {
+                $("#AlmacenarClave").attr("checked", false);
+            }
+
+            if (data.DatosUsuario.LastPasswordSet == true) {
+                $("#UsrCambiaClaveSesion").prop("checked");
+                $("#UsrCambiaClaveSesion").attr("checked", true);
+                $("#UsrCambiaClaveSesion")[0].checked = true;
+            }
+            else {
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+            }
         }
 
         function desHabilitarCampos(data)
         {
             $('#jstree').jstree("deselect_all");
-            $("#btnSubmit").attr("disabled", true);     
+            $("#btnSubmit").attr("disabled", true);
             $("#btnDesUsr").attr("disabled", true);
             $("#UpnPrefijo").attr("disabled", true);
             $("#UpnPrefijo").val('');
@@ -359,8 +720,6 @@
             $("#Apellidos").val('');
             $("#NombreCompleto").attr("disabled", true);
             $("#NombreCompleto").val('');
-            $("#Descripcion").attr("disabled", true);
-            $("#Descripcion").val('');
             $("#Clave").attr("disabled", true);
             $("#Clave").val('');
             $("#Correo").attr("disabled", true);
@@ -370,8 +729,52 @@
             $("#CodigoLicencia").val('');
             $("#PatchOu").val('');
             $("#CambioPatchOu").val(false);
-            $("#Info").attr("disabled", true);            
-            $("#Info").attr("checked", false);                        
+
+            //Nuevos campos
+            $("#Anexo").val("");
+            $("#Anexo").attr("disabled", true);
+            $("#Cumpleanos").val("");
+            $("#Cumpleanos").attr("disabled", true);
+            $("#CentroCosto").val("");
+            $("#CentroCosto").attr("disabled", true);
+            $("#Oficina").val('');
+            $("#Oficina").attr("disabled", true);
+            $("#Ciudad").val('');
+            $("#Ciudad").attr("disabled", true);
+            $("#PaisRegion").val('');
+            $("#PaisRegion").attr("disabled", true);
+            $("#DireccionSucursal").val("");
+            $("#DireccionSucursal").attr("disabled", true);
+            $("#Ingreso").val("");
+            $("#Ingreso").attr("disabled", true);
+            $("#Cargo").val('');
+            $("#Cargo").attr("disabled", true);
+            $("#Departamento").val('');
+            $("#Departamento").attr("disabled", true);
+            $("#Organizacion").val('');
+            $("#Organizacion").attr("disabled", true);
+            $("#Jefatura").val("");
+            $("#JefaturaCn").val("");
+            $("#Movil").val("");
+            $("#Movil").attr("disabled", true);
+            $("#Domicilio").val("");
+            $("#Domicilio").attr("disabled", true);
+            $("#PinHp").val("");
+            $("#PinHp").attr("disabled", true);
+            $("#TelefIp").val("");
+            $("#TelefIp").attr("disabled", true);
+            $("#Notas").val("");
+            $("#Notas").attr("disabled", true);
+            $("#Rut").val("");
+            $("#Rut").attr("disabled", true);
+            $("#UsrCambiaClaveSesion").attr("checked", false);
+            $("#UsrCambiaClaveSesion").attr("disabled", true);
+            $("#UsrNoCambiaClave").attr("checked", false);
+            $("#UsrNoCambiaClave").attr("disabled", true);
+            $("#ClaveNoExpira").attr("checked", false);
+            $("#ClaveNoExpira").attr("disabled", true);
+            $("#AlmacenarClave").attr("checked", false);
+            $("#AlmacenarClave").attr("disabled", true);
         }
 
         function listaGruposAdByOu()
@@ -384,7 +787,11 @@
                 return;
             }
 
-            $.ajax({
+            var codAdm = '@Convert.ToInt32(EnumPerfilUsuario.ADMP)';
+            var codPerfil = '@SessionViewModel.Usuario.PerfilId';
+            if (codAdm == codPerfil)
+            {
+                $.ajax({
                 url: '@Url.Action("ObtenerListaGruposAdOu2", "Home")',
                 type: 'POST',
                 contentType: "application/json; charset=utf-8",
@@ -402,7 +809,7 @@
                         return;
                     }
 
-                    if (data.Error != '') {                        
+                    if (data.Error != '') {
                         BootstrapDialog.alert({
                             title: '¡Error al encontrar listado de Grupos en el AD!',
                             message: '<strong>' + data.Error + '</strong>',
@@ -424,7 +831,7 @@
                                     contentido += '<td>' + (data.GrupoOu[i].NumeroGrupo) + '</td>';
                                     contentido += '<td>' + (data.GrupoOu[i].NombreGrupo == null ? '' : data.GrupoOu[i].NombreGrupo) + '</td>';
                                     contentido += '<td>' + (data.GrupoOu[i].TipoGrupo == null ? '' : data.GrupoOu[i].TipoGrupo) + '</td>';
-                                    contentido += '<td>' + (data.GrupoOu[i].DescripcionGrupo == null ? '' : data.GrupoOu[i].DescripcionGrupo) + '</td>';                                    
+                                    contentido += '<td>' + (data.GrupoOu[i].DescripcionGrupo == null ? '' : data.GrupoOu[i].DescripcionGrupo) + '</td>';
                                     contentido += '<td class="columnaAcciones textCenter">';
                                     if (data.GrupoOu[i].Asociado) {
                                         contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-remove colorOrange" title="Desasignar Grupo a Usuario" onclick="desAsignarGrupoUsuario(' + i + ', ' + nomGrupo + ')"></a>';
@@ -432,14 +839,14 @@
                                     else
                                     {
                                         contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-plus" title="Asignar Grupo a Usuario" onclick="asignarGrupoUsuario(' + i + ', ' + nomGrupo + ')"></a>';
-                                    }                                    
+                                    }
                                     contentido += '</td></tr>';
                                     nomGrupoSel = data.GrupoOu[i].NombreGrupo + ',';
                                 }
                             }
                             $('#tbAsociarGrupo tbody').html(contentido);
-                            $("#NombreGrupoSel").val(nomGrupoSel);                            
-                        } else {                            
+                            $("#NombreGrupoSel").val(nomGrupoSel);
+                        } else {
                             BootstrapDialog.alert({
                                 title: '¡Error al encontrar listado de Grupos en el AD!',
                                 message: '<strong>No existen Grupos para OU seleccionada.</strong>',
@@ -451,14 +858,15 @@
                 complete: function () {
                     $("#SeccionAsociarGrupo").show();
                 },
-                error: function (data) {                    
+                error: function (data) {
                     BootstrapDialog.alert({
                         title: '¡Error al encontrar listado de Grupos en el AD!',
                         message: '<strong>' + data.Error + '</strong>',
                         type: BootstrapDialog.TYPE_DANGER
                     });
                 }
-            });
+                });
+            }            
         }
 
         $("#btnSubmit").off('click').click(function () {
@@ -470,10 +878,24 @@
         });
 
         function actualizarCuentaUsuario() {
-            var infoBool = false;
-            if ($('#Info').is(":checked")) {
-                infoBool = true;
+            var usrCambiaClaveSesion = false;
+            var usrNoCambiaClave = false;
+            var claveNoExpira = false;
+            var almacenarClave = false;
+
+            if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                usrCambiaClaveSesion = true;
             }
+            if ($('#UsrNoCambiaClave').is(":checked")) {
+                usrNoCambiaClave = true;
+            }
+            if ($('#ClaveNoExpira').is(":checked")) {
+                claveNoExpira = true;
+            }
+            if ($('#AlmacenarClave').is(":checked")) {
+                almacenarClave = true;
+            }
+
             var objEnvio =
             {
                 model:
@@ -488,10 +910,31 @@
                     'Correo': $('#Correo').val(),
                     'PatchOu': $('#PatchOu').val(),
                     'ExisteUsuario': $("#ExisteUsuario").val(),
-                    'Descripcion': $("#Descripcion").val(),
                     'CodigoLicencia': $("#CodigoLicencia").val(),
                     'CambioPatchOu': $("#CambioPatchOu").val(),
-                    'Info': infoBool
+                    'Anexo': $("#Anexo").val(),
+                    'Cumpleanos': $("#Cumpleanos").val(),
+                    'CentroCosto': $("#CentroCosto").val(),
+                    'Oficina': $("#Oficina").val(),
+                    'Ciudad': $("#Ciudad").val(),
+                    'PaisRegion': $("#PaisRegion").val(),
+                    'DireccionSucursal': $("#DireccionSucursal").val(),
+                    'Ingreso': $("#Ingreso").val(),
+                    'Cargo': $("#Cargo").val(),
+                    'Departamento': $("#Departamento").val(),
+                    'Organizacion': $("#Organizacion").val(),
+                    'Jefatura': $("#Jefatura").val(),
+                    'JefaturaCn': $("#JefaturaCn").val(),
+                    'Movil': $("#Movil").val(),
+                    'Domicilio': $("#Domicilio").val(),
+                    'PinHp': $("#PinHp").val(),
+                    'TelefIp': $("#TelefIp").val(),
+                    'Notas': $("#Notas").val(),
+                    'Rut': $("#Rut").val(),
+                    'UsrCambiaClaveSesion': usrCambiaClaveSesion,
+                    'UsrNoCambiaClave': usrNoCambiaClave,
+                    'ClaveNoExpira': claveNoExpira,
+                    'AlmacenarClave': almacenarClave
                 }
             };
 
@@ -570,7 +1013,7 @@
                                     ]
                                 });
                             }
-                            
+
                         } else {
                             $("#btnSubmit").attr("disabled", false);
 
@@ -635,7 +1078,7 @@
 			                    message: '<strong>No se puede deshabilitar cuenta ya que existe un proceso de sincronización en ejecución. Vuelva a buscar cuenta para actualizar estado.</strong>',
 			                    type: BootstrapDialog.TYPE_WARNING
 		                    });
-            }            
+            }
         });
 
         function deshabilitarUsuario() {
@@ -652,8 +1095,7 @@
                     'NombreCompleto': $('#NombreCompleto').val(),
                     'Correo': $('#Correo').val(),
                     'PatchOu': $('#PatchOu').val(),
-                    'ExisteUsuario': $("#ExisteUsuario").val(),
-                    'Descripcion': $("#Descripcion").val()
+                    'ExisteUsuario': $("#ExisteUsuario").val()
                 }
             };
             $.ajax({
@@ -675,7 +1117,7 @@
                     }
 
                     if (data.Error != '') {
-                        $("#btnSubmit").attr("disabled", true);                                                 
+                        $("#btnSubmit").attr("disabled", true);
                         $("#btnDesUsr").attr("disabled", false);
                         BootstrapDialog.alert({
                             title: '¡Error al Deshabilitar Usuario!',
@@ -684,7 +1126,7 @@
                         });
                     } else {
                         if (data.Validar) {
-                            $("#btnSubmit").attr("disabled", true);                                                                                        
+                            $("#btnSubmit").attr("disabled", true);
                             $("#btnDesUsr").attr("disabled", true);
                             BootstrapDialog.alert({
                                 title: '¡Proceso Exitoso!',
@@ -692,7 +1134,7 @@
                                 type: BootstrapDialog.TYPE_SUCCESS
                             });
                         } else {
-                            $("#btnSubmit").attr("disabled", true);                                                            
+                            $("#btnSubmit").attr("disabled", true);
                             $("#btnDesUsr").attr("disabled", false);
                             BootstrapDialog.alert({
                                 title: '¡Error al Deshabilitar Usuario!',
@@ -706,7 +1148,7 @@
                     $("#loading-modal").hide();
                 },
                 error: function (data) {
-                    $("#btnSubmit").attr("disabled", true);                                                                
+                    $("#btnSubmit").attr("disabled", true);
                     $("#btnDesUsr").attr("disabled", false);
                     $("#loading-modal").hide();
 
@@ -718,6 +1160,29 @@
                 }
             });
         }
+
+        $('#Rut').on('blur', function () {
+            var rut = $("#Rut").val();
+            if (rutValido(rut)) {
+                formateaRut(this, 'XXXXXXX-X');
+            }
+            else {
+                BootstrapDialog.show({
+                    title: '¡Validación!',
+                    message: '<strong>Rut Incorrecto</strong>',
+                    type: BootstrapDialog.TYPE_DANGER,
+                    buttons: [{
+                        label: 'Aceptar',
+                        cssClass: 'btn-default btn-sm',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+                $('#Rut').focus();
+                $("#Rut").val("");
+            }
+        });
     });
 </script>
 <script language="javascript" type="text/javascript">
@@ -854,7 +1319,7 @@
                     });
                 }
             });
-        }        
+        }
     }
 
     function eliminarGrupo(idTrGrupo, nombreGrupoElm, tipo) {

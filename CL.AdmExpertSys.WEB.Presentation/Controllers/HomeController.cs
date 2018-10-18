@@ -170,6 +170,10 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                         return RedirectToAction("IndexLogin", "Error", new { mensajeError = "Usuario no tiene asignado un Perfil. Favor contacte a soporte IT" });
                     }
                     model.EstaAutenticado = true;
+                    if (objUsrPerfil.PerfilId == (int)EnumPerfilUsuario.OPERADOR)
+                    {
+                        return RedirectToAction("EditCuenta", "Home");
+                    }
                     return RedirectToAction("HomeSysWeb", "Home");
                 }
 
@@ -1089,7 +1093,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
         }
 
         [HttpPost]
-        public JsonResult ObtenerListaGruposAdOu2(string patchOu, string usrAD)
+        public JsonResult ObtenerListaGruposAdOu2(string usrAD)
         {
             var varSession = true;
             try
@@ -1110,6 +1114,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 }
 
                 HomeSysWebFactory = new HomeSysWebFactory();
+                var patchOu = ConfigurationManager.AppSettings["RutaAllDominio"];
                 var listaGrupos = HomeSysWebFactory.ObtenerListadoGrupoAdByOu(patchOu, usrAD);
 
                 return new JsonResult
@@ -1255,6 +1260,64 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
         }
 
         [HttpPost]
+        public ActionResult AsociarGrupoSplitUsuario(string nomGrupoSplit, string userName)
+        {
+            var varSession = true;
+            try
+            {
+                //Verifica que sesiones no sean nulas, si lo es redirecciona a página login                
+                if (System.Web.HttpContext.Current.Session["UsuarioVM"] == null || System.Web.HttpContext.Current.Session["EstructuraArbol"] == null)
+                {
+                    varSession = false;
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            Validar = false,
+                            Error = string.Empty,
+                            Session = varSession
+                        }
+                    };
+                }
+
+                HomeSysWebFactory = new HomeSysWebFactory();
+                var exitoOper = false;
+                foreach (string grupo in nomGrupoSplit.Split(','))
+                {
+                    if (!string.IsNullOrEmpty(grupo))
+                    {
+                        exitoOper = HomeSysWebFactory.AsociarGrupoUsuario(grupo, userName);
+                        if (!exitoOper)
+                            break;
+                    }                    
+                }
+
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Validar = exitoOper,
+                        Error = string.Empty,
+                        Session = varSession
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        Validar = false,
+                        Error = ex.Message,
+                        Session = varSession
+                    }
+                };
+            }
+        }
+
+        [HttpPost]
         public ActionResult DesAsociarGrupoUsuario(string nomGrupo, string userName)
         {
             var varSession = true;
@@ -1307,6 +1370,12 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
             return View();
         }
 
+        public ActionResult VerPopupAsignarGrupo(string cuentaId)
+        {
+            ViewBag.CuentaId = cuentaId;
+            return View();
+        }
+
         [HttpPost]
         public ActionResult ObtenerCuentasxNombreCompleto(string nombreCuenta)
         {
@@ -1348,6 +1417,55 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     Data = new
                     {
                         DatosUsuario = string.Empty,
+                        Error = ex.Message,
+                        Session = varSession
+                    }
+                };
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ObtenerGruposxNombreCompleto(string nombreGrupo)
+        {
+            var varSession = true;
+            try
+            {
+                //Verifica que sesiones no sean nulas, si lo es redirecciona a página login                
+                if (System.Web.HttpContext.Current.Session["UsuarioVM"] == null || System.Web.HttpContext.Current.Session["EstructuraArbol"] == null)
+                {
+                    varSession = false;
+                    return new JsonResult
+                    {
+                        Data = new
+                        {
+                            DatosGrupo = string.Empty,
+                            Error = string.Empty,
+                            Session = varSession
+                        }
+                    };
+                }
+
+                HomeSysWebFactory = new HomeSysWebFactory();
+                var datoGrupo = HomeSysWebFactory.ObtenerBusquedaGruposXNombreCompleto(nombreGrupo);
+
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        DatosGrupo = datoGrupo,
+                        Error = string.Empty,
+                        Session = varSession
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return new JsonResult
+                {
+                    Data = new
+                    {
+                        DatosGrupo = string.Empty,
                         Error = ex.Message,
                         Session = varSession
                     }

@@ -686,62 +686,9 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
         public List<GrupoAdVm> ObtenerListadoGrupoAdByOu(string sOu, string adUsr)
         {
             try
-            {
-                var listaGrupo = new List<GrupoAdVm>();
-                AdFactory = new AdLib();
-
-                var userAd = AdFactory.GetUser(adUsr);
-
-                var j = 1;
-                foreach (GroupPrincipal objGroup in userAd.GetGroups())
-                {                    
-                    var correo = ((DirectoryEntry)objGroup.GetUnderlyingObject()).Properties["mail"];
-                    var grupoVm = new GrupoAdVm
-                    {
-                        NumeroGrupo = j,
-                        NombreGrupo = objGroup.Name,
-                        UbicacionGrupo = objGroup.DistinguishedName,
-                        CorreoGrupo = correo.Value != null ? correo.Value.ToString() : string.Empty,
-                        ExisteGrupo = true,
-                        DescripcionGrupo = objGroup.Description,
-                        TipoGrupo = (bool)objGroup.IsSecurityGroup ? "Grupo Seguridad - " + objGroup.GroupScope.Value : "Grupo Distribución - " + objGroup.GroupScope.Value,
-                        Asociado = true
-                    };
-                    listaGrupo.Add(grupoVm);
-                    j++;
-                    
-                    objGroup.Dispose();
-                }
-
-                var objListaGroup = AdFactory.GetListGroupByOu(sOu);
-
-                var i = j;                
-                foreach (GroupPrincipal objGroup in objListaGroup.ToList())
-                {                                       
-                    var asocUsrGrp = AdFactory.IsUserGroupMember(userAd, objGroup);
-                    if (!asocUsrGrp)
-                    {
-                        var correo = ((DirectoryEntry)objGroup.GetUnderlyingObject()).Properties["mail"];
-                        var grupoVm = new GrupoAdVm
-                        {
-                            NumeroGrupo = i,
-                            NombreGrupo = objGroup.Name,
-                            UbicacionGrupo = objGroup.DistinguishedName,
-                            CorreoGrupo = correo.Value != null ? correo.Value.ToString() : string.Empty,
-                            ExisteGrupo = true,
-                            DescripcionGrupo = objGroup.Description,
-                            TipoGrupo = (bool)objGroup.IsSecurityGroup ? "Grupo Seguridad - " + objGroup.GroupScope.Value : "Grupo Distribución - " + objGroup.GroupScope.Value,
-                            Asociado = asocUsrGrp
-                        };
-                        listaGrupo.Add(grupoVm);
-                        i++;
-                    }                    
-                    objGroup.Dispose();                    
-                }
-
-                userAd.Dispose();                
-
-                return listaGrupo;
+            {                
+                AdFactory = new AdLib();                                                                           
+                return AdFactory.GetListGroupByUser(sOu, adUsr);
             }
             catch (Exception ex)
             {
@@ -1278,6 +1225,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
             {
                 Utils.LogErrores(ex);
                 return listaAccount;
+            }
+        }
+
+        public List<GrupoAdVm> ObtenerBusquedaGruposXNombreCompleto(string nombreBusqueda)
+        {
+            var listaGrupo = new List<GrupoAdVm>();
+            try
+            {
+                AdFactory = new AdLib();
+                listaGrupo = AdFactory.SearchGroupsByDisplayName(nombreBusqueda);                
+                return listaGrupo;
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return listaGrupo;
             }
         }
     }

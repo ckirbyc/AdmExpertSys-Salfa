@@ -263,39 +263,75 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
 
             var sOu = sOuCompleto.Replace(_sLdapServer, string.Empty);
 
-            PrincipalContext ctx = GetPrincipalContext(sOu);            
-            using (GroupPrincipal objGroup = new GroupPrincipal(ctx))
+            using (PrincipalContext ctx = GetPrincipalContext(sOu))
             {
-                //objGroup.IsSecurityGroup = false;
-
-                using (PrincipalSearcher pSearch = new PrincipalSearcher(objGroup))
-                {
-                    foreach (GroupPrincipal group in pSearch.FindAll())
+                using (GroupPrincipal objGroup = new GroupPrincipal(ctx))
+                {                    
+                    using (PrincipalSearcher pSearch = new PrincipalSearcher(objGroup))
                     {
-                        var ubicGroup = group.DistinguishedName;
-                        int startIndex = ubicGroup.IndexOf(",") + 1;
-                        int length = ubicGroup.Length - startIndex;
-                        var ubicClear = ubicGroup.Substring(startIndex, length);
-                        if (sOu.Equals(ubicClear))
+                        foreach (GroupPrincipal group in pSearch.FindAll())
                         {
-                            listaGroup.Add(group);
+                            var ubicGroup = group.DistinguishedName;
+                            int startIndex = ubicGroup.IndexOf(",") + 1;
+                            int length = ubicGroup.Length - startIndex;
+                            var ubicClear = ubicGroup.Substring(startIndex, length);
+                            if (sOu.Equals(ubicClear))
+                            {
+                                listaGroup.Add(group);
+                            }
                         }
-                    }                    
-                    return listaGroup;
-                }                       
-            }                    
+                        return listaGroup;
+                    }
+                }
+            };                                           
+        }
+
+        public List<GrupoAdVm> GetListGroupByUser(string sOu, string nameUser)
+        {
+            var listaGroups = new List<GrupoAdVm>();
+            using (PrincipalContext oPrincipalContext = GetPrincipalContext(sOu))
+            {
+                using (UserPrincipal objUser = new UserPrincipal(oPrincipalContext))
+                {                    
+                    objUser.SamAccountName = nameUser;
+                    using (PrincipalSearcher pSearch = new PrincipalSearcher(objUser))
+                    {
+                        var i = 1;
+                        foreach (UserPrincipal oUserPrincipal in pSearch.FindAll())
+                        {
+                            foreach (GroupPrincipal oGroupPrincipal in oUserPrincipal.GetGroups(oPrincipalContext))
+                            {
+                                var grupoVm = new GrupoAdVm
+                                {
+                                    NumeroGrupo = i,
+                                    NombreGrupo = oGroupPrincipal.Name,
+                                    UbicacionGrupo = oGroupPrincipal.DistinguishedName,
+                                    CorreoGrupo = string.Empty,
+                                    ExisteGrupo = true,
+                                    DescripcionGrupo = oGroupPrincipal.Description,
+                                    TipoGrupo = (bool)oGroupPrincipal.IsSecurityGroup ? "Grupo Seguridad - " + oGroupPrincipal.GroupScope.Value : "Grupo Distribución - " + oGroupPrincipal.GroupScope.Value
+                                };
+                                listaGroups.Add(grupoVm);
+                                oGroupPrincipal.Dispose();
+                                i++;
+                            }                                                       
+                            oUserPrincipal.Dispose();                            
+                        }
+                    }
+                };
+                return listaGroups;
+            };
         }
 
         public PrincipalSearcher GetListGroupByOuMantGroup(string sOuCompleto)
         {           
             var sOu = sOuCompleto.Replace(_sLdapServer, string.Empty);
-            PrincipalContext ctx = GetPrincipalContext(sOu);
+            PrincipalContext ctx = GetPrincipalContext(sOu);            
             using (GroupPrincipal objGroup = new GroupPrincipal(ctx))
             {
-                //objGroup.IsSecurityGroup = false;
-                PrincipalSearcher pSearch = new PrincipalSearcher(objGroup);                                    
-                return pSearch;                
-            }
+                PrincipalSearcher pSearch = new PrincipalSearcher(objGroup);
+                return pSearch;
+            }            
         }
 
         #endregion
@@ -1515,6 +1551,40 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 };
                 return listaUser;
             };            
+        }
+
+        public List<GrupoAdVm> SearchGroupsByDisplayName(string nameGroup)
+        {
+            var listaGroups = new List<GrupoAdVm>();
+            using (PrincipalContext oPrincipalContext = GetPrincipalContext(_sRutaAllDominio))
+            {
+                using (GroupPrincipal objGroup = new GroupPrincipal(oPrincipalContext))
+                {
+                    var paramSearchGroups = nameGroup + @"*";                    
+                    objGroup.Name = paramSearchGroups;
+                    using (PrincipalSearcher pSearch = new PrincipalSearcher(objGroup))
+                    {
+                        var i = 1;
+                        foreach (GroupPrincipal oGroupPrincipal in pSearch.FindAll())
+                        {
+                            var grupoVm = new GrupoAdVm
+                            {
+                                NumeroGrupo = i,
+                                NombreGrupo = oGroupPrincipal.Name,
+                                UbicacionGrupo = oGroupPrincipal.DistinguishedName,
+                                CorreoGrupo = string.Empty,
+                                ExisteGrupo = true,
+                                DescripcionGrupo = oGroupPrincipal.Description,
+                                TipoGrupo = (bool)oGroupPrincipal.IsSecurityGroup ? "Grupo Seguridad - " + oGroupPrincipal.GroupScope.Value : "Grupo Distribución - " + oGroupPrincipal.GroupScope.Value
+                            };
+                            listaGroups.Add(grupoVm);
+                            oGroupPrincipal.Dispose();
+                            i++;                                                      
+                        }
+                    }
+                };
+                return listaGroups;
+            };
         }
 
         public string GetNameClearFromCn(string cn)

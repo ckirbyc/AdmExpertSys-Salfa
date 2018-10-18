@@ -53,6 +53,25 @@
                     </div>
                 </div>
             }
+            if ((int)EnumPerfilUsuario.OPERADOR == SessionViewModel.Usuario.PerfilId)
+            {
+                <div class="handCursor" data-toggle="collapse" data-parent="#accordion" href="#menuCollapse">
+                    <ul class="nav nav-sidebar">
+                        <li><a href=""><i class="glyphicon glyphicon-play bulletFirstLevelNav"></i>OPERADOR</a></li>
+                    </ul>
+                </div>
+                <div id="menuCollapse" class="panel-collapse collapse">
+                    <div>
+                        <div>
+                            <ul class="nav nav-sidebar">
+                                <ul class="nav nav-sidebar">                                    
+                                    <li id="EditarCuenta"><a href="@Url.Action("EditCuenta","Home")" onclick="javascript:$('#loading-modal').show();" data-toggle="tooltip" data-placement="top" title="Editar Cuentas Usuarios"><i class="glyphicon glyphicon-play bulletFirstLevelNav"></i>1.0 Editar Cuentas</a></li>                                    
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
             if (SessionViewModel.Usuario.EsAdm)
             {
                 <div class="handCursor" data-toggle="collapse" data-parent="#accordion" href="#menuCollapse2">

@@ -4,12 +4,12 @@
     <div class="">
         @if (SessionViewModel.Usuario != null)
         {
-            if ((int)EnumPerfilUsuario.CAF == SessionViewModel.Usuario.PerfilId ||
+            if ((int)EnumPerfilUsuario.RRHH == SessionViewModel.Usuario.PerfilId ||
                 (int)EnumPerfilUsuario.ADMP == SessionViewModel.Usuario.PerfilId)
             {
                 <div class="handCursor" data-toggle="collapse" data-parent="#accordion" href="#menuCollapse">
                     <ul class="nav nav-sidebar">
-                        <li><a href=""><i class="glyphicon glyphicon-play bulletFirstLevelNav"></i>CAF</a></li>
+                        <li><a href=""><i class="glyphicon glyphicon-play bulletFirstLevelNav"></i>RRHH</a></li>
                     </ul>
                 </div>
                 <div id="menuCollapse" class="panel-collapse collapse">

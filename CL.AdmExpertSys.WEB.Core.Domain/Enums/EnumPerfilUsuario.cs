@@ -7,6 +7,8 @@ namespace CL.AdmExpertSys.WEB.Core.Domain.Enums
         [Description("RRHH")]
         RRHH = 1,
         [Description("ADMINISTRACION PERSONAL")]
-        ADMP = 2
+        ADMP = 2,
+        [Description("OPERADOR")]
+        OPERADOR = 3
     }
 }

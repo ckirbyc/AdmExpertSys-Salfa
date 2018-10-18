@@ -190,14 +190,14 @@
             });
 
         $('#btnVerAddUsrGroup').off('click').click(function () {
-                VerPopupAsignarUsuarioGrupo();
-            });
+            VerPopupAsignarUsuarioGrupo();
+        });
 
-            function VerPopupAsignarUsuarioGrupo()
-            {
+        function VerPopupAsignarUsuarioGrupo()
+        {
             $("#loading-modal").show();
             $.ajax({
-                    type: "POST",
+                type: "POST",
                 url: '@Url.Action("VerPopupAsignarUsuarioGrupo", "Grupos", new { nombreGrupo = Model.NombreGrupo })',
                 success: function (data) {
                     $('.modal-body').empty();
@@ -206,14 +206,14 @@
                     $('#myModal').find('.modal-dialog').css('width', '90%');
                     $('#myModal').modal('show');
                     $("#loading-modal").hide();
-                    },
+                },
                 error: function (jqXHR, textStatus, errorThown) {
                     $("#loading-modal").hide();
-                        console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThown);
-                    }
-                });
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThown);
+                }
+            });
         }
     });
 </script>

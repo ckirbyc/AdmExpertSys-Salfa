@@ -1,0 +1,136 @@
+﻿@{
+    Layout = null;
+    var cuentaId = ViewBag.CuentaId;
+}
+<div class="row">
+    <h2 class="sub-header">Asignar Jefatura a Cuenta @cuentaId</h2>
+    <div class="col-md-12">
+        <table class="table table-secondary">
+            <tbody>
+                <tr>
+                    <th scope="row">Nombre de la Cuenta</th>
+                    <td>
+                        <input type="text" maxlength="20" class="form-control" id="NombreCuenta" style="width: 75%" />
+                    </td>
+                    <td>
+                        <div id="btnBuscar" class="btn btn-primary pull-right btn-sm">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <input type="button" value="Buscar" class="btnInput" id="Buscar" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" id="SeccionResultadoBusqueda" style="display: none;">
+    <div class="col-md-12">
+        <h2 class="sub-header">Asociar Jefatura a Cuenta</h2>
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="form-group col-md-12">
+                    <table class="table table-hover tablaMantenedores" id="tbAsociarJefatura">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Descripción</th>
+                                <th class="acciones text-center">Asignar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnBuscar").off('click').click(function () {
+        $("#loading-modal").show();            
+        if ($("#NombreCuenta").val() != '') {
+            setTimeout(function () {
+                obtenerCuentasxNombreCompleto();
+            }, 1000);
+        } else {
+            setTimeout(function () {
+                $("#loading-modal").hide();
+                BootstrapDialog.alert({
+                    title: '¡Advertencia!',
+                    message: '<strong>Debe ingresar el nombre de la cuenta</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }, 1000);
+        }
+    });
+
+    function obtenerCuentasxNombreCompleto() {
+        var nombreCuenta = $("#NombreCuenta").val();
+
+        $.ajax({
+            url: '@Url.Action("ObtenerCuentasxNombreCompleto", "Home")',
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            dataType: 'json',
+            processData: false,
+            data: JSON.stringify({ nombreCuenta: nombreCuenta }),
+            success: function (data) {
+                if (data.DatosUsuario == '') {
+                    BootstrapDialog.alert({
+                        title: '¡Mensaje de aviso!',
+                        message: '<strong>La consulta ingresada no trajo resultados</strong>',
+                        type: BootstrapDialog.TYPE_WARNING
+                    });
+                }
+                else {
+                    $("#SeccionResultadoBusqueda").show();
+                    cargarTabla(data);                    
+                }                                  
+            },
+            complete: function () {
+                $("#loading-modal").hide();                                
+            },
+            error: function () {      
+                $("#SeccionResultadoBusqueda").hide();                
+                BootstrapDialog.alert({
+                    title: '¡Error al obtener los datos!',
+                    message: '<strong>Error al obtener los datos. Intente más tarde</strong>',
+                    type: BootstrapDialog.TYPE_DANGER
+                });
+            }
+        });
+    }
+
+    function cargarTabla(data)
+    {
+        $('#SeccionResultadoBusqueda .tbody').html('');
+        var contentido = '';
+        for (var i = 0; i < data.DatosUsuario.length; i++)
+        {          
+            var nombreCompleto = data.DatosUsuario[i].DisplayName;
+            var rutaCuenta = data.DatosUsuario[i].DistinguishedName;
+            contentido += '<tr>';
+            contentido += '<td style="display: none;"><input type="text" id="DisplayName' + i + '" value="' + nombreCompleto + '"/></td>';
+            contentido += '<td style="display: none;"><input type="text" id="DistinguishedName' + i + '" value="' + rutaCuenta + '"/></td>';
+            contentido += '<td>' + data.DatosUsuario[i].DisplayName + '</td>';
+            contentido += '<td>' + data.DatosUsuario[i].EmailAddress + '</td>';
+            contentido += '<td>' + data.DatosUsuario[i].Description + '</td>';
+            contentido += '<td class="columnaAcciones textCenter">';
+            contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-plus" title="Asignar Jefefatura a Cuenta" onclick="asignarJefaturaCuenta('+i+')"></a>';
+            contentido += '</td></tr>';
+        }        
+        $('#SeccionResultadoBusqueda tbody').html(contentido);
+    }
+
+    function asignarJefaturaCuenta(fila)
+    {
+        var nombreCompletoId = '#DisplayName' + fila;             
+        var nombreCompleto = $(nombreCompletoId).val();
+        $("#Jefatura").val(nombreCompleto);
+        var rutaCuentaId = '#DistinguishedName' + fila;
+        var rutaCuenta = $(rutaCuentaId).val();
+        $("#JefaturaCn").val(rutaCuenta);
+        $('#myModal').modal('hide');
+    }
+</script>
