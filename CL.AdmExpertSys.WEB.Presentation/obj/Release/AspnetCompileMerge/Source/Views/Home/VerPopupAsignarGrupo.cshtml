@@ -1,0 +1,171 @@
+﻿
+@{
+    Layout = null;
+    var cuentaId = ViewBag.CuentaId;
+}
+
+<div class="row">
+    <h2 class="sub-header">Asignar Grupos a Cuenta @cuentaId</h2>
+    <div class="col-md-12">
+        <table class="table table-secondary">
+            <tbody>
+                <tr>
+                    <th scope="row">Nombre del Grupo</th>
+                    <td>
+                        <input type="text" class="form-control" id="NombreGrupoPopup" style="width: 75%" />
+                    </td>
+                    <td>
+                        <div id="btnBuscarGrupoPopup" class="btn btn-primary pull-right btn-sm">
+                            <span class="glyphicon glyphicon-search"></span>
+                            <input type="button" value="Buscar" class="btnInput" id="BuscarGrupo" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" id="SeccionResultadoBusquedaGrupoPopup" style="display: none;">
+    <div class="col-md-12">
+        <h2 class="sub-header">Asociar Grupo a Cuenta</h2>
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="form-group col-md-12">
+                    <table class="table table-hover tablaMantenedores" id="tbAsociarGrupoPopup">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ubicación</th>
+                                <th>Tipo</th>
+                                <th class="acciones text-center">Asignar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var contFilaAsignadoGrupo = $("#FilaGrupoSel").val();
+
+    $("#btnBuscarGrupoPopup").off('click').click(function () {
+        $("#loading-modal").show();
+        if ($("#NombreGrupoPopup").val() != '') {
+            setTimeout(function () {
+                obtenerGrupoxNombre();
+            }, 1000);
+        } else {
+            setTimeout(function () {
+                $("#loading-modal").hide();
+                BootstrapDialog.alert({
+                    title: '¡Advertencia!',
+                    message: '<strong>Debe ingresar un nombre de Grupo.</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }, 1000);
+        }
+    });
+
+    function obtenerGrupoxNombre() {
+        var nombreGrupo = $("#NombreGrupoPopup").val();
+
+        $.ajax({
+            url: '@Url.Action("ObtenerGruposxNombreCompleto", "Home")',
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            dataType: 'json',
+            processData: false,
+            data: JSON.stringify({ nombreGrupo: nombreGrupo }),
+            success: function (data) {
+                if (data.Session == false)
+                {
+                    BootstrapDialog.alert({
+                        title: '¡Validación Sesión!',
+                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+                        type: BootstrapDialog.TYPE_WARNING
+                    });
+                    return;
+                }
+                if (data.DatosGrupo == '') {
+                    BootstrapDialog.alert({
+                        title: '¡Mensaje de aviso!',
+                        message: '<strong>La consulta ingresada no trajo resultados</strong>',
+                        type: BootstrapDialog.TYPE_WARNING
+                    });
+                }
+                else {
+                    $("#SeccionResultadoBusquedaGrupoPopup").show();
+                    cargarTabla(data);
+                }
+            },
+            complete: function () {
+                $("#loading-modal").hide();
+            },
+            error: function () {
+                $("#SeccionResultadoBusquedaGrupoPopup").hide();
+                BootstrapDialog.alert({
+                    title: '¡Error al obtener los datos!',
+                    message: '<strong>Error al obtener los datos. Intente más tarde</strong>',
+                    type: BootstrapDialog.TYPE_DANGER
+                });
+            }
+        });
+    }
+
+    function cargarTabla(data)
+    {
+        $('#SeccionResultadoBusquedaGrupoPopup .tbody').html('');
+        var contentido = '';
+        for (var i = 0; i < data.DatosGrupo.length; i++)
+        {
+            var nombreCompleto = data.DatosGrupo[i].NombreGrupo;            
+            contentido += '<tr class="trGrupoPopup' + i + '">';
+            contentido += '<td style="display: none;"><input type="text" id="DisplayNameGroup' + i + '" value="' + nombreCompleto + '"/></td>';            
+            contentido += '<td style="display: none;"><input type="text" id="RouteGroup' + i + '" value="' + data.DatosGrupo[i].UbicacionGrupo + '"/></td>';
+            contentido += '<td style="display: none;"><input type="text" id="TypeGroup' + i + '" value="' + data.DatosGrupo[i].TipoGrupo + '"/></td>';
+            contentido += '<td>' + nombreCompleto + '</td>';
+            contentido += '<td>' + data.DatosGrupo[i].UbicacionGrupo + '</td>';
+            contentido += '<td>' + data.DatosGrupo[i].TipoGrupo + '</td>';
+            contentido += '<td class="columnaAcciones textCenter">';
+            contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-plus" title="Asignar Grupo a Cuenta" onclick="asignarGrupoCuenta('+i+')"></a>';
+            contentido += '</td></tr>';
+        }
+        $('#SeccionResultadoBusquedaGrupoPopup tbody').html(contentido);
+    }
+
+    function asignarGrupoCuenta(fila)
+    {
+        $("#btnGrabarGrupo").attr('disabled', false);
+        var nombreGrupoId = '#DisplayNameGroup' + fila;
+        var nombreGrupo = $(nombreGrupoId).val();        
+        var rutaGrupoId = '#RouteGroup' + fila;
+        var rutaGrupo = $(rutaGrupoId).val();
+        var tipoGrupoId = '#TypeGroup' + fila;
+        var tipoGrupo = $(tipoGrupoId).val();   
+
+        var nomGrupoSel = $("#NombreGrupoSel").val();
+
+        var contentido = $('#tbAsociarGrupo tbody').html();
+        var nomGrupo = "'" + nombreGrupo + "'";
+        contentido += '<tr class="trGrupoOu' + contFilaAsignadoGrupo + '">';        
+        contentido += '<td>' + contFilaAsignadoGrupo + '</td>';
+        contentido += '<td>' + nombreGrupo + '</td>';
+        contentido += '<td>' + tipoGrupo + '</td>';
+        contentido += '<td>' + rutaGrupo + '</td>';        
+        contentido += '<td class="columnaAcciones textCenter">';
+        contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-remove colorOrange" title="Quitar Grupo" onclick="eliminarGrupo(' + contFilaAsignadoGrupo + ', ' + nomGrupo + ',2)"></a>';
+        contentido += '</td></tr>';
+        nomGrupoSel += nombreGrupo + ',';
+
+        $('#tbAsociarGrupo tbody').html(contentido);
+
+        $('.trGrupoPopup' + fila).html('');
+        contFilaAsignadoGrupo++;
+        $("#FilaGrupoSel").val(contFilaAsignadoGrupo);
+        $("#NombreGrupoSel").val(nomGrupoSel);
+    }
+</script>
+

@@ -9,6 +9,7 @@ using ClosedXML.Excel;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Protocols;
 
@@ -40,6 +41,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
             try
             {
                 ViewBag.EstadoSync = HiloEstadoSincronizacion.EsSincronizacion();
+                ViewBag.processToken = Convert.ToInt64(DateTime.Now.Hour.ToString() + DateTime.Now.Minute + DateTime.Now.Second +
+                                       DateTime.Now.Millisecond);
                 //Obtener todos los usuarios No Sincronizados
                 var listaEstUsr = EstadoCuentaUsuarioFactory.GetEstadoCuentaUsuarioNoSync();
                 return View(listaEstUsr);
@@ -52,10 +55,12 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult SincronizarCuentas()
+        public ActionResult SincronizarCuentas(long processToken)
         {
             try
             {
+                MakeProcessTokenCookie(processToken);
+
                 var listaEstUsr = EstadoCuentaUsuarioFactory.GetEstadoCuentaUsuarioNoSync();
                 var usuarioModificacion = SessionViewModel.Usuario.Nombre.Trim();
                 var listaEstCuentaVmHilo = new List<object>
@@ -67,7 +72,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 var logSync = new LogInfoVm
                 {
                     MsgInfo = @"Sincroniza Usuario entre el AD y el O365",
-                    UserInfo = SessionViewModel.Usuario.Nombre,
+                    UserInfo = usuarioModificacion,
                     FechaInfo = DateTime.Now,
                     AccionIdInfo = EnumAccionInfo.Sincronizar.GetHashCode()
                 };
@@ -81,8 +86,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     Utils.LogErrores(ex);
                 }
 
+                //Sincronizar
+                HiloEstadoSincronizacion.ActualizarEstadoSync(true, usuarioModificacion, "S");
+
+                HomeSysWebFactory = new HomeSysWebFactory();
+                try
+                {
+                    HomeSysWebFactory.ForzarDirSync();
+                }
+                catch (Exception ex)
+                {
+                    HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
+                    Utils.LogErrores(ex);
+                }
+
                 _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta);
-                _hiloEjecucion.Start(listaEstCuentaVmHilo);
+                _hiloEjecucion.Start(listaEstCuentaVmHilo);                
 
                 return new JsonResult
                 {
@@ -112,23 +131,8 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
         {
             var usuarioModificacion = (string)estadoCuentaHilo.CastTo<List<object>>()[1];
             try
-            {               
-                HiloEstadoSincronizacion.ActualizarEstadoSync(true, usuarioModificacion, "S");
-
-                HomeSysWebFactory = new HomeSysWebFactory();
-                try
-                {
-                    HomeSysWebFactory.ForzarDirSync();
-                }
-                catch (Exception ex)
-                {
-                    HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
-                    Utils.LogErrores(ex);
-                }
-
-                var estadoCuentaLista = (List<EstadoCuentaUsuarioVm>)estadoCuentaHilo.CastTo<List<object>>()[0];
-
-                //Task.Delay(TimeSpan.FromSeconds(120)).Wait();
+            {                              
+                var estadoCuentaLista = (List<EstadoCuentaUsuarioVm>)estadoCuentaHilo.CastTo<List<object>>()[0];                
                 var comm = new Common();
                 var intentoEstadoSync = Convert.ToInt64(comm.GetAppSetting("IntentoEstadoSync"));
 
@@ -163,6 +167,15 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 var exNew = new Exception(msgError);
                 Utils.LogErrores(exNew);                
             }            
+        }
+
+        private void MakeProcessTokenCookie(long processToken)
+        {
+            var cookie = new HttpCookie("processToken")
+            {
+                Value = processToken.ToString()
+            };
+            ControllerContext.HttpContext.Response.Cookies.Add(cookie);
         }
     }
 }

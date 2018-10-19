@@ -62,24 +62,21 @@
     $(document).ready(function () { 
         $('[data-toggle="tooltip"]').tooltip();
 
-        $("#btnSync").off('click').click(function () {
-            if ('@Model.Count()' == 0 || '@esSync' == 'True') {
+        $("#btnSync").off('click').click(function () {            
+            var $btn = $("#Sincronizar");
+            $btn.button('loading');
+
+            if ('@Model.Count()' == 0 || '@esSync' == 'True') {                
                 BootstrapDialog.alert({
                     title: '¡Validación Inicio Proceso!',
                     message: '<strong>No se puede iniciar el proceso de sincronización, se puede deber a:</br>1.- Proceso en ejecución</br>2.- No existen datos a sincronizar</strong>',
                     type: BootstrapDialog.TYPE_WARNING
                 });
+                $btn.button('reset');
                 return;
-            }
+            }                                                           
 
-            $("#loading-modal").show();
-
-            var $btn = $("#Sincronizar");
-            $btn.button('loading');
-            $("#btnSync").attr("disabled", true);
-            //$("input").focus(function () {
-            //    $btn.button('reset');
-            //});            
+            monitorSync();
 
             $.ajax({
                 url: '@Url.Action("SincronizarCuentas", "SyncCuenta")',
@@ -88,7 +85,7 @@
                 async: false,
                 dataType: 'json',
                 processData: false,
-                //data: JSON.stringify({ nombreUsuario: nombreUsuario }),
+                data: JSON.stringify({ processToken: @ViewBag.processToken }),
                 success: function (data) {
                     if (data.Validar) {
                         BootstrapDialog.alert({
@@ -104,11 +101,9 @@
                         });
                     }
                 },
-                complete: function () {
-                    $("#loading-modal").hide();
+                complete: function () {                    
                 },
-                error: function () {
-                    $("#loading-modal").hide();
+                error: function () {                    
                     BootstrapDialog.alert({
                         title: '¡Error al iniciar el proceso!',
                         message: '<strong>Error al ejecutar el proceso de sincronización.</strong>',
@@ -118,5 +113,17 @@
             });
 
         });
+
+        function monitorSync() {
+            $("#loading-modal").show();
+            var interval = setInterval(function () {
+                var cookieValue = $.cookie('processToken');
+                if (cookieValue == '@ViewBag.processToken') {
+                    $("#loading-modal").hide();
+                    clearInterval(interval);
+                    $.removeCookie('processToken', { path: '/' });
+                }
+            }, 1000);
+        }
     });
 </script>

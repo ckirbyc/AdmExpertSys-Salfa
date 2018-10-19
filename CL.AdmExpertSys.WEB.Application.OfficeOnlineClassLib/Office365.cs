@@ -352,47 +352,47 @@ namespace CL.AdmExpertSys.WEB.Application.OfficeOnlineClassLib
                 cmdlic.Parameters.Add((new CommandParameter("UserPrincipalName", sUpn)));
                 cmdlic.Parameters.Add((new CommandParameter("AddLicenses", sLicense)));
 
-                List<string> desLic;
-                if (sLicense.Equals(codEnterPrisePack))
-                {
-                    desLic = new List<string>
-                    {
-                        "PROJECTWORKMANAGEMENT", 
-                        "INTUNE_O365", 
-                        "YAMMER_ENTERPRISE", 
-                        "RMS_S_ENTERPRISE", 
-                        "SWAY", 
-                        "OFFICESUBSCRIPTION", 
-                        "MCOSTANDARD", 
-                        "SHAREPOINTWAC", 
-                        "SHAREPOINTENTERPRISE"
-                    };
-                }
-                else if (sLicense.Equals(codStandardPack))
-                {
-                    desLic = new List<string>
-                    {
-                        "SHAREPOINTWAC",
-                        "PROJECTWORKMANAGEMENT",
-                        "SWAY",
-                        "INTUNE_O365",
-                        "YAMMER_ENTERPRISE",
-                        "MCOSTANDARD",
-                        "SHAREPOINTSTANDARD"
-                    };
-                }
-                else
-                {
-                    desLic = new List<string>
-                    {
-                        "INTUNE_O365"
-                    };
-                }
+                //List<string> desLic;
+                //if (sLicense.Equals(codEnterPrisePack))
+                //{
+                //    desLic = new List<string>
+                //    {
+                //        "PROJECTWORKMANAGEMENT", 
+                //        "INTUNE_O365", 
+                //        "YAMMER_ENTERPRISE", 
+                //        "RMS_S_ENTERPRISE", 
+                //        "SWAY", 
+                //        "OFFICESUBSCRIPTION", 
+                //        "MCOSTANDARD", 
+                //        "SHAREPOINTWAC", 
+                //        "SHAREPOINTENTERPRISE"
+                //    };
+                //}
+                //else if (sLicense.Equals(codStandardPack))
+                //{
+                //    desLic = new List<string>
+                //    {
+                //        "SHAREPOINTWAC",
+                //        "PROJECTWORKMANAGEMENT",
+                //        "SWAY",
+                //        "INTUNE_O365",
+                //        "YAMMER_ENTERPRISE",
+                //        "MCOSTANDARD",
+                //        "SHAREPOINTSTANDARD"
+                //    };
+                //}
+                //else
+                //{
+                //    desLic = new List<string>
+                //    {
+                //        "INTUNE_O365"
+                //    };
+                //}
 
 
                 var cmdLicDes = new Command("New-MsolLicenseOptions");
                 cmdLicDes.Parameters.Add((new CommandParameter("AccountSkuId", sLicense)));
-                cmdLicDes.Parameters.Add((new CommandParameter("DisabledPlans", desLic)));
+                //cmdLicDes.Parameters.Add((new CommandParameter("DisabledPlans", desLic)));
 
                 var lCommands = new List<Command> { connectCommand, cmdLocation, cmdlic, cmdLicDes };
 

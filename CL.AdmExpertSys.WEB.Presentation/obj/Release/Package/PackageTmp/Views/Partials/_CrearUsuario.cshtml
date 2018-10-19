@@ -97,12 +97,12 @@
                         </td>
                     </tr>
                     @*<tr>
-            <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
-            <td colspan="2">
-                @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
-                @Html.ValidationMessageFor(m => m.Descripcion)
-            </td>
-        </tr>*@
+                            <th scope="row">@Html.DisplayNameFor(m => m.Descripcion)</th>
+                            <td colspan="2">
+                                @Html.TextBoxFor(m => m.Descripcion, new { @maxlength = "50", @class = "form-control", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(m => m.Descripcion)
+                            </td>
+                        </tr>*@
                     <tr>
                         <th scope="row">@Html.DisplayNameFor(m => m.CodigoLicencia)</th>
                         <td colspan="2">
@@ -280,9 +280,9 @@
                                 <input type="button" value="Guardar Usuario en AD" class="btnInput" id="Guardar" />
                             </div>
                             @*<div id="btnSync" class="btn btn-primary pull-right btn-sm">
-                    <span class="glyphicon glyphicon-save"></span>
-                    <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
-                </div>*@
+                                    <span class="glyphicon glyphicon-save"></span>
+                                    <input type="button" value="Sincronizar" class="btnInput" id="Sincronizar" />
+                                </div>*@
                         </td>
                     </tr>
                     <tr>
@@ -308,25 +308,25 @@
                             <label>@licEnterPrisePack</label>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <div id="btnLicExO" class="btn btn-primary btn-sm btn-block pull-right">
-                                <span class="glyphicon glyphicon-check"></span>
-                                <input type="button" value="Office 365 Exchange Online P1" class="btnInput" data-toggle="collapse" data-target="#demo3" id="EXCHANGESTANDARD" />
-                            </div>
-                        </td>
-                        <td colspan="2">
-                            <label>@licExStandard</label>
-                        </td>
-                    </tr>
                     @*<tr>
-            <td>
-                <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
-                    <span class="glyphicon glyphicon-save"></span>
-                    <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
-                </div>
-            </td>
-        </tr>*@
+                            <td>
+                                <div id="btnLicExO" class="btn btn-primary btn-sm btn-block pull-right">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    <input type="button" value="Office 365 Exchange Online P1" class="btnInput" data-toggle="collapse" data-target="#demo3" id="EXCHANGESTANDARD" />
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <label>@licExStandard</label>
+                            </td>
+                        </tr>*@
+                    @*<tr>
+                            <td>
+                                <div id="btnAsignarLic" class="btn btn-primary pull-right btn-sm">
+                                    <span class="glyphicon glyphicon-save"></span>
+                                    <input type="button" value="Asignar Licencia" class="btnInput" id="AsignarLic" />
+                                </div>
+                            </td>
+                        </tr>*@
                 </tbody>
             </table>
         </div>
@@ -378,25 +378,31 @@
         </div>
     </div>
     <div class="row" id="SeccionAsociarGrupo" style="display: none;">
+        <h2 class="colorSky col-md-12">Asociar Usuario a Grupos</h2>
+        <div class="col-md-10">
+            <table class="table table-hover tablaMantenedores" id="tbAsociarGrupo">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Nombre Grupo</th>
+                        <th>Tipo</th>
+                        <th>Ubicación</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="col-md-2">
+            <div id="btnBuscarGrupo" class="btn btn-primary pull-right btn-sm">
+                <span class="glyphicon glyphicon-search"></span>
+                <input type="button" value="Buscar Grupos" class="btnInput" id="BuscarGrupo" />
+            </div>
+        </div>
         <div class="col-md-12">
-            <h2 class="page-header colorSky col-md-12">Asociar Usuario a Grupos</h2>
-            <div class="form-horizontal">
-                <div class="panel-group">
-                    <div class="form-group col-md-12">
-                        <table class="table table-hover tablaMantenedores" id="tbAsociarGrupo">
-                            <thead>
-                                <tr>
-                                    <th>Nº</th>
-                                    <th>Nombre Grupo</th>
-                                    <th>Tipo</th>
-                                    <th>Descripción</th>
-                                    <th class="acciones text-center">Asignar</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
+            <div id="btnGrabarGrupo" class="btn btn-primary pull-right btn-sm">
+                <span class="glyphicon glyphicon-plus"></span>
+                <input type="button" value="Grabar Grupos" class="btnInput" id="GrabarGrupo" />
             </div>
         </div>
     </div>
@@ -417,10 +423,27 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="myModalGrupo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h2 class="modal-title" id="myModalLabelGrupo">Buscar y asignar Grupos</h2>
+                </div>
+                <div class="modal-body">
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm" id="btnCerrarGrupo" data-dismiss="modal"><strong>Cerrar</strong></button>
+                </div>
+            </div>
+        </div>
+    </div>
     @Html.HiddenFor(m => m.PatchOu)
     @Html.HiddenFor(m => m.ExisteUsuario)
     <input type="hidden" id="LicenciaSel" value="" />
     <input type="hidden" id="NombreGrupoSel" value="" />
+    <input type="hidden" id="FilaGrupoSel" value="1" />
 }
 <script src="~/Scripts/Fechas/ConfiguracionFecha.js"></script>
 <script src="~/Scripts/FuncionesGenerales.js"></script>
@@ -437,8 +460,8 @@
                 type: "POST",
                 url: '@Url.Action("VerPopupAsignarJefatura", "Home")?cuentaId=' + $("#NombreUsuario").val(),
                 success: function (data) {
-                    $('.modal-body').empty();
-                    $('.modal-body').append(data);
+                    $('#myModal .modal-body').empty();
+                    $('#myModal .modal-body').append(data);
                     $('#myModal').find('.modal').css('width', '90%');
                     $('#myModal').find('.modal-dialog').css('width', '90%');
                     $('#myModal').modal('show');
@@ -453,327 +476,163 @@
             });
         }
 
-            $("#btnSubmit").attr("disabled", true);
-            $("#btnLicE1").attr("disabled", true);
-            $("#btnLicE3").attr("disabled", true);
-            $("#btnLicExO").attr("disabled", true);
-            $("#UpnPrefijo").attr("disabled", false);
-            $("#UpnPrefijo").prop('disabled', 'disabled');
-            $("#CodigoLicencia").attr("disabled", false);
-            $("#CodigoLicencia").prop('disabled', 'disabled');
-            $("#Oficina").attr("disabled", false);
-            $("#Oficina").prop('disabled', 'disabled');
-            $("#Ciudad").attr("disabled", false);
-            $("#Ciudad").prop('disabled', 'disabled');
-            $("#PaisRegion").attr("disabled", false);
-            $("#PaisRegion").prop('disabled', 'disabled');
-            $("#Organizacion").attr("disabled", false);
-            $("#Organizacion").prop('disabled', 'disabled');
-            $("#Cargo").attr("disabled", false);
-            $("#Cargo").prop('disabled', 'disabled');
-            $("#Departamento").attr("disabled", false);
-            $("#Departamento").prop('disabled', 'disabled');
-            $("#UsrCambiaClaveSesion").attr("disabled", false);
-            $("#UsrCambiaClaveSesion").prop('disabled', 'disabled');
-            $("#UsrNoCambiaClave").attr("disabled", false);
-            $("#UsrNoCambiaClave").prop('disabled', 'disabled');
-            $("#ClaveNoExpira").attr("disabled", false);
-            $("#ClaveNoExpira").prop('disabled', 'disabled');
-            $("#AlmacenarClave").attr("disabled", false);
-            $("#AlmacenarClave").prop('disabled', 'disabled');
+        $('#btnBuscarGrupo').off('click').click(function () {
+            VerPopupAsignarGrupo();
+        });
 
-            $('#jstree').jstree();
-
-            $("#UsrCambiaClaveSesion").off('click').click(function () {
-                if ($('#UsrCambiaClaveSesion').is(":checked")) {
-                    $("#UsrNoCambiaClave").attr("checked", false);
-                    $("#UsrNoCambiaClave").attr("disabled", true);
-                    $("#ClaveNoExpira").attr("checked", false);
-                    $("#ClaveNoExpira").attr("disabled", true);
-                }
-                else
-                {
-                    $("#UsrNoCambiaClave").attr("checked", false);
-                    $("#UsrNoCambiaClave").attr("disabled", false);
-                    $("#ClaveNoExpira").attr("checked", false);
-                    $("#ClaveNoExpira").attr("disabled", false);
+        function VerPopupAsignarGrupo()
+        {
+            $("#loading-modal").show();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("VerPopupAsignarGrupo", "Home")?cuentaId=' + $("#NombreUsuario").val(),
+                success: function (data) {
+                    $('#myModalGrupo .modal-body').empty();
+                    $('#myModalGrupo .modal-body').append(data);
+                    $('#myModalGrupo').find('.modal').css('width', '90%');
+                    $('#myModalGrupo').find('.modal-dialog').css('width', '90%');
+                    $('#myModalGrupo').modal('show');
+                    $("#loading-modal").hide();
+                },
+                error: function (jqXHR, textStatus, errorThown) {
+                    $("#loading-modal").hide();
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThown);
                 }
             });
+        }
 
-            $("#UsrNoCambiaClave,#ClaveNoExpira").off('click').click(function () {
-                if ($('#UsrNoCambiaClave').is(":checked") || $('#ClaveNoExpira').is(":checked")) {
-                    $("#UsrCambiaClaveSesion").attr("checked", false);
-                    $("#UsrCambiaClaveSesion").attr("disabled", true);
-                }
-                else
-                {
-                    $("#UsrCambiaClaveSesion").attr("checked", false);
-                    $("#UsrCambiaClaveSesion").attr("disabled", false);
-                }
-            });
+        $("#btnGrabarGrupo").attr("disabled", true);
+        $("#btnSubmit").attr("disabled", true);
+        $("#btnLicE1").attr("disabled", true);
+        $("#btnLicE3").attr("disabled", true);
+        //$("#btnLicExO").attr("disabled", true);
+        $("#UpnPrefijo").attr("disabled", false);
+        $("#UpnPrefijo").prop('disabled', 'disabled');
+        $("#CodigoLicencia").attr("disabled", false);
+        $("#CodigoLicencia").prop('disabled', 'disabled');
+        $("#Oficina").attr("disabled", false);
+        $("#Oficina").prop('disabled', 'disabled');
+        $("#Ciudad").attr("disabled", false);
+        $("#Ciudad").prop('disabled', 'disabled');
+        $("#PaisRegion").attr("disabled", false);
+        $("#PaisRegion").prop('disabled', 'disabled');
+        $("#Organizacion").attr("disabled", false);
+        $("#Organizacion").prop('disabled', 'disabled');
+        $("#Cargo").attr("disabled", false);
+        $("#Cargo").prop('disabled', 'disabled');
+        $("#Departamento").attr("disabled", false);
+        $("#Departamento").prop('disabled', 'disabled');
+        $("#UsrCambiaClaveSesion").attr("disabled", false);
+        $("#UsrCambiaClaveSesion").prop('disabled', 'disabled');
+        $("#UsrNoCambiaClave").attr("disabled", false);
+        $("#UsrNoCambiaClave").prop('disabled', 'disabled');
+        $("#ClaveNoExpira").attr("disabled", false);
+        $("#ClaveNoExpira").prop('disabled', 'disabled');
+        $("#AlmacenarClave").attr("disabled", false);
+        $("#AlmacenarClave").prop('disabled', 'disabled');
 
-            //Seleccionar OU desde el Arbol
-            $('#jstree').on("changed.jstree", function (e, data) {
-                $("#tbAsociarGrupo tbody").html('');
-                $("#SeccionAsociarGrupo").show();
-                var ldap = data.selected[0];
-                $("#PatchOu").val(ldap);
-                //if (ldap != null) {
-                //    listaGruposAdByOu(ldap);
-                //}
-            });
+        $('#jstree').jstree();
 
-            $("#Apellidos").off('blur').blur(function () {
-                var nombreCompleto = $("#Apellidos").val() + ", " + $("#Nombres").val();
-                $("#NombreCompleto").val(nombreCompleto);
-            });
+        $("#UsrCambiaClaveSesion").off('click').click(function () {
+            if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                $("#UsrNoCambiaClave").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("disabled", true);
+                $("#ClaveNoExpira").attr("checked", false);
+                $("#ClaveNoExpira").attr("disabled", true);
+            }
+            else
+            {
+                $("#UsrNoCambiaClave").attr("checked", false);
+                $("#UsrNoCambiaClave").attr("disabled", false);
+                $("#ClaveNoExpira").attr("checked", false);
+                $("#ClaveNoExpira").attr("disabled", false);
+            }
+        });
 
-            $("#UpnPrefijo").off('change').change(function () {
-                var correo = $("#NombreUsuario").val() + $("#UpnPrefijo").val();
-                $("#Correo").val(correo);
-            });
+        $("#UsrNoCambiaClave,#ClaveNoExpira").off('click').click(function () {
+            if ($('#UsrNoCambiaClave').is(":checked") || $('#ClaveNoExpira').is(":checked")) {
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+                $("#UsrCambiaClaveSesion").attr("disabled", true);
+            }
+            else
+            {
+                $("#UsrCambiaClaveSesion").attr("checked", false);
+                $("#UsrCambiaClaveSesion").attr("disabled", false);
+            }
+        });
 
-            $("#btnVerificar").off('click').click(function () {
-                $("#loading-modal").show();
-                $("#SeccionAsociarGrupo").hide();
-                if ($("#NombreUsuario").val() != '') {
-                    setTimeout(function () {
-                        validarUsuario();
-                    }, 1000);
-                } else {
-                    setTimeout(function () {
-                        $("#loading-modal").hide();
+        //Seleccionar OU desde el Arbol
+        $('#jstree').on("changed.jstree", function (e, data) {
+            $("#tbAsociarGrupo tbody").html('');            
+            var ldap = data.selected[0];
+            $("#PatchOu").val(ldap);            
+        });
+
+        $("#Apellidos").off('blur').blur(function () {
+            var nombreCompleto = $("#Apellidos").val() + ", " + $("#Nombres").val();
+            $("#NombreCompleto").val(nombreCompleto);
+        });
+
+        $("#UpnPrefijo").off('change').change(function () {
+            var correo = $("#NombreUsuario").val() + $("#UpnPrefijo").val();
+            $("#Correo").val(correo);
+        });
+
+        $("#btnVerificar").off('click').click(function () {
+            $("#loading-modal").show();
+            $("#SeccionAsociarGrupo").hide();
+            if ($("#NombreUsuario").val() != '') {
+                setTimeout(function () {
+                    validarUsuario();
+                }, 1000);
+            } else {
+                setTimeout(function () {
+                    $("#loading-modal").hide();
+                    BootstrapDialog.alert({
+                        title: '¡Advertencia!',
+                        message: '<strong>Debe ingresar un ID de usuario</strong>',
+                        type: BootstrapDialog.TYPE_WARNING
+                    });
+                }, 1000);
+            }
+        });
+
+
+        function validarUsuario() {
+            var nombreUsuario = $("#NombreUsuario").val();
+            $('#jstree').jstree("deselect_all");
+            var codAdm = '@Convert.ToInt32(EnumPerfilUsuario.ADMP)';
+            var codPerfil = '@SessionViewModel.Usuario.PerfilId';
+
+            $.ajax({
+                url: '@Url.Action("VerificarUsuario", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ nombreUsuario: nombreUsuario }),
+                success: function (data) {
+                    if (data.Session == false)
+                    {
                         BootstrapDialog.alert({
-                            title: '¡Advertencia!',
-                            message: '<strong>Debe ingresar un ID de usuario</strong>',
+                            title: '¡Validación Sesión!',
+                            message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
                             type: BootstrapDialog.TYPE_WARNING
                         });
-                    }, 1000);
-                }
-            });
-
-
-            function validarUsuario() {
-                var nombreUsuario = $("#NombreUsuario").val();
-                $('#jstree').jstree("deselect_all");                
-                var codAdm = '@Convert.ToInt32(EnumPerfilUsuario.ADMP)';
-                var codPerfil = '@SessionViewModel.Usuario.PerfilId';                
-
-                $.ajax({
-                    url: '@Url.Action("VerificarUsuario", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ nombreUsuario: nombreUsuario }),
-                    success: function (data) {
-                        if (data.Session == false)
-                        {
-                            BootstrapDialog.alert({
-                                title: '¡Validación Sesión!',
-                                message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-                                type: BootstrapDialog.TYPE_WARNING
-                            });
-                            return;
-                        }
-                        if (data.Validar) {
-                            //Seleccionar nodo existente
-                            var ubicGrupo = data.DatosUsuario.DistinguishedName;
-                            var myLiId = '#' + ubicGrupo;
-                            $("#jstree").jstree("select_node", myLiId);
-                            $("#PatchOu").val(ubicGrupo);
-                            $("#btnSubmit").attr("disabled", true);
-                            $("#UpnPrefijo").attr("disabled", true);
-                            $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);
-                            $("#Nombres").attr("disabled", true);
-                            $("#Nombres").val(data.DatosUsuario.GivenName);
-                            $("#Apellidos").attr("disabled", true);
-                            $("#Apellidos").val(data.DatosUsuario.Surname);
-                            $("#NombreCompleto").attr("disabled", true);
-                            $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
-                            $("#CentroCosto").attr("disabled", true);
-                            $("#CentroCosto").val(data.DatosUsuario.Description);
-                            $("#Clave").attr("disabled", true);
-                            $("#Clave").val(data.Clave);
-                            $("#Correo").attr("disabled", true);
-                            $("#Correo").val(data.DatosUsuario.EmailAddress);
-                            $("#ExisteUsuario").val(true);
-                            $("#CodigoLicencia").attr("disabled", true);
-                            $("#CodigoLicencia").val(data.CodigoLicencia);
-
-                            //Nuevos campos
-                            $("#Anexo").val(data.DatosUsuario.TelephoneNumber);
-                            $("#Anexo").attr("disabled", true);
-                            $("#Cumpleanos").val(data.DatosUsuario.WwwHomePage);
-                            $("#Cumpleanos").attr("disabled", true);
-                            $("#CentroCosto").val(data.DatosUsuario.Description);
-                            $("#CentroCosto").attr("disabled", true);
-                            $("#Oficina").val(data.DatosUsuario.Office);
-                            $("#Oficina").attr("disabled", true);
-                            $("#Ciudad").val(data.DatosUsuario.L);
-                            $("#Ciudad").attr("disabled", true);
-                            $("#PaisRegion").val(data.DatosUsuario.C);
-                            $("#PaisRegion").attr("disabled", true);
-                            $("#DireccionSucursal").val(data.DatosUsuario.StreetAddress);
-                            $("#DireccionSucursal").attr("disabled", true);
-                            $("#Ingreso").val(data.DatosUsuario.PostOfficeBox);
-                            $("#Ingreso").attr("disabled", true);
-                            $("#Cargo").val(data.DatosUsuario.Title);
-                            $("#Cargo").attr("disabled", true);
-                            $("#Departamento").val(data.DatosUsuario.Department);
-                            $("#Departamento").attr("disabled", true);
-                            $("#Organizacion").val(data.DatosUsuario.Company);
-                            $("#Organizacion").attr("disabled", true);
-                            $("#Jefatura").val(data.DatosUsuario.Manager);
-                            $("#JefaturaCn").val(data.DatosUsuario.ManagerCn);
-                            $("#Movil").val(data.DatosUsuario.Mobile);
-                            $("#Movil").attr("disabled", true);
-                            $("#Domicilio").val(data.DatosUsuario.HomePhone);
-                            $("#Domicilio").attr("disabled", true);                            
-                            $("#PinHp").val(data.DatosUsuario.FacsimileTelephoneNumber);
-                            $("#PinHp").attr("disabled", true);
-                            $("#TelefIp").val(data.DatosUsuario.IpPhone);
-                            $("#TelefIp").attr("disabled", true);
-                            $("#Notas").val(data.DatosUsuario.InfoNote);
-                            $("#Notas").attr("disabled", true);
-                            $("#Rut").val(data.DatosUsuario.EmployeeID);
-                            $("#Rut").attr("disabled", true);
-                            $("#UsrCambiaClaveSesion").attr("checked", true);
-                            $("#UsrCambiaClaveSesion").attr("disabled", true);
-                            $("#UsrNoCambiaClave").attr("checked", true);
-                            $("#UsrNoCambiaClave").attr("disabled", true);
-                            $("#ClaveNoExpira").attr("checked", true);
-                            $("#ClaveNoExpira").attr("disabled", true);
-                            $("#AlmacenarClave").attr("checked", true);
-                            $("#AlmacenarClave").attr("disabled", true);
-
-                            if (data.DatosUsuario.UserCannotChangePassword == true) {
-                                $("#UsrNoCambiaClave").prop("checked");
-                                $("#UsrNoCambiaClave").attr("checked", true);
-                                $("#UsrNoCambiaClave")[0].checked = true;
-                            }
-                            else {
-                                $("#UsrNoCambiaClave").attr("checked", false);
-                            }
-
-                            if (data.DatosUsuario.PasswordNeverExpires == true) {
-                                $("#ClaveNoExpira").prop("checked");
-                                $("#ClaveNoExpira").attr("checked", true);
-                                $("#ClaveNoExpira")[0].checked = true;
-                            }
-                            else {
-                                $("#ClaveNoExpira").attr("checked", false);
-                            }
-
-                            if (data.DatosUsuario.AllowReversiblePasswordEncryption == true) {
-                                $("#AlmacenarClave").prop("checked");
-                                $("#AlmacenarClave").attr("checked", true);
-                                $("#AlmacenarClave")[0].checked = true;
-                            }
-                            else {
-                                $("#AlmacenarClave").attr("checked", false);
-                            }
-
-                            if (data.DatosUsuario.LastPasswordSet == true) {
-                                $("#UsrCambiaClaveSesion").prop("checked");
-                                $("#UsrCambiaClaveSesion").attr("checked", true);
-                                $("#UsrCambiaClaveSesion")[0].checked = true;
-                            }
-                            else {
-                                $("#UsrCambiaClaveSesion").attr("checked", false);
-                            }
-
-                            $("#SeccionGrupo").hide();
-                            $("#SeccionAsociarGrupo").hide();
-
-                            BootstrapDialog.alert({
-                                title: '¡Verificación Exitosa!',
-                                message: '<strong>Usuario Existe y cuenta se encuentra en estado ' + data.DatosUsuario.EstadoCuenta + '</strong>',
-                                type: BootstrapDialog.TYPE_SUCCESS
-                            });
-                        } else {
-                            if (codAdm == codPerfil)
-                            {
-                                $("#btnSubmit").attr("disabled", false);
-                                $("#UpnPrefijo").attr("disabled", false);
-                                $("#Nombres").val("");
-                                $("#Nombres").removeAttr("disabled");
-                                $("#Apellidos").val("");
-                                $("#Apellidos").removeAttr("disabled");
-                                $("#Clave").val("");
-                                $("#Clave").removeAttr("disabled");
-                                $("#Licencia").attr("disabled", "disabled");
-                                $("#Ou").attr("disabled", "disabled");
-                                $("#NombreCompleto").val("");
-                                $("#NombreCompleto").attr("disabled", "disabled");
-                                $("#Correo").val("");
-                                $("#Correo").attr("disabled", "disabled");
-                                $("#ExisteUsuario").val(false);
-                                $("#CodigoLicencia").attr("disabled", false);
-                                $("#CodigoLicencia").val(data.CodigoLicencia);
-
-                                //Nuevos campos
-                                $("#Anexo").val("");
-                                $("#Anexo").attr("disabled", false);
-                                $("#Cumpleanos").val("");
-                                $("#Cumpleanos").attr("disabled", false);
-                                $("#CentroCosto").val("");
-                                $("#CentroCosto").attr("disabled", false);
-                                $("#Oficina").attr("disabled", false);
-                                $("#Ciudad").attr("disabled", false);
-                                $("#PaisRegion").attr("disabled", false);
-                                $("#DireccionSucursal").val("");
-                                $("#DireccionSucursal").attr("disabled", false);
-                                $("#Ingreso").val("");
-                                $("#Ingreso").attr("disabled", false);
-                                $("#Cargo").attr("disabled", false);
-                                $("#Departamento").attr("disabled", false);
-                                $("#Organizacion").attr("disabled", false);
-                                $("#Jefatura").val("");
-                                $("#JefaturaCn").val("");
-                                $("#Movil").val("");
-                                $("#Movil").attr("disabled", false);
-                                $("#Domicilio").val("");
-                                $("#Domicilio").attr("disabled", false);
-                                $("#PinHp").val("");
-                                $("#PinHp").attr("disabled", false);
-                                $("#TelefIp").val("");
-                                $("#TelefIp").attr("disabled", false);
-                                $("#Notas").val("");
-                                $("#Notas").attr("disabled", false);
-                                $("#Rut").val("");
-                                $("#Rut").attr("disabled", false);
-                                $("#UsrCambiaClaveSesion").attr("checked", false);
-                                $("#UsrCambiaClaveSesion").attr("disabled", false);
-                                $("#UsrNoCambiaClave").attr("checked", false);
-                                $("#UsrNoCambiaClave").attr("disabled", false);
-                                $("#ClaveNoExpira").attr("checked", false);
-                                $("#ClaveNoExpira").attr("disabled", false);
-                                $("#AlmacenarClave").attr("checked", false);
-                                $("#AlmacenarClave").attr("disabled", false);
-
-                                BootstrapDialog.alert({
-                                    title: '¡Verificación Exitosa!',
-                                    message: '<strong>Usuario No Existe</strong>',
-                                    type: BootstrapDialog.TYPE_SUCCESS
-                                });
-                            }                            
-                            else {
-                                BootstrapDialog.alert({
-                                    title: '¡Verificación Exitosa!',
-                                    message: '<strong>Usuario No Existe. Perfil conectado no tiene acceso para crear cuentas.</strong>',
-                                    type: BootstrapDialog.TYPE_SUCCESS
-                                });
-                            }                            
-                        }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                    },
-                    error: function () {
+                        return;
+                    }
+                    if (data.Validar) {
+                        //Seleccionar nodo existente
+                        var ubicGrupo = data.DatosUsuario.DistinguishedName;
+                        var myLiId = '#' + ubicGrupo;
+                        $("#jstree").jstree("select_node", myLiId);
+                        $("#PatchOu").val(ubicGrupo);
                         $("#btnSubmit").attr("disabled", true);
                         $("#UpnPrefijo").attr("disabled", true);
+                        $("#UpnPrefijo").val(data.DatosUsuario.UpnPrefijo);
                         $("#Nombres").attr("disabled", true);
                         $("#Nombres").val(data.DatosUsuario.GivenName);
                         $("#Apellidos").attr("disabled", true);
@@ -782,148 +641,377 @@
                         $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
                         $("#CentroCosto").attr("disabled", true);
                         $("#CentroCosto").val(data.DatosUsuario.Description);
+                        $("#Clave").attr("disabled", true);
+                        $("#Clave").val(data.Clave);
                         $("#Correo").attr("disabled", true);
                         $("#Correo").val(data.DatosUsuario.EmailAddress);
                         $("#ExisteUsuario").val(true);
-                        $("#CodigoLicencia").val(true);
+                        $("#CodigoLicencia").attr("disabled", true);
                         $("#CodigoLicencia").val(data.CodigoLicencia);
+
+                        //Nuevos campos
+                        $("#Anexo").val(data.DatosUsuario.TelephoneNumber);
+                        $("#Anexo").attr("disabled", true);
+                        $("#Cumpleanos").val(data.DatosUsuario.WwwHomePage);
+                        $("#Cumpleanos").attr("disabled", true);
+                        $("#CentroCosto").val(data.DatosUsuario.Description);
+                        $("#CentroCosto").attr("disabled", true);
+                        $("#Oficina").val(data.DatosUsuario.Office);
+                        $("#Oficina").attr("disabled", true);
+                        $("#Ciudad").val(data.DatosUsuario.L);
+                        $("#Ciudad").attr("disabled", true);
+                        $("#PaisRegion").val(data.DatosUsuario.C);
+                        $("#PaisRegion").attr("disabled", true);
+                        $("#DireccionSucursal").val(data.DatosUsuario.StreetAddress);
+                        $("#DireccionSucursal").attr("disabled", true);
+                        $("#Ingreso").val(data.DatosUsuario.PostOfficeBox);
+                        $("#Ingreso").attr("disabled", true);
+                        $("#Cargo").val(data.DatosUsuario.Title);
+                        $("#Cargo").attr("disabled", true);
+                        $("#Departamento").val(data.DatosUsuario.Department);
+                        $("#Departamento").attr("disabled", true);
+                        $("#Organizacion").val(data.DatosUsuario.Company);
+                        $("#Organizacion").attr("disabled", true);
+                        $("#Jefatura").val(data.DatosUsuario.Manager);
+                        $("#JefaturaCn").val(data.DatosUsuario.ManagerCn);
+                        $("#Movil").val(data.DatosUsuario.Mobile);
+                        $("#Movil").attr("disabled", true);
+                        $("#Domicilio").val(data.DatosUsuario.HomePhone);
+                        $("#Domicilio").attr("disabled", true);
+                        $("#PinHp").val(data.DatosUsuario.FacsimileTelephoneNumber);
+                        $("#PinHp").attr("disabled", true);
+                        $("#TelefIp").val(data.DatosUsuario.IpPhone);
+                        $("#TelefIp").attr("disabled", true);
+                        $("#Notas").val(data.DatosUsuario.InfoNote);
+                        $("#Notas").attr("disabled", true);
+                        $("#Rut").val(data.DatosUsuario.EmployeeID);
+                        $("#Rut").attr("disabled", true);
+                        $("#UsrCambiaClaveSesion").attr("checked", true);
+                        $("#UsrCambiaClaveSesion").attr("disabled", true);
+                        $("#UsrNoCambiaClave").attr("checked", true);
+                        $("#UsrNoCambiaClave").attr("disabled", true);
+                        $("#ClaveNoExpira").attr("checked", true);
+                        $("#ClaveNoExpira").attr("disabled", true);
+                        $("#AlmacenarClave").attr("checked", true);
+                        $("#AlmacenarClave").attr("disabled", true);
+
+                        if (data.DatosUsuario.UserCannotChangePassword == true) {
+                            $("#UsrNoCambiaClave").prop("checked");
+                            $("#UsrNoCambiaClave").attr("checked", true);
+                            $("#UsrNoCambiaClave")[0].checked = true;
+                        }
+                        else {
+                            $("#UsrNoCambiaClave").attr("checked", false);
+                        }
+
+                        if (data.DatosUsuario.PasswordNeverExpires == true) {
+                            $("#ClaveNoExpira").prop("checked");
+                            $("#ClaveNoExpira").attr("checked", true);
+                            $("#ClaveNoExpira")[0].checked = true;
+                        }
+                        else {
+                            $("#ClaveNoExpira").attr("checked", false);
+                        }
+
+                        if (data.DatosUsuario.AllowReversiblePasswordEncryption == true) {
+                            $("#AlmacenarClave").prop("checked");
+                            $("#AlmacenarClave").attr("checked", true);
+                            $("#AlmacenarClave")[0].checked = true;
+                        }
+                        else {
+                            $("#AlmacenarClave").attr("checked", false);
+                        }
+
+                        if (data.DatosUsuario.LastPasswordSet == true) {
+                            $("#UsrCambiaClaveSesion").prop("checked");
+                            $("#UsrCambiaClaveSesion").attr("checked", true);
+                            $("#UsrCambiaClaveSesion")[0].checked = true;
+                        }
+                        else {
+                            $("#UsrCambiaClaveSesion").attr("checked", false);
+                        }
+
                         $("#SeccionGrupo").hide();
                         $("#SeccionAsociarGrupo").hide();
 
-                        //Nuevos campos
-                        $("#Anexo").val("");
-                        $("#Anexo").attr("disabled", true);
-                        $("#Cumpleanos").val("");
-                        $("#Cumpleanos").attr("disabled", true);
-                        $("#Oficina").attr("disabled", true);
-                        $("#Ciudad").attr("disabled", true);
-                        $("#PaisRegion").attr("disabled", true);
-                        $("#DireccionSucursal").val("");
-                        $("#DireccionSucursal").attr("disabled", true);
-                        $("#Ingreso").val("");
-                        $("#Ingreso").attr("disabled", true);
-                        $("#Cargo").attr("disabled", true);
-                        $("#Departamento").attr("disabled", true);
-                        $("#Organizacion").attr("disabled", true);
-                        $("#Jefatura").val("");
-                        $("#JefaturaCn").val("");                        
-                        $("#Movil").val("");
-                        $("#Movil").attr("disabled", true);
-                        $("#Domicilio").val("");
-                        $("#Domicilio").attr("disabled", true);
-                        $("#PinHp").val("");
-                        $("#PinHp").attr("disabled", true);
-                        $("#TelefIp").val("");
-                        $("#TelefIp").attr("disabled", true);
-                        $("#Notas").val("");
-                        $("#Notas").attr("disabled", true);
-                        $("#Rut").val("");
-                        $("#Rut").attr("disabled", true);
-                        $("#UsrCambiaClaveSesion").attr("checked", false);
-                        $("#UsrCambiaClaveSesion").attr("disabled", true);
-                        $("#UsrNoCambiaClave").attr("checked", false);
-                        $("#UsrNoCambiaClave").attr("disabled", true);
-                        $("#ClaveNoExpira").attr("checked", false);
-                        $("#ClaveNoExpira").attr("disabled", true);
-                        $("#AlmacenarClave").attr("checked", false);
-                        $("#AlmacenarClave").attr("disabled", true);
-
                         BootstrapDialog.alert({
-                            title: '¡Verificación Erronea!',
-                            message: '<strong>Error en la verificación.</strong>',
-                            type: BootstrapDialog.TYPE_DANGER
+                            title: '¡Verificación Exitosa!',
+                            message: '<strong>Usuario Existe y cuenta se encuentra en estado ' + data.DatosUsuario.EstadoCuenta + '</strong>',
+                            type: BootstrapDialog.TYPE_SUCCESS
                         });
+                    } else {
+                        if (codAdm == codPerfil)
+                        {
+                            $("#btnSubmit").attr("disabled", false);
+                            $("#UpnPrefijo").attr("disabled", false);
+                            $("#Nombres").val("");
+                            $("#Nombres").removeAttr("disabled");
+                            $("#Apellidos").val("");
+                            $("#Apellidos").removeAttr("disabled");
+                            $("#Clave").val("");
+                            $("#Clave").removeAttr("disabled");
+                            $("#Licencia").attr("disabled", "disabled");
+                            $("#Ou").attr("disabled", "disabled");
+                            $("#NombreCompleto").val("");
+                            $("#NombreCompleto").attr("disabled", "disabled");
+                            $("#Correo").val("");
+                            $("#Correo").attr("disabled", "disabled");
+                            $("#ExisteUsuario").val(false);
+                            $("#CodigoLicencia").attr("disabled", false);
+                            $("#CodigoLicencia").val(data.CodigoLicencia);
+
+                            //Nuevos campos
+                            $("#Anexo").val("");
+                            $("#Anexo").attr("disabled", false);
+                            $("#Cumpleanos").val("");
+                            $("#Cumpleanos").attr("disabled", false);
+                            $("#CentroCosto").val("");
+                            $("#CentroCosto").attr("disabled", false);
+                            $("#Oficina").attr("disabled", false);
+                            $("#Ciudad").attr("disabled", false);
+                            $("#PaisRegion").attr("disabled", false);
+                            $("#DireccionSucursal").val("");
+                            $("#DireccionSucursal").attr("disabled", false);
+                            $("#Ingreso").val("");
+                            $("#Ingreso").attr("disabled", false);
+                            $("#Cargo").attr("disabled", false);
+                            $("#Departamento").attr("disabled", false);
+                            $("#Organizacion").attr("disabled", false);
+                            $("#Jefatura").val("");
+                            $("#JefaturaCn").val("");
+                            $("#Movil").val("");
+                            $("#Movil").attr("disabled", false);
+                            $("#Domicilio").val("");
+                            $("#Domicilio").attr("disabled", false);
+                            $("#PinHp").val("");
+                            $("#PinHp").attr("disabled", false);
+                            $("#TelefIp").val("");
+                            $("#TelefIp").attr("disabled", false);
+                            $("#Notas").val("");
+                            $("#Notas").attr("disabled", false);
+                            $("#Rut").val("");
+                            $("#Rut").attr("disabled", false);
+                            $("#UsrCambiaClaveSesion").attr("checked", false);
+                            $("#UsrCambiaClaveSesion").attr("disabled", false);
+                            $("#UsrNoCambiaClave").attr("checked", false);
+                            $("#UsrNoCambiaClave").attr("disabled", false);
+                            $("#ClaveNoExpira").attr("checked", false);
+                            $("#ClaveNoExpira").attr("disabled", false);
+                            $("#AlmacenarClave").attr("checked", false);
+                            $("#AlmacenarClave").attr("disabled", false);
+
+                            $("#SeccionGrupo").hide();
+                            $("#SeccionAsociarGrupo").hide();
+
+                            BootstrapDialog.alert({
+                                title: '¡Verificación Exitosa!',
+                                message: '<strong>Usuario No Existe</strong>',
+                                type: BootstrapDialog.TYPE_SUCCESS
+                            });
+                        }
+                        else {
+                            BootstrapDialog.alert({
+                                title: '¡Verificación Exitosa!',
+                                message: '<strong>Usuario No Existe. Perfil conectado no tiene acceso para crear cuentas.</strong>',
+                                type: BootstrapDialog.TYPE_SUCCESS
+                            });
+                        }
                     }
-                });
+                },
+                complete: function () {
+                    $("#loading-modal").hide();
+                },
+                error: function () {
+                    $("#btnSubmit").attr("disabled", true);
+                    $("#UpnPrefijo").attr("disabled", true);
+                    $("#Nombres").attr("disabled", true);
+                    $("#Nombres").val(data.DatosUsuario.GivenName);
+                    $("#Apellidos").attr("disabled", true);
+                    $("#Apellidos").val(data.DatosUsuario.Surname);
+                    $("#NombreCompleto").attr("disabled", true);
+                    $("#NombreCompleto").val(data.DatosUsuario.DisplayName);
+                    $("#CentroCosto").attr("disabled", true);
+                    $("#CentroCosto").val(data.DatosUsuario.Description);
+                    $("#Correo").attr("disabled", true);
+                    $("#Correo").val(data.DatosUsuario.EmailAddress);
+                    $("#ExisteUsuario").val(true);
+                    $("#CodigoLicencia").val(true);
+                    $("#CodigoLicencia").val(data.CodigoLicencia);
+                    $("#SeccionGrupo").hide();
+                    $("#SeccionAsociarGrupo").hide();
+
+                    //Nuevos campos
+                    $("#Anexo").val("");
+                    $("#Anexo").attr("disabled", true);
+                    $("#Cumpleanos").val("");
+                    $("#Cumpleanos").attr("disabled", true);
+                    $("#Oficina").attr("disabled", true);
+                    $("#Ciudad").attr("disabled", true);
+                    $("#PaisRegion").attr("disabled", true);
+                    $("#DireccionSucursal").val("");
+                    $("#DireccionSucursal").attr("disabled", true);
+                    $("#Ingreso").val("");
+                    $("#Ingreso").attr("disabled", true);
+                    $("#Cargo").attr("disabled", true);
+                    $("#Departamento").attr("disabled", true);
+                    $("#Organizacion").attr("disabled", true);
+                    $("#Jefatura").val("");
+                    $("#JefaturaCn").val("");
+                    $("#Movil").val("");
+                    $("#Movil").attr("disabled", true);
+                    $("#Domicilio").val("");
+                    $("#Domicilio").attr("disabled", true);
+                    $("#PinHp").val("");
+                    $("#PinHp").attr("disabled", true);
+                    $("#TelefIp").val("");
+                    $("#TelefIp").attr("disabled", true);
+                    $("#Notas").val("");
+                    $("#Notas").attr("disabled", true);
+                    $("#Rut").val("");
+                    $("#Rut").attr("disabled", true);
+                    $("#UsrCambiaClaveSesion").attr("checked", false);
+                    $("#UsrCambiaClaveSesion").attr("disabled", true);
+                    $("#UsrNoCambiaClave").attr("checked", false);
+                    $("#UsrNoCambiaClave").attr("disabled", true);
+                    $("#ClaveNoExpira").attr("checked", false);
+                    $("#ClaveNoExpira").attr("disabled", true);
+                    $("#AlmacenarClave").attr("checked", false);
+                    $("#AlmacenarClave").attr("disabled", true);
+
+                    BootstrapDialog.alert({
+                        title: '¡Verificación Erronea!',
+                        message: '<strong>Error en la verificación.</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
+                    });
+                }
+            });
+        }
+
+        $("#btnSubmit").off('click').click(function () {
+            $("#loading-modal").show();
+            $("#Correo").val($("#NombreUsuario").val() + $("#UpnPrefijo").val())
+            setTimeout(function () {
+                guardarSincronizarUsuario();
+            }, 1000);
+        });
+
+        function guardarSincronizarUsuario() {
+            var usrCambiaClaveSesion = false;
+            var usrNoCambiaClave = false;
+            var claveNoExpira = false;
+            var almacenarClave = false;
+
+            if ($('#UsrCambiaClaveSesion').is(":checked")) {
+                usrCambiaClaveSesion = true;
+            }
+            if ($('#UsrNoCambiaClave').is(":checked")) {
+                usrNoCambiaClave = true;
+            }
+            if ($('#ClaveNoExpira').is(":checked")) {
+                claveNoExpira = true;
+            }
+            if ($('#AlmacenarClave').is(":checked")) {
+                almacenarClave = true;
             }
 
-            $("#btnSubmit").off('click').click(function () {
-                $("#loading-modal").show();
-                $("#Correo").val($("#NombreUsuario").val() + $("#UpnPrefijo").val())
-                setTimeout(function () {
-                    guardarSincronizarUsuario();
-                }, 1000);
-            });
-
-            function guardarSincronizarUsuario() {
-                var usrCambiaClaveSesion = false;
-                var usrNoCambiaClave = false;
-                var claveNoExpira = false;
-                var almacenarClave = false;
-
-                if ($('#UsrCambiaClaveSesion').is(":checked")) {
-                    usrCambiaClaveSesion = true;
-                }
-                if ($('#UsrNoCambiaClave').is(":checked")) {
-                    usrNoCambiaClave = true;
-                }
-                if ($('#ClaveNoExpira').is(":checked")) {
-                    claveNoExpira = true;
-                }
-                if ($('#AlmacenarClave').is(":checked")) {
-                    almacenarClave = true;
-                }
-
-                var objEnvio =
+            var objEnvio =
+            {
+                model:
                 {
-                    model:
-                    {
-                        'Nombres': $('#Nombres').val(),
-                        'Apellidos': $('#Apellidos').val(),
-                        'NombreUsuario': $('#NombreUsuario').val(),
-                        'Clave': $('#Clave').val(),
-                        'Licencia': $('#LicenciaSel').val(),
-                        'UpnPrefijo': $('#UpnPrefijo').val(),
-                        'NombreCompleto': $('#NombreCompleto').val(),
-                        'Correo': $('#Correo').val(),
-                        'PatchOu': $('#PatchOu').val(),
-                        'ExisteUsuario': $("#ExisteUsuario").val(),
-                        'CodigoLicencia': $("#CodigoLicencia").val(),
-                        'Anexo': $("#Anexo").val(),
-                        'Cumpleanos': $("#Cumpleanos").val(),
-                        'CentroCosto': $("#CentroCosto").val(),
-                        'Oficina': $("#Oficina").val(),
-                        'Ciudad': $("#Ciudad").val(),
-                        'PaisRegion': $("#PaisRegion").val(),
-                        'DireccionSucursal': $("#DireccionSucursal").val(),
-                        'Ingreso': $("#Ingreso").val(),
-                        'Cargo': $("#Cargo").val(),
-                        'Departamento': $("#Departamento").val(),
-                        'Organizacion': $("#Organizacion").val(),
-                        'Jefatura': $("#Jefatura").val(),
-                        'JefaturaCn': $("#JefaturaCn").val(),
-                        'Movil': $("#Movil").val(),
-                        'Domicilio': $("#Domicilio").val(),
-                        'PinHp': $("#PinHp").val(),
-                        'TelefIp': $("#TelefIp").val(),
-                        'Notas': $("#Notas").val(),
-                        'Rut': $("#Rut").val(),
-                        'UsrCambiaClaveSesion': usrCambiaClaveSesion,
-                        'UsrNoCambiaClave': usrNoCambiaClave,
-                        'ClaveNoExpira': claveNoExpira,
-                        'AlmacenarClave': almacenarClave
+                    'Nombres': $('#Nombres').val(),
+                    'Apellidos': $('#Apellidos').val(),
+                    'NombreUsuario': $('#NombreUsuario').val(),
+                    'Clave': $('#Clave').val(),
+                    'Licencia': $('#LicenciaSel').val(),
+                    'UpnPrefijo': $('#UpnPrefijo').val(),
+                    'NombreCompleto': $('#NombreCompleto').val(),
+                    'Correo': $('#Correo').val(),
+                    'PatchOu': $('#PatchOu').val(),
+                    'ExisteUsuario': $("#ExisteUsuario").val(),
+                    'CodigoLicencia': $("#CodigoLicencia").val(),
+                    'Anexo': $("#Anexo").val(),
+                    'Cumpleanos': $("#Cumpleanos").val(),
+                    'CentroCosto': $("#CentroCosto").val(),
+                    'Oficina': $("#Oficina").val(),
+                    'Ciudad': $("#Ciudad").val(),
+                    'PaisRegion': $("#PaisRegion").val(),
+                    'DireccionSucursal': $("#DireccionSucursal").val(),
+                    'Ingreso': $("#Ingreso").val(),
+                    'Cargo': $("#Cargo").val(),
+                    'Departamento': $("#Departamento").val(),
+                    'Organizacion': $("#Organizacion").val(),
+                    'Jefatura': $("#Jefatura").val(),
+                    'JefaturaCn': $("#JefaturaCn").val(),
+                    'Movil': $("#Movil").val(),
+                    'Domicilio': $("#Domicilio").val(),
+                    'PinHp': $("#PinHp").val(),
+                    'TelefIp': $("#TelefIp").val(),
+                    'Notas': $("#Notas").val(),
+                    'Rut': $("#Rut").val(),
+                    'UsrCambiaClaveSesion': usrCambiaClaveSesion,
+                    'UsrNoCambiaClave': usrNoCambiaClave,
+                    'ClaveNoExpira': claveNoExpira,
+                    'AlmacenarClave': almacenarClave
+                }
+            };
+
+            $.ajax({
+                url: '@Url.Action("GuardarSincronizarUsuario", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ model: objEnvio.model }),
+                success: function (data) {
+                    if (data.Session == false) {
+                        BootstrapDialog.alert({
+			                    title: '¡Validación Sesión!',
+			                    message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                    type: BootstrapDialog.TYPE_WARNING
+		                    });
+                        return;
                     }
-                };
 
-                $.ajax({
-                    url: '@Url.Action("GuardarSincronizarUsuario", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ model: objEnvio.model }),
-                    success: function (data) {
-                        if (data.Session == false) {
-                            BootstrapDialog.alert({
-			                        title: '¡Validación Sesión!',
-			                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-			                        type: BootstrapDialog.TYPE_WARNING
-		                        });
-                            return;
-                        }
+                    if (data.Error != '') {
+                        $("#btnSubmit").attr("disabled", false);
 
-                        if (data.Error != '') {
+                        BootstrapDialog.show({
+                            title: 'Error al Guardar Usuario en el AD',
+                            message: '<strong>' + data.Error + '</strong>',
+                            type: BootstrapDialog.TYPE_DANGER,
+                            buttons:
+                            [
+                                {
+                                    label: 'Aceptar',
+                                    cssClass: 'btn-success',
+                                    action: function (dialog) {
+                                        dialog.close();
+                                    }
+                                }
+                            ]
+                        });
+                    } else {
+                        if (data.Validar) {
+                            $("#btnSubmit").attr("disabled", true);
+                            $("#SeccionAsociarGrupo").show();
+
+                            BootstrapDialog.show({
+                                title: '¡Proceso Exitoso!',
+                                message: '<strong>Usuario creado correctamente. Favor asignar Grupo(s) al usuario.</strong>',
+                                type: BootstrapDialog.TYPE_SUCCESS,
+                                buttons:
+                                [
+                                    {
+                                        label: 'Aceptar',
+                                        cssClass: 'btn-success',
+                                        action: function (dialog) {
+                                            dialog.close();
+                                        }
+                                    }
+                                ]
+                            });
+                        } else {
                             $("#btnSubmit").attr("disabled", false);
 
                             BootstrapDialog.show({
@@ -941,178 +1029,96 @@
                                     }
                                 ]
                             });
-                        } else {
-                            if (data.Validar) {
-                                $("#btnSubmit").attr("disabled", true);
-                                $("#SeccionAsociarGrupo").show();
-
-                                BootstrapDialog.show({
-                                    title: '¡Proceso Exitoso!',
-                                    message: '<strong>Usuario creado correctamente. Favor asignar Grupo(s) al usuario.</strong>',
-                                    type: BootstrapDialog.TYPE_SUCCESS,
-                                    buttons:
-                                    [
-                                        {
-                                            label: 'Aceptar',
-                                            cssClass: 'btn-success',
-                                            action: function (dialog) {
-                                                dialog.close();
-                                            }
-                                        }
-                                    ]
-                                });
-                            } else {
-                                $("#btnSubmit").attr("disabled", false);
-
-                                BootstrapDialog.show({
-                                    title: 'Error al Guardar Usuario en el AD',
-                                    message: '<strong>' + data.Error + '</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER,
-                                    buttons:
-                                    [
-                                        {
-                                            label: 'Aceptar',
-                                            cssClass: 'btn-success',
-                                            action: function (dialog) {
-                                                dialog.close();
-                                            }
-                                        }
-                                    ]
-                                });
-                            }
                         }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                        var sOu = $("#PatchOu").val();
-                        listaGruposAdByOu(sOu);
-                    },
-                    error: function (data) {
-                        $("#btnSubmit").attr("disabled", false);
-                        $("#loading-modal").hide();
-
-                        BootstrapDialog.show({
-                            title: 'Error al Guardar Usuario en el AD',
-                            message: '<strong>' + data.Error + '</strong>',
-                            type: BootstrapDialog.TYPE_DANGER,
-                            buttons:
-                            [
-                                {
-                                    label: 'Aceptar',
-                                    cssClass: 'btn-success',
-                                    action: function (dialog) {
-                                        dialog.close();
-                                    }
-                                }
-                            ]
-                        });
                     }
-                });
-            }
+                },
+                complete: function () {
+                    $("#loading-modal").hide();
+                    $('#SeccionAsociarGrupo').show();                    
+                },
+                error: function (data) {
+                    $("#btnSubmit").attr("disabled", false);
+                    $("#loading-modal").hide();
 
-            $("#btnAgregarGrupo").off('click').click(function () {
-                var nombreGrupo = $("#NombreGrupo").val();
-                if (nombreGrupo != '') {
-                    $("#loading-modal").show();
-                    setTimeout(function () {
-                        var msgGrupoIgual = '';
-                        if ($("#NombreGrupoSel").val() != '') {
-                            var nomGrupoSplit = $("#NombreGrupoSel").val().split(',');
-                            for (var i = 0; i < nomGrupoSplit.length; i++) {
-                                var nomGrupoIngresado = nomGrupoSplit[i];
-                                if (nomGrupoIngresado == nombreGrupo) {
-                                    msgGrupoIgual = msgGrupoIgual + " Grupo ingresado  " + nomGrupoIngresado + " ya existe en la búsqueda <br />";
+                    BootstrapDialog.show({
+                        title: 'Error al Guardar Usuario en el AD',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER,
+                        buttons:
+                        [
+                            {
+                                label: 'Aceptar',
+                                cssClass: 'btn-success',
+                                action: function (dialog) {
+                                    dialog.close();
                                 }
                             }
-                        }
-
-                        if (msgGrupoIgual != '') {
-                            $("#loading-modal").hide();
-                            BootstrapDialog.alert({
-                                title: '¡Advertencia!',
-                                message: '<strong>' + msgGrupoIgual + '</strong>',
-                                type: BootstrapDialog.TYPE_WARNING
-                            });
-                        } else {
-                            var nomGrupoSel = $("#NombreGrupoSel").val();
-                            nomGrupoSel = nombreGrupo + ',' + nomGrupoSel;
-                            $("#NombreGrupoSel").val(nomGrupoSel);
-                            buscarAsignarGrupo(nomGrupoSel);
-                        }
-                    }, 1000);
-                } else {
-                    BootstrapDialog.alert({
-                        title: '¡Advertencia!',
-                        message: '<strong>Debe ingresar un nombre de grupo</strong>',
-                        type: BootstrapDialog.TYPE_WARNING
+                        ]
                     });
                 }
             });
+        }
 
-            function listaGruposAdByOu(sOu)
-            {
-                $.ajax({
-                    url: '@Url.Action("ObtenerListaGruposAdOu", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ patchOu: sOu }),
-                    success: function (data) {
-                        if (data.Session == false) {
-                            BootstrapDialog.alert({
-			                        title: '¡Validación Sesión!',
-			                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-			                        type: BootstrapDialog.TYPE_WARNING
-		                        });
-                            return;
-                        }
-
-                        if (data.Error != '') {
-                            $("#loading-modal").hide();
-                            BootstrapDialog.alert({
-                                title: '¡Error al encontrar listado de Grupos en el AD!',
-                                message: '<strong>' + data.Error + '</strong>',
-                                type: BootstrapDialog.TYPE_DANGER
-                            });
-                        }
-                        else {
-                            if (data.GrupoOu != null) {
-                                $('#tbAsociarGrupo .tbody').html('');
-                                var contentido = '';
-
-                                $("#NombreGrupoSel").val('');
-                                var nomGrupoSel = $("#NombreGrupoSel").val();
-
-                                for (var i = 0; i < data.GrupoOu.length; i++) {
-                                    if (data.GrupoOu[i].ExisteGrupo == true) {
-                                        var nomGrupo = "'" + data.GrupoOu[i].NombreGrupo.trim() + "'";
-                                        contentido += '<tr class="trGrupoOu' + i + '">';
-                                        contentido += '<td>' + (data.GrupoOu[i].NumeroGrupo) + '</td>';
-                                        contentido += '<td>' + (data.GrupoOu[i].NombreGrupo == null ? '' : data.GrupoOu[i].NombreGrupo) + '</td>';
-                                        contentido += '<td>' + (data.GrupoOu[i].TipoGrupo == null ? '' : data.GrupoOu[i].TipoGrupo) + '</td>';
-                                        contentido += '<td>' + (data.GrupoOu[i].DescripcionGrupo == null ? '' : data.GrupoOu[i].DescripcionGrupo) + '</td>';
-                                        contentido += '<td class="columnaAcciones textCenter">';
-                                        contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-plus" title="Asignar Grupo a Usuario" onclick="asignarGrupoUsuario(' + i + ', ' + nomGrupo + ')"></a>';
-                                        contentido += '</td></tr>';
-                                        nomGrupoSel = data.GrupoOu[i].NombreGrupo + ',';
-                                    }
-                                }
-                                $('#tbAsociarGrupo tbody').html(contentido);
-                                $("#NombreGrupoSel").val(nomGrupoSel);
-                                $("#loading-modal").hide();
-                            } else {
-                                $("#loading-modal").hide();
-                                BootstrapDialog.alert({
-                                    title: '¡Error al encontrar listado de Grupos en el AD!',
-                                    message: '<strong>No existen Grupos para OU seleccionada.</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
-                                });
+        $("#btnAgregarGrupo").off('click').click(function () {
+            var nombreGrupo = $("#NombreGrupo").val();
+            if (nombreGrupo != '') {
+                $("#loading-modal").show();
+                setTimeout(function () {
+                    var msgGrupoIgual = '';
+                    if ($("#NombreGrupoSel").val() != '') {
+                        var nomGrupoSplit = $("#NombreGrupoSel").val().split(',');
+                        for (var i = 0; i < nomGrupoSplit.length; i++) {
+                            var nomGrupoIngresado = nomGrupoSplit[i];
+                            if (nomGrupoIngresado == nombreGrupo) {
+                                msgGrupoIgual = msgGrupoIgual + " Grupo ingresado  " + nomGrupoIngresado + " ya existe en la búsqueda <br />";
                             }
                         }
-                    },
-                    error: function (data) {
+                    }
+
+                    if (msgGrupoIgual != '') {
+                        $("#loading-modal").hide();
+                        BootstrapDialog.alert({
+                            title: '¡Advertencia!',
+                            message: '<strong>' + msgGrupoIgual + '</strong>',
+                            type: BootstrapDialog.TYPE_WARNING
+                        });
+                    } else {
+                        var nomGrupoSel = $("#NombreGrupoSel").val();
+                        nomGrupoSel = nombreGrupo + ',' + nomGrupoSel;
+                        $("#NombreGrupoSel").val(nomGrupoSel);
+                        buscarAsignarGrupo(nomGrupoSel);
+                    }
+                }, 1000);
+            } else {
+                BootstrapDialog.alert({
+                    title: '¡Advertencia!',
+                    message: '<strong>Debe ingresar un nombre de grupo</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }
+        });
+
+        function listaGruposAdByOu(sOu)
+        {
+            $.ajax({
+                url: '@Url.Action("ObtenerListaGruposAdOu", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ patchOu: sOu }),
+                success: function (data) {
+                    if (data.Session == false) {
+                        BootstrapDialog.alert({
+			                    title: '¡Validación Sesión!',
+			                    message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                    type: BootstrapDialog.TYPE_WARNING
+		                    });
+                        return;
+                    }
+
+                    if (data.Error != '') {
                         $("#loading-modal").hide();
                         BootstrapDialog.alert({
                             title: '¡Error al encontrar listado de Grupos en el AD!',
@@ -1120,234 +1126,132 @@
                             type: BootstrapDialog.TYPE_DANGER
                         });
                     }
-                });
-            }
+                    else {
+                        if (data.GrupoOu != null) {
+                            $('#tbAsociarGrupo .tbody').html('');
+                            var contentido = '';
 
-            function buscarAsignarGrupo(nombreGrupo) {
-                $.ajax({
-                    url: '@Url.Action("ObtenerGrupoAd", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ nomGrupo: nombreGrupo }),
-                    success: function (data) {
-                        if (data.Session == false) {
-                            BootstrapDialog.alert({
-			                        title: '¡Validación Sesión!',
-			                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-			                        type: BootstrapDialog.TYPE_WARNING
-		                        });
-                            return;
-                        }
+                            $("#NombreGrupoSel").val('');
+                            var nomGrupoSel = $("#NombreGrupoSel").val();
 
-                        if (data.Error != '') {
+                            for (var i = 0; i < data.GrupoOu.length; i++) {
+                                if (data.GrupoOu[i].ExisteGrupo == true) {
+                                    var nomGrupo = "'" + data.GrupoOu[i].NombreGrupo.trim() + "'";
+                                    contentido += '<tr class="trGrupoOu' + i + '">';
+                                    contentido += '<td>' + (data.GrupoOu[i].NumeroGrupo) + '</td>';
+                                    contentido += '<td>' + (data.GrupoOu[i].NombreGrupo == null ? '' : data.GrupoOu[i].NombreGrupo) + '</td>';
+                                    contentido += '<td>' + (data.GrupoOu[i].TipoGrupo == null ? '' : data.GrupoOu[i].TipoGrupo) + '</td>';
+                                    contentido += '<td>' + (data.GrupoOu[i].DescripcionGrupo == null ? '' : data.GrupoOu[i].DescripcionGrupo) + '</td>';
+                                    contentido += '<td class="columnaAcciones textCenter">';
+                                    contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-plus" title="Asignar Grupo a Usuario" onclick="asignarGrupoUsuario(' + i + ', ' + nomGrupo + ')"></a>';
+                                    contentido += '</td></tr>';
+                                    nomGrupoSel = data.GrupoOu[i].NombreGrupo + ',';
+                                }
+                            }
+                            $('#tbAsociarGrupo tbody').html(contentido);
+                            $("#NombreGrupoSel").val(nomGrupoSel);
+                            $("#loading-modal").hide();
+                        } else {
+                            $("#loading-modal").hide();
                             BootstrapDialog.alert({
-                                title: '¡Error al buscar Grupo en el AD!',
-                                message: '<strong>' + data.Error + '</strong>',
+                                title: '¡Error al encontrar listado de Grupos en el AD!',
+                                message: '<strong>No existen Grupos para OU seleccionada.</strong>',
                                 type: BootstrapDialog.TYPE_DANGER
                             });
-                        } else {
-                            if (data.Grupo != null) {
-                                $('#tbGrupos .tbody').html('');
-                                var contentido = '';
-                                $("#NombreGrupoSel").val('');
-                                var nomGrupoSel = $("#NombreGrupoSel").val();
-
-                                for (var i = 0; i < data.Grupo.length; i++) {
-                                    if (data.Grupo[i].ExisteGrupo == true) {
-                                        var nomGrupo = "'" + data.Grupo[i].NombreGrupo.trim() + "'";
-                                        contentido += '<tr class="trGrupo' + i + '">';
-                                        contentido += '<td>' + (data.Grupo[i].NumeroGrupo) + '</td>';
-                                        contentido += '<td>' + (data.Grupo[i].NombreGrupo == null ? '' : data.Grupo[i].NombreGrupo) + '</td>';
-                                        contentido += '<td>' + (data.Grupo[i].CorreoGrupo == null ? '' : data.Grupo[i].CorreoGrupo) + '</td>';
-                                        contentido += '<td class="columnaAcciones textCenter">';
-                                        contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-remove colorOrange" onclick="eliminarGrupo(' + i + ', ' + nomGrupo + ',1)"></a> <text>|</text> ';
-                                        contentido += '</td></tr>';
-                                        nomGrupoSel = data.Grupo[i].NombreGrupo + ',' + nomGrupoSel;
-                                    }
-                                }
-                                $('#tbGrupos tbody').html(contentido);
-                                $("#NombreGrupoSel").val(nomGrupoSel);
-                                if (nomGrupoSel != '') {
-                                    $("#btnGuardarGrupo").show();
-                                }
-                            } else {
-                                BootstrapDialog.alert({
-                                    title: '¡Error al buscar Grupo en el AD!',
-                                    message: '<strong>No existe Grupo</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
-                                });
-                            }
                         }
-                    },
-                    complete: function () {
-                        $("#NombreGrupo").val('');
-                        $("#loading-modal").hide();
-                    },
-                    error: function (data) {
-                        $("#loading-modal").hide();
+                    }
+                },
+                error: function (data) {
+                    $("#loading-modal").hide();
+                    BootstrapDialog.alert({
+                        title: '¡Error al encontrar listado de Grupos en el AD!',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
+                    });
+                }
+            });
+        }
+
+        function buscarAsignarGrupo(nombreGrupo) {
+            $.ajax({
+                url: '@Url.Action("ObtenerGrupoAd", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ nomGrupo: nombreGrupo }),
+                success: function (data) {
+                    if (data.Session == false) {
+                        BootstrapDialog.alert({
+			                    title: '¡Validación Sesión!',
+			                    message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                    type: BootstrapDialog.TYPE_WARNING
+		                    });
+                        return;
+                    }
+
+                    if (data.Error != '') {
                         BootstrapDialog.alert({
                             title: '¡Error al buscar Grupo en el AD!',
                             message: '<strong>' + data.Error + '</strong>',
                             type: BootstrapDialog.TYPE_DANGER
                         });
-                    }
-                });
-            }
+                    } else {
+                        if (data.Grupo != null) {
+                            $('#tbGrupos .tbody').html('');
+                            var contentido = '';
+                            $("#NombreGrupoSel").val('');
+                            var nomGrupoSel = $("#NombreGrupoSel").val();
 
-            $("#btnGuardarGrupo").off('click').click(function () {
-                $("#loading-modal").show();
-                var valida = true;
-                var userName = $("#NombreUsuario").val();
-                var selGrupos = $("#NombreGrupoSel").val();
-                if (userName == '') {
-                    valida = false;
-                    $("#loading-modal").hide();
-                    BootstrapDialog.alert({
-                        title: '¡Advertencia!',
-                        message: '<strong>Debe asignar un ID de Usuario</strong>',
-                        type: BootstrapDialog.TYPE_WARNING
-                    });
-                }
-                if (selGrupos == '') {
-                    valida = false;
-                    $("#loading-modal").hide();
-                    BootstrapDialog.alert({
-                        title: '¡Advertencia!',
-                        message: '<strong>Debe buscar y asignar Grupo</strong>',
-                        type: BootstrapDialog.TYPE_WARNING
-                    });
-                }
-
-                if (valida == true) {
-                    setTimeout(function () {
-                        guardarGrupos();
-                    }, 1000);
-                }
-            });
-
-            function guardarGrupos() {
-                $.ajax({
-                    url: '@Url.Action("GuardarGrupos", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ nomGrupos: $("#NombreGrupoSel").val(), userName: $("#NombreUsuario").val(), upnPrefijo: $("#UpnPrefijo").val() }),
-                    success: function (data) {
-                        if (data.Session == false) {
+                            for (var i = 0; i < data.Grupo.length; i++) {
+                                if (data.Grupo[i].ExisteGrupo == true) {
+                                    var nomGrupo = "'" + data.Grupo[i].NombreGrupo.trim() + "'";
+                                    contentido += '<tr class="trGrupo' + i + '">';
+                                    contentido += '<td>' + (data.Grupo[i].NumeroGrupo) + '</td>';
+                                    contentido += '<td>' + (data.Grupo[i].NombreGrupo == null ? '' : data.Grupo[i].NombreGrupo) + '</td>';
+                                    contentido += '<td>' + (data.Grupo[i].CorreoGrupo == null ? '' : data.Grupo[i].CorreoGrupo) + '</td>';
+                                    contentido += '<td class="columnaAcciones textCenter">';
+                                    contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-remove colorOrange" onclick="eliminarGrupo(' + i + ', ' + nomGrupo + ',1)"></a> <text>|</text> ';
+                                    contentido += '</td></tr>';
+                                    nomGrupoSel = data.Grupo[i].NombreGrupo + ',' + nomGrupoSel;
+                                }
+                            }
+                            $('#tbGrupos tbody').html(contentido);
+                            $("#NombreGrupoSel").val(nomGrupoSel);
+                            if (nomGrupoSel != '') {
+                                $("#btnGuardarGrupo").show();
+                            }
+                        } else {
                             BootstrapDialog.alert({
-			                        title: '¡Validación Sesión!',
-			                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-			                        type: BootstrapDialog.TYPE_WARNING
-		                        });
-                            return;
-                        }
-
-                        if (data.Error != '') {
-                            BootstrapDialog.alert({
-                                title: '¡Error al guardar Grupo en el AD!',
-                                message: '<strong>' + data.Error + '</strong>',
+                                title: '¡Error al buscar Grupo en el AD!',
+                                message: '<strong>No existe Grupo</strong>',
                                 type: BootstrapDialog.TYPE_DANGER
                             });
-                        } else {
-                            if (data.Validar) {
-                                if (data.TieneLicencia) {
-                                    BootstrapDialog.alert({
-                                        title: '¡Proceso Exitoso!',
-                                        message: '<strong>Grupos guardados exitosamente y licencia se encuentra asignada a la cuenta.</strong>',
-                                        type: BootstrapDialog.TYPE_SUCCESS
-                                    });
-                                } else {
-                                    BootstrapDialog.alert({
-                                        title: '¡Proceso Incompleto!',
-                                        message: '<strong>Grupos guardados exitosamente, pero debe asignar licencia a la cuenta para terminar proceso.</strong>',
-                                        type: BootstrapDialog.TYPE_WARNING
-                                    });
-                                }
-                            } else {
-                                BootstrapDialog.alert({
-                                    title: '¡Error al guardar Grupo en el AD!',
-                                    message: '<strong>No se pudo asignar usuario a los Grupos, intente más tarde.</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
-                                });
-                            }
                         }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                    },
-                    error: function (data) {
-                        $("#loading-modal").hide();
-                        BootstrapDialog.alert({
-                            title: '¡Error al guardar Grupo en el AD!',
-                            message: '<strong>' + data.Error + '</strong>',
-                            type: BootstrapDialog.TYPE_DANGER
-                        });
                     }
-                });
-            }
-
-            $('#Rut').on('blur', function () {
-                var rut = $("#Rut").val();
-                if (rutValido(rut)) {
-                    formateaRut(this, 'XXXXXXX-X');
-                }
-                else {
-                    BootstrapDialog.show({
-                        title: '¡Validación!',
-                        message: '<strong>Rut Incorrecto</strong>',
-                        type: BootstrapDialog.TYPE_DANGER,
-                        buttons: [{
-                            label: 'Aceptar',
-                            cssClass: 'btn-default btn-sm',
-                            action: function (dialog) {
-                                dialog.close();
-                            }
-                        }]
+                },
+                complete: function () {
+                    $("#NombreGrupo").val('');
+                    $("#loading-modal").hide();
+                },
+                error: function (data) {
+                    $("#loading-modal").hide();
+                    BootstrapDialog.alert({
+                        title: '¡Error al buscar Grupo en el AD!',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
                     });
-                    $('#Rut').focus();
-                    $("#Rut").val("");
                 }
             });
-        });
-</script>
-<script language="javascript" type="text/javascript">
-        function eliminarGrupo(idTrGrupo, nombreGrupoElm, tipo) {
-            var nomGrupoSel = $("#NombreGrupoSel").val();
-            var nomGrupoSelFinal = '';
-            if (nomGrupoSel != '') {
-                var nomGrupoSplit = $("#NombreGrupoSel").val().split(',');
-                $("#NombreGrupoSel").val('');
-                for (var i = 0; i < nomGrupoSplit.length; i++) {
-                    var nomGrupoIngresado = nomGrupoSplit[i];
-                    if (nomGrupoIngresado.trim() != nombreGrupoElm.trim() && nomGrupoIngresado.trim() != '') {
-                        nomGrupoSelFinal = nomGrupoIngresado.trim() + ',' + nomGrupoSelFinal;
-                    }
-                }
-            }
-
-            $("#NombreGrupoSel").val(nomGrupoSelFinal);
-            if(tipo == 1)
-                $('.trGrupo' + idTrGrupo).html('');
-            else
-                $('.trGrupoOu' + idTrGrupo).html('');
-
-            if (nomGrupoSelFinal == '' && tipo == 1) {
-                $("#btnGuardarGrupo").hide();
-            }
         }
 
-        function asignarGrupoUsuario(idTrGrupoAsig, nombreGrupoAsig)
-        {
-            MostrarCargando();
+        $("#btnGuardarGrupo").off('click').click(function () {
+            $("#loading-modal").show();
             var valida = true;
-            var userNameVal = $("#NombreUsuario").val();
-
-            if (userNameVal == '') {
+            var userName = $("#NombreUsuario").val();
+            var selGrupos = $("#NombreGrupoSel").val();
+            if (userName == '') {
                 valida = false;
                 $("#loading-modal").hide();
                 BootstrapDialog.alert({
@@ -1356,66 +1260,319 @@
                     type: BootstrapDialog.TYPE_WARNING
                 });
             }
+            if (selGrupos == '') {
+                valida = false;
+                $("#loading-modal").hide();
+                BootstrapDialog.alert({
+                    title: '¡Advertencia!',
+                    message: '<strong>Debe buscar y asignar Grupo</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+            }
 
             if (valida == true) {
-                $.ajax({
-                    url: '@Url.Action("AsociarGrupoUsuario", "Home")',
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    async: false,
-                    dataType: 'json',
-                    processData: false,
-                    data: JSON.stringify({ nomGrupo: nombreGrupoAsig, userName: userNameVal }),
-                    success: function (data) {
-                        if (data.Session == false) {
-                            BootstrapDialog.alert({
-			                        title: '¡Validación Sesión!',
-			                        message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
-			                        type: BootstrapDialog.TYPE_WARNING
-		                        });
-                            return;
-                        }
+                setTimeout(function () {
+                    guardarGrupos();
+                }, 1000);
+            }
+        });
 
-                        if (data.Error != '') {
-                            BootstrapDialog.alert({
-                                title: '¡Error al asociar Grupo a Usuario en el AD!',
-                                message: '<strong>' + data.Error + '</strong>',
-                                type: BootstrapDialog.TYPE_DANGER
-                            });
-                        } else {
-                            if (data.Validar) {
-                                eliminarGrupo(idTrGrupoAsig, nombreGrupoAsig, 2);
-                                $("#PatchOu").val('');
+        function guardarGrupos() {
+            $.ajax({
+                url: '@Url.Action("GuardarGrupos", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ nomGrupos: $("#NombreGrupoSel").val(), userName: $("#NombreUsuario").val(), upnPrefijo: $("#UpnPrefijo").val() }),
+                success: function (data) {
+                    if (data.Session == false) {
+                        BootstrapDialog.alert({
+			                    title: '¡Validación Sesión!',
+			                    message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                    type: BootstrapDialog.TYPE_WARNING
+		                    });
+                        return;
+                    }
+
+                    if (data.Error != '') {
+                        BootstrapDialog.alert({
+                            title: '¡Error al guardar Grupo en el AD!',
+                            message: '<strong>' + data.Error + '</strong>',
+                            type: BootstrapDialog.TYPE_DANGER
+                        });
+                    } else {
+                        if (data.Validar) {
+                            if (data.TieneLicencia) {
                                 BootstrapDialog.alert({
                                     title: '¡Proceso Exitoso!',
-                                    message: '<strong>Grupo asociado exitosamente al Usuario.</strong>',
+                                    message: '<strong>Grupos guardados exitosamente y licencia se encuentra asignada a la cuenta.</strong>',
                                     type: BootstrapDialog.TYPE_SUCCESS
                                 });
                             } else {
                                 BootstrapDialog.alert({
-                                    title: '¡Error al asociar Grupo a Usuario en el AD!',
-                                    message: '<strong>No se pudo asignar el Grupo al Usuario, intente más tarde.</strong>',
-                                    type: BootstrapDialog.TYPE_DANGER
+                                    title: '¡Proceso Incompleto!',
+                                    message: '<strong>Grupos guardados exitosamente, pero debe asignar licencia a la cuenta para terminar proceso.</strong>',
+                                    type: BootstrapDialog.TYPE_WARNING
                                 });
                             }
+                        } else {
+                            BootstrapDialog.alert({
+                                title: '¡Error al guardar Grupo en el AD!',
+                                message: '<strong>No se pudo asignar usuario a los Grupos, intente más tarde.</strong>',
+                                type: BootstrapDialog.TYPE_DANGER
+                            });
                         }
-                    },
-                    complete: function () {
-                        $("#loading-modal").hide();
-                    },
-                    error: function (data) {
-                        $("#loading-modal").hide();
+                    }
+                },
+                complete: function () {
+                    $("#loading-modal").hide();
+                },
+                error: function (data) {
+                    $("#loading-modal").hide();
+                    BootstrapDialog.alert({
+                        title: '¡Error al guardar Grupo en el AD!',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
+                    });
+                }
+            });
+        }
+
+        $("#btnGrabarGrupo").off('click').click(function () {
+            if ($("#NombreGrupoSel").val() == '')
+            {
+                BootstrapDialog.alert({
+                    title: '¡Validación Grupos!',
+                    message: '<strong>Debe asignar Grupos a la tabla para poder grabar. Intente nuevamente.</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+                return;
+            }            
+            if ($("#NombreUsuario").val() == '') {
+                BootstrapDialog.alert({
+                    title: '¡Validación Grupos!',
+                    message: '<strong>Debe asignar un Id Usuario válido para poder grabar. Intente nuevamente.</strong>',
+                    type: BootstrapDialog.TYPE_WARNING
+                });
+                return;
+            }
+
+            BootstrapDialog.show({
+                title: 'Confirmación Grabar Grupos.',
+                message: '<strong>¿Está seguro de Grabar todos los grupos asignados a la cuenta?</strong>',
+                type: BootstrapDialog.TYPE_INFO,
+                buttons:
+                    [
+                        {
+                            label: 'Si',
+                            cssClass: 'btn-success',
+                            action: function (dialog) {
+                                dialog.close();
+                                $("#loading-modal").show();
+                                setTimeout(function () {
+                                    asignarGrupoSplitUsuario();
+                                }, 1000);
+                            }
+                        },
+                        {
+                            label: 'No',
+                            cssClass: 'btn-danger',
+                            action: function (dialog) {
+                                dialog.close();
+                            }
+                        }
+                    ]
+            });
+        });
+
+        $('#Rut').on('blur', function () {
+            var rut = $("#Rut").val();
+            if (rutValido(rut)) {
+                formateaRut(this, 'XXXXXXX-X');
+            }
+            else {
+                BootstrapDialog.show({
+                    title: '¡Validación!',
+                    message: '<strong>Rut Incorrecto</strong>',
+                    type: BootstrapDialog.TYPE_DANGER,
+                    buttons: [{
+                        label: 'Aceptar',
+                        cssClass: 'btn-default btn-sm',
+                        action: function (dialog) {
+                            dialog.close();
+                        }
+                    }]
+                });
+                $('#Rut').focus();
+                $("#Rut").val("");
+            }
+        });
+    });
+</script>
+<script language="javascript" type="text/javascript">
+    function eliminarGrupo(idTrGrupo, nombreGrupoElm, tipo) {
+        var nomGrupoSel = $("#NombreGrupoSel").val();
+        var nomGrupoSelFinal = '';
+        if (nomGrupoSel != '') {
+            var nomGrupoSplit = $("#NombreGrupoSel").val().split(',');
+            $("#NombreGrupoSel").val('');
+            for (var i = 0; i < nomGrupoSplit.length; i++) {                    
+                var nomGrupoIngresado = nomGrupoSplit[i];
+                if (nomGrupoIngresado.trim() != nombreGrupoElm.trim() && nomGrupoIngresado.trim() != '') {
+                    nomGrupoSelFinal = nomGrupoIngresado.trim() + ',' + nomGrupoSelFinal;
+                }
+            }
+        }
+
+        $("#NombreGrupoSel").val(nomGrupoSelFinal);
+        if(tipo == 1)
+            $('.trGrupo' + idTrGrupo).html('');
+        else
+            $('.trGrupoOu' + idTrGrupo).html('');
+
+        if (nomGrupoSelFinal == '' && tipo == 1) {
+            $("#btnGuardarGrupo").hide();                
+        }
+        else if (nomGrupoSelFinal == '' && tipo == 2) {
+            $("#btnGrabarGrupo").attr('disabled', true);
+            $("#FilaGrupoSel").val(1);
+        }
+    }
+
+    function asignarGrupoUsuario(idTrGrupoAsig, nombreGrupoAsig)
+    {
+        MostrarCargando();
+        var valida = true;
+        var userNameVal = $("#NombreUsuario").val();
+
+        if (userNameVal == '') {
+            valida = false;
+            $("#loading-modal").hide();
+            BootstrapDialog.alert({
+                title: '¡Advertencia!',
+                message: '<strong>Debe asignar un ID de Usuario</strong>',
+                type: BootstrapDialog.TYPE_WARNING
+            });
+        }
+
+        if (valida == true) {
+            $.ajax({
+                url: '@Url.Action("AsociarGrupoUsuario", "Home")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                async: false,
+                dataType: 'json',
+                processData: false,
+                data: JSON.stringify({ nomGrupo: nombreGrupoAsig, userName: userNameVal }),
+                success: function (data) {
+                    if (data.Session == false) {
+                        BootstrapDialog.alert({
+			                    title: '¡Validación Sesión!',
+			                    message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                    type: BootstrapDialog.TYPE_WARNING
+		                    });
+                        return;
+                    }
+
+                    if (data.Error != '') {
                         BootstrapDialog.alert({
                             title: '¡Error al asociar Grupo a Usuario en el AD!',
                             message: '<strong>' + data.Error + '</strong>',
                             type: BootstrapDialog.TYPE_DANGER
                         });
+                    } else {
+                        if (data.Validar) {
+                            eliminarGrupo(idTrGrupoAsig, nombreGrupoAsig, 2);
+                            $("#PatchOu").val('');
+                            BootstrapDialog.alert({
+                                title: '¡Proceso Exitoso!',
+                                message: '<strong>Grupo asociado exitosamente al Usuario.</strong>',
+                                type: BootstrapDialog.TYPE_SUCCESS
+                            });
+                        } else {
+                            BootstrapDialog.alert({
+                                title: '¡Error al asociar Grupo a Usuario en el AD!',
+                                message: '<strong>No se pudo asignar el Grupo al Usuario, intente más tarde.</strong>',
+                                type: BootstrapDialog.TYPE_DANGER
+                            });
+                        }
                     }
+                },
+                complete: function () {
+                    $("#loading-modal").hide();
+                },
+                error: function (data) {
+                    $("#loading-modal").hide();
+                    BootstrapDialog.alert({
+                        title: '¡Error al asociar Grupo a Usuario en el AD!',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
+                    });
+                }
+            });
+        }
+    }
+
+    function asignarGrupoSplitUsuario()
+    {                
+        $.ajax({
+            url: '@Url.Action("AsociarGrupoSplitUsuario", "Home")',
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            async: false,
+            dataType: 'json',
+            processData: false,
+            data: JSON.stringify({ nomGrupoSplit: $("#NombreGrupoSel").val(), userName: $("#NombreUsuario").val() }),
+            success: function (data) {
+                if (data.Session == false) {
+                    BootstrapDialog.alert({
+			                title: '¡Validación Sesión!',
+			                message: '<strong>Su sesión ha expirado. Seleccione <a href="@Url.Action("IndexLogin", "Error", new { mensajeError = "Su sesión ha expirado." })">aquí</a> para iniciar sesión nuevamente</strong>',
+			                type: BootstrapDialog.TYPE_WARNING
+		                });
+                    return;
+                }
+
+                if (data.Error != '') {
+                    BootstrapDialog.alert({
+                        title: '¡Error al asociar Grupo a Usuario en el AD!',
+                        message: '<strong>' + data.Error + '</strong>',
+                        type: BootstrapDialog.TYPE_DANGER
+                    });
+                } else {
+                    if (data.Validar) {                                                
+                        BootstrapDialog.alert({
+                            title: '¡Proceso Exitoso!',
+                            message: '<strong>Grupos asociados exitosamente al Usuario.</strong>',
+                            type: BootstrapDialog.TYPE_SUCCESS
+                        });
+                    } else {
+                        BootstrapDialog.alert({
+                            title: '¡Error al asociar Grupos al Usuario en el AD!',
+                            message: '<strong>No se pudo asignar el o los Grupos al Usuario, intente más tarde.</strong>',
+                            type: BootstrapDialog.TYPE_DANGER
+                        });
+                    }
+                }
+            },
+            complete: function () {
+                $("#loading-modal").hide();
+                $("#btnGrabarGrupo").attr('disabled', true);
+            },
+            error: function (data) {
+                $("#loading-modal").hide();
+                BootstrapDialog.alert({
+                    title: '¡Error al asociar Grupos al Usuario en el AD!',
+                    message: '<strong>' + data.Error + '</strong>',
+                    type: BootstrapDialog.TYPE_DANGER
                 });
             }
-        }
+        });        
+    }
 
-        function MostrarCargando() {
-            $("#loading-modal").show();
-        }
+    function MostrarCargando() {
+        $("#loading-modal").show();
+    }
 </script>
