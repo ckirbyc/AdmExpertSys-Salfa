@@ -571,7 +571,7 @@
         });
 
         $("#Apellidos").off('blur').blur(function () {
-            var nombreCompleto = $("#Apellidos").val() + ", " + $("#Nombres").val();
+            var nombreCompleto = $("#Nombres").val() + " " + $("#Apellidos").val();
             $("#NombreCompleto").val(nombreCompleto);
         });
 

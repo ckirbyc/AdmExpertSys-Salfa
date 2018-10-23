@@ -87,7 +87,7 @@
                             cssClass: 'btn-success',
                             action: function (dialog) {
                                 dialog.close();
-                                monitorSync();
+                                $("#loading-modal").show();                                
                                 setTimeout(function () {
                                     sincronizarCuentas();
                                 }, 500);
@@ -130,9 +130,11 @@
                         });
                     }
                 },
-                complete: function () {                    
+                complete: function () {       
+                    $("#loading-modal").hide();
                 },
-                error: function () {                    
+                error: function () {     
+                    $("#loading-modal").hide();
                     BootstrapDialog.alert({
                         title: '¡Error al iniciar el proceso!',
                         message: '<strong>Error al ejecutar el proceso de sincronización.</strong>',
@@ -140,18 +142,6 @@
                     });
                 }
             });
-        }
-
-        function monitorSync() {
-            $("#loading-modal").show();
-            var interval = setInterval(function () {
-                var cookieValue = $.cookie('processToken');
-                if (cookieValue == '@ViewBag.processToken') {
-                    $("#loading-modal").hide();
-                    clearInterval(interval);
-                    $.removeCookie('processToken', { path: '/' });
-                }
-            }, 1000);
-        }
+        }        
     });
 </script>

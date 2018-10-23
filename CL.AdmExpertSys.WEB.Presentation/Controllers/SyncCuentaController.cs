@@ -100,8 +100,16 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     Utils.LogErrores(ex);
                 }
 
-                _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta);
-                _hiloEjecucion.Start(listaEstCuentaVmHilo);                
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+
+                _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta)
+                {
+                    IsBackground = true,
+                    Priority = ThreadPriority.Highest
+                };
+                _hiloEjecucion.Start(listaEstCuentaVmHilo);               
 
                 return new JsonResult
                 {

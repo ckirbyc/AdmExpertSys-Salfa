@@ -15,10 +15,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/01/2018 20:28:47</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/20/2018 10:23:18</publishTime>
+      <publishTime>10/23/2018 17:05:28</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/20/2018 10:23:18</publishTime>
+      <publishTime>10/23/2018 17:05:28</publishTime>
     </File>
     <File Include="bin/AutoMapper.dll">
       <publishTime>06/01/2018 20:28:46</publishTime>
@@ -99,7 +99,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/18/2018 21:31:42</publishTime>
     </File>
     <File Include="bin/CL.AdmExpertSys.WEB.Presentation.dll">
-      <publishTime>10/20/2018 10:22:49</publishTime>
+      <publishTime>10/23/2018 17:04:53</publishTime>
     </File>
     <File Include="bin/CL.AdmExpertSys.WEB.Presentation.Mapping.dll">
       <publishTime>10/18/2018 21:31:53</publishTime>
@@ -111,7 +111,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/18/2018 21:31:54</publishTime>
     </File>
     <File Include="bin/CL.AdmExpertSys.WEB.Presentation.pdb">
-      <publishTime>10/20/2018 10:22:49</publishTime>
+      <publishTime>10/23/2018 17:04:53</publishTime>
     </File>
     <File Include="bin/CL.AdmExpertSys.WEB.Presentation.ViewModel.dll">
       <publishTime>10/18/2018 21:31:48</publishTime>
@@ -858,7 +858,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/01/2018 20:28:46</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/20/2018 10:23:05</publishTime>
+      <publishTime>10/23/2018 17:05:14</publishTime>
     </File>
     <File Include="Scripts/autoNumeric.js">
       <publishTime>06/01/2018 20:28:32</publishTime>
@@ -1131,7 +1131,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>08/07/2018 16:49:22</publishTime>
     </File>
     <File Include="Views/Home/EditCuenta.cshtml">
-      <publishTime>10/18/2018 19:12:52</publishTime>
+      <publishTime>10/23/2018 16:57:05</publishTime>
     </File>
     <File Include="Views/Home/HomeSysWeb.cshtml">
       <publishTime>06/01/2018 20:28:32</publishTime>
@@ -1146,7 +1146,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>10/18/2018 11:44:20</publishTime>
     </File>
     <File Include="Views/LicCuenta/Index.cshtml">
-      <publishTime>08/07/2018 16:49:22</publishTime>
+      <publishTime>10/20/2018 12:19:15</publishTime>
     </File>
     <File Include="Views/MantenedorLic/CargarPlanilla.cshtml">
       <publishTime>06/01/2018 20:28:32</publishTime>
@@ -1170,7 +1170,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/01/2018 20:28:32</publishTime>
     </File>
     <File Include="Views/Partials/_CrearUsuario.cshtml">
-      <publishTime>10/18/2018 14:56:02</publishTime>
+      <publishTime>10/23/2018 16:43:45</publishTime>
     </File>
     <File Include="Views/Partials/_Menu.cshtml">
       <publishTime>10/17/2018 12:41:03</publishTime>
@@ -1194,7 +1194,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>06/01/2018 20:28:32</publishTime>
     </File>
     <File Include="Views/SyncCuenta/Index.cshtml">
-      <publishTime>10/20/2018 10:13:56</publishTime>
+      <publishTime>10/20/2018 10:45:14</publishTime>
     </File>
     <File Include="Views/UsuarioCreado/Index.cshtml">
       <publishTime>08/07/2018 16:49:23</publishTime>
