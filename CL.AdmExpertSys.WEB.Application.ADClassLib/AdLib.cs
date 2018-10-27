@@ -587,10 +587,8 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 { Enabled = true, PasswordNeverExpires = false };
 
                 //Proxy Addresses                
-                string emailOnmicrosoft = sUserName + "@" + _sTenantDomain;
-                //string emailTransporte = "SMTP:"+ sUserName + "@agrosuper.mail.onmicrosoft.com";
-                string emailTransporte = "SMTP:" + sUserName + '@' + _sTenantDomainSmtp;
-                //string emailSecundario = sUserName + "@agrosuper.cl";
+                string emailOnmicrosoft = sUserName + "@" + _sTenantDomain;                
+                string emailTransporte = "SMTP:" + sUserName + '@' + _sTenantDomainSmtp;                
                 string emailSecundario = sUserName + "@" + _sTenantDomainSmtpSecundario;
 
                 string[] proxyaddresses = { "", "", "" };
@@ -603,9 +601,9 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                 oUserPrincipal.UserPrincipalName = upn;
                 oUserPrincipal.GivenName = sGivenName;
                 oUserPrincipal.Surname = sSurname;
-                oUserPrincipal.Name = sSurname + ", " + sGivenName;
+                oUserPrincipal.Name = sGivenName + " " + sSurname;
                 oUserPrincipal.MiddleName = sSurname;
-                oUserPrincipal.DisplayName = sSurname + ", " + sGivenName;
+                oUserPrincipal.DisplayName = sGivenName + " " + sSurname;
                 oUserPrincipal.EmailAddress = upn;
                 oUserPrincipal.ExpirePasswordNow();                
                 oUserPrincipal.PasswordNeverExpires = model.ClaveNoExpira;
@@ -720,26 +718,26 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
 
                 using (var eUserActual = new DirectoryEntry(sLdapAsAux, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
                 {
-                    if (usrData.CambioPatchOu)
-                    {
-                        //Elimina los grupos asociados a la cuenta de usuario
-                        var contMember = eUserActual.Properties["memberOf"].Count;
-                        int equalsIndex, commaIndex;
-                        for (int val = 0; val < contMember; val++)
-                        {
-                            var valMember = eUserActual.Properties["memberOf"][val].ToString();
+                    //if (usrData.CambioPatchOu)
+                    //{
+                    //    //Elimina los grupos asociados a la cuenta de usuario
+                    //    var contMember = eUserActual.Properties["memberOf"].Count;
+                    //    int equalsIndex, commaIndex;
+                    //    for (int val = 0; val < contMember; val++)
+                    //    {
+                    //        var valMember = eUserActual.Properties["memberOf"][val].ToString();
 
-                            equalsIndex = valMember.IndexOf("=", 1);
-                            commaIndex = valMember.IndexOf(",", 1);
+                    //        equalsIndex = valMember.IndexOf("=", 1);
+                    //        commaIndex = valMember.IndexOf(",", 1);
 
-                            var groupName = valMember.Substring((equalsIndex + 1), (commaIndex - equalsIndex) - 1);
+                    //        var groupName = valMember.Substring((equalsIndex + 1), (commaIndex - equalsIndex) - 1);
 
-                            if (!string.IsNullOrEmpty(groupName))
-                            {
-                                RemoveUserFromGroup(usrData.NombreUsuario.Trim().ToLower(), groupName);
-                            }
-                        }
-                    }                    
+                    //        if (!string.IsNullOrEmpty(groupName))
+                    //        {
+                    //            RemoveUserFromGroup(usrData.NombreUsuario.Trim().ToLower(), groupName);
+                    //        }
+                    //    }
+                    //}                    
 
                     //Actualiza propiedades de la cuenta
                     CommonServices = new Common();
@@ -762,7 +760,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     eUserActual.Properties["givenName"].Value = sGivenName;
                     eUserActual.Properties["sn"].Value = sSurname;                    
                     eUserActual.Properties["middleName"].Value = sSurname;
-                    eUserActual.Properties["displayName"].Value = sSurname + ", " + sGivenName;
+                    eUserActual.Properties["displayName"].Value = sGivenName + " " + sSurname;
                     eUserActual.Properties["mail"].Value = upn;
                     eUserActual.Properties["description"].Value = usrData.Descripcion.Trim();
                     eUserActual.Properties["mailnickname"].Value = usrData.NombreUsuario.Trim().ToLower();                                        
@@ -853,13 +851,13 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     }
 
                     eUserActual.CommitChanges();
-                    eUserActual.Close();                    
+                    eUserActual.Close();
 
                     //Mueve cuenta de ubicacion
                     if (usrData.CambioPatchOu)
                     {
                         if (oUserPrincipalAux != null)
-                        {                            
+                        {
                             using (var eLocation = new DirectoryEntry(sLdapAsAux, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
                             {
                                 using (var nLocation = new DirectoryEntry(usrData.PatchOu, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
@@ -870,13 +868,24 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                                 eLocation.Close();
                             }
                             Task.Delay(TimeSpan.FromSeconds(15)).Wait();
+
+                            //Actualiza los parametros de la clave cuando cuenta cambia de ubicacion
+                            using (UserPrincipal oUserPrincipalNew = GetUser(usrData.NombreUsuario))
+                            {
+                                oUserPrincipalNew.PasswordNeverExpires = usrData.ClaveNoExpira;
+                                oUserPrincipalNew.UserCannotChangePassword = usrData.UsrNoCambiaClave;
+                                oUserPrincipalNew.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
+                                oUserPrincipalNew.Save();
+                            }
                         }
                     }
-
-                    oUserPrincipalAux.PasswordNeverExpires = usrData.ClaveNoExpira;
-                    oUserPrincipalAux.UserCannotChangePassword = usrData.UsrNoCambiaClave;
-                    oUserPrincipalAux.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
-                    oUserPrincipalAux.Save();
+                    else
+                    {
+                        oUserPrincipalAux.PasswordNeverExpires = usrData.ClaveNoExpira;
+                        oUserPrincipalAux.UserCannotChangePassword = usrData.UsrNoCambiaClave;
+                        oUserPrincipalAux.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
+                        oUserPrincipalAux.Save();
+                    }                    
                 }
             }
 
@@ -1148,7 +1157,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
         /// </returns>
         public PrincipalContext GetPrincipalContext()
         {
-            var oPrincipalContext = new PrincipalContext(ContextType.Domain, _sInternalDomain, _sInternalDomainOu, _sUserAdDomain, _sPassAdDomain);
+            var oPrincipalContext = new PrincipalContext(ContextType.Domain, _sInternalDomain, _sInternalDomainOu, ContextOptions.Negotiate, _sUserAdDomain, _sPassAdDomain);
              return oPrincipalContext;
         }
         /// <summary>
@@ -1160,7 +1169,7 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
         /// </returns>
         public PrincipalContext GetPrincipalContext(string sOu)
         {
-            var oPrincipalContext = new PrincipalContext(ContextType.Domain, _sInternalDomain, sOu, _sUserAdDomain, _sPassAdDomain);
+            var oPrincipalContext = new PrincipalContext(ContextType.Domain, _sInternalDomain, sOu, ContextOptions.Negotiate, _sUserAdDomain, _sPassAdDomain);
             return oPrincipalContext;
         }
 
