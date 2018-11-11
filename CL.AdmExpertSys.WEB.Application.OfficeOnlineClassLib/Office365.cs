@@ -841,12 +841,18 @@ namespace CL.AdmExpertSys.WEB.Application.OfficeOnlineClassLib
                 {
                     //FileName = @"C:\\PSTools\\PsExec64.exe",
                     //Arguments = @"-d \\192.168.19.50 -u AS\mauricio.gonzalez -p inicio01 C:\\sync.bat"
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
                     FileName = @"C:\\sync.bat"
                 };
 
                 using (Process process = Process.Start(processInfo))
                 {
-                    if (process != null) process.WaitForExit();
+                    if (process != null)
+                    {
+                        process.WaitForExit();
+                    }
+                    process.Close();
                 }
                 //var processInfo = new ProcessStartInfo
                 //{

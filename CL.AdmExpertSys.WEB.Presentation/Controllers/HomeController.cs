@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Threading;
 using System.Web.Mvc;
+using System.Web.Services.Protocols;
 
 namespace CL.AdmExpertSys.WEB.Presentation.Controllers
 {
@@ -832,7 +833,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 }
                 catch (Exception ex)
                 {
-                    HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
+                    //HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
                     Utils.LogErrores(ex);
                 }
                 
@@ -905,22 +906,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                         }
                         catch (Exception ex)
                         {
-                            HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
+                            //HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
                             Utils.LogErrores(ex);
                         }
                     }
 
-                    //Ejecuta Hilo para el proceso de sync de cuentas
-                    HomeSysWebFactory.ForzarDirSync();
-                    HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
+                    //Ejecuta Hilo para el proceso de sync de cuentas                    
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
 
-                    //var usuarioModificacion = SessionViewModel.Usuario.Nombre.Trim();
-                    //var listaEstCuentaVmHilo = new List<object>
-                    //{                        
-                    //    usuarioModificacion
-                    //};
-                    //_hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta);
-                    //_hiloEjecucion.Start(listaEstCuentaVmHilo);
+                    _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta)
+                    {
+                        IsBackground = true,
+                        Priority = ThreadPriority.Highest
+                    };
+                    _hiloEjecucion.Start();
                 }
 
                 return new JsonResult
@@ -935,7 +936,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
             }
             catch (Exception ex)
             {
-                HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
+                //HiloEstadoSincronizacion.ActualizarEstadoSync(false, SessionViewModel.Usuario.Nombre.Trim(), "D");
                 Utils.LogErrores(ex);
                 return new JsonResult
                 {
@@ -949,27 +950,31 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
             }
         }
 
-        //[SoapDocumentMethod(OneWay = true)]
-        //public void InciarProcesoHiloSincronizarCuenta(object estadoCuentaHilo)
-        //{
-        //    var usuarioModificacion = (string)estadoCuentaHilo.CastTo<List<object>>()[0];
-        //    try
-        //    {
-        //        HiloEstadoSincronizacion.ActualizarEstadoSync(true, usuarioModificacion, "D");
-
-        //        HomeSysWebFactory = new HomeSysWebFactory();
-        //        HomeSysWebFactory.ForzarDirSync();
-
-        //        HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "D");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "D");
-        //        var msgError = @"Error en proceso asincronico Syncronizar por cuenta : " + ex.Message;
-        //        var exNew = new Exception(msgError);
-        //        Utils.LogErrores(exNew);
-        //    }            
-        //}
+        [SoapDocumentMethod(OneWay = true)]
+        public void InciarProcesoHiloSincronizarCuenta()
+        {
+            try
+            {
+                //HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "D");
+                HomeSysWebFactory = new HomeSysWebFactory();
+                try
+                {
+                    HomeSysWebFactory.ForzarDirSync();
+                }
+                catch (Exception ex)
+                {
+                    //HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
+                    Utils.LogErrores(ex);
+                }
+            }
+            catch (Exception ex)
+            {
+                //HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "D");
+                var msgError = @"Error en proceso asincronico Syncronizar por cuenta : " + ex.Message;
+                var exNew = new Exception(msgError);
+                Utils.LogErrores(exNew);
+            }
+        }
 
         /// <summary>
         /// Buscar el grupo ingresado en el AD 
