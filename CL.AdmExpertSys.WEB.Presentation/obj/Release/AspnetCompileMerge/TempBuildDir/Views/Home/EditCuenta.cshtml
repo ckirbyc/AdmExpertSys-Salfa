@@ -13,6 +13,8 @@
     string licEnterPrisePack = firstEnterPrisePack != null ? firstEnterPrisePack.MensajeCantidadLicencia : string.Empty;
     string licStandardPack = firstStandardPack != null ? firstStandardPack.MensajeCantidadLicencia : string.Empty;
     string licExStandard = firstExStandard != null ? firstExStandard.MensajeCantidadLicencia : string.Empty;
+    bool esSync = ViewBag.EstadoSync;
+    var mostrarMsgSync = esSync == true ? "display:block;" : "display:none;";
 }
 
 @using (Html.BeginForm())
@@ -24,6 +26,12 @@
                 <span class="glyphicon glyphicon-refresh"></span>
                 <input type="button" value="Guardar" class="btnInput" id="Guardar" />
             </div>
+        </div>
+    </div>
+    <div class="row" id="MsgSync" style=@mostrarMsgSync>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Actualmente existe un proceso de sincronización ejecutándose, no podrá deshabilitar cuentas hasta que este termine.</strong>
         </div>
     </div>
     <div class="row">
@@ -297,16 +305,16 @@
                         </td>
                     </tr>
                     @*<tr>
-                    <td>
-                        <div id="btnLicExO" class="btn btn-primary btn-sm btn-block pull-right">
-                            <span class="glyphicon glyphicon-check"></span>
-                            <input type="button" value="Office 365 Exchange Online P1" class="btnInput" data-toggle="collapse" data-target="#demo3" id="EXCHANGESTANDARD" />
-                        </div>
-                    </td>
-                    <td colspan="2">
-                        <label>@licExStandard</label>
-                    </td>
-                </tr>*@
+                            <td>
+                                <div id="btnLicExO" class="btn btn-primary btn-sm btn-block pull-right">
+                                    <span class="glyphicon glyphicon-check"></span>
+                                    <input type="button" value="Office 365 Exchange Online P1" class="btnInput" data-toggle="collapse" data-target="#demo3" id="EXCHANGESTANDARD" />
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <label>@licExStandard</label>
+                            </td>
+                        </tr>*@
                 </tbody>
             </table>
         </div>
@@ -578,7 +586,7 @@
         });
 
         function asignarGrupoSplitUsuario()
-        {                
+        {
             $.ajax({
                 url: '@Url.Action("AsociarGrupoSplitUsuario", "Home")',
                 type: 'POST',
@@ -604,7 +612,7 @@
                             type: BootstrapDialog.TYPE_DANGER
                         });
                     } else {
-                        if (data.Validar) {                                                
+                        if (data.Validar) {
                             BootstrapDialog.alert({
                                 title: '¡Proceso Exitoso!',
                                 message: '<strong>Grupos asociados exitosamente al Usuario.</strong>',
@@ -631,7 +639,7 @@
                         type: BootstrapDialog.TYPE_DANGER
                     });
                 }
-            });        
+            });
         }
 
         function validarUsuario() {
@@ -649,6 +657,12 @@
                     if (data.Validar) {
                         habilitarCampos(data);
                         $("#EstadoSync").val(data.EstadoSync);
+                        if (data.EstadoSync == false) {
+                            $("#MsgSync").hide();
+                        }
+                        else {
+                            $("#MsgSync").show();
+                        }
                         BootstrapDialog.alert({
                             title: '¡Verificación Exitosa!',
                             message: '<strong>Usuario Existe y cuenta se encuentra en estado ' + data.DatosUsuario.EstadoCuenta + '</strong>',
@@ -657,6 +671,12 @@
                     } else {
                         desHabilitarCampos(data);
                         $("#EstadoSync").val(data.EstadoSync);
+                        if (data.EstadoSync == false) {
+                            $("#MsgSync").hide();
+                        }
+                        else {
+                            $("#MsgSync").show();
+                        }
                         BootstrapDialog.alert({
                             title: '¡Verificación Exitosa!',
                             message: '<strong>Usuario No Existe</strong>',
@@ -979,7 +999,7 @@
         }
 
         function listaGruposAdByOu()
-        {            
+        {
             var sUsrAd = $("#NombreUsuario").val();
 
             if (sUsrAd == '') {
@@ -1038,7 +1058,7 @@
                                     contentido += '<td>' + (data.GrupoOu[i].NombreGrupo == null ? '' : data.GrupoOu[i].NombreGrupo) + '</td>';
                                     contentido += '<td>' + (data.GrupoOu[i].TipoGrupo == null ? '' : data.GrupoOu[i].TipoGrupo) + '</td>';
                                     contentido += '<td>' + (data.GrupoOu[i].UbicacionGrupo == null ? '' : data.GrupoOu[i].UbicacionGrupo) + '</td>';
-                                    contentido += '<td class="columnaAcciones textCenter">';                                    
+                                    contentido += '<td class="columnaAcciones textCenter">';
                                     contentido += '<a style="cursor: pointer;" class="glyphicon glyphicon-remove colorOrange" title="Desasignar Grupo a Usuario" onclick="desAsignarGrupoUsuario(' + i + ', ' + nomGrupo + ')"></a>';
                                     contentido += '</td></tr>';
                                     nomGrupoSel = data.GrupoOu[i].NombreGrupo + ',';
