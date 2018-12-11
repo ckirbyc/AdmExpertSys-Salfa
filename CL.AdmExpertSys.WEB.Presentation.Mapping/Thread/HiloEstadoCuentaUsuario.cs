@@ -1,6 +1,10 @@
-﻿using CL.AdmExpertSys.WEB.Core.Domain.Model;
+﻿using CL.AdmExpertSys.Web.Infrastructure.LogTransaccional;
+using CL.AdmExpertSys.WEB.Application.OfficeOnlineClassLib;
+using CL.AdmExpertSys.WEB.Core.Domain.Dto;
+using CL.AdmExpertSys.WEB.Core.Domain.Model;
 using CL.AdmExpertSys.WEB.Presentation.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Thread
@@ -83,6 +87,22 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Thread
             {
                 throw;
             }                      
+        }
+
+        public static List<MsolAccountSku> GetLicenciasDisponibles()
+        {
+            var listaLicO365 = new List<MsolAccountSku>();
+            try
+            {
+                var office365 = new Office365();
+                listaLicO365 = office365.ObtenerMsolAccountSku();
+                return listaLicO365;
+            }
+            catch (Exception ex)
+            {
+                Utils.LogErrores(ex);
+                return listaLicO365;
+            }
         }
     }
 }

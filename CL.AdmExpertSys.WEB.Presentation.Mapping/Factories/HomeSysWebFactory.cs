@@ -43,7 +43,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
                 Licencias = ObtenerTipoLicencias(),
                 Ous = ObtenerTipoOus(),
                 UpnPrefijoLista = ObtenerUpnPrefijo(),
-                ListaAccountSkus = GetLicenciasDisponibles(),
+                //ListaAccountSkus = GetLicenciasDisponibles(),
                 CodigoLicenciaLista = ObtenerSelectMantenedorLicencia(),
                 Oficinas = ObtenerSelectOficina(),
                 Ciudades = ObtenerSelectCiudad(),
@@ -391,19 +391,19 @@ namespace CL.AdmExpertSys.WEB.Presentation.Mapping.Factories
             }
         }
 
-        private static List<MsolAccountSku> GetLicenciasDisponibles()
-        {
-            try
-            {
-                var office365 = new Office365();
-                return office365.ObtenerMsolAccountSku();
-            }
-            catch (Exception ex)
-            {
-                Utils.LogErrores(ex);
-                return null;
-            }
-        }
+        //private static List<MsolAccountSku> GetLicenciasDisponibles()
+        //{
+        //    try
+        //    {
+        //        var office365 = new Office365();
+        //        return office365.ObtenerMsolAccountSku();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Utils.LogErrores(ex);
+        //        return null;
+        //    }
+        //}
         /// <summary>
         /// Sincroniza Usuarios AD al O365
         /// </summary>

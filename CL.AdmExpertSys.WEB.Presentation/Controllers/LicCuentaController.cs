@@ -77,6 +77,10 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 _hiloEjecucion = new Thread(InciarProcesoHiloAsignarLicencia);
                 _hiloEjecucion.Start(listaEstCuentaVmHilo);
 
+                /*Despues de ejecutar asignacion de licencias deja nulo la session para que vuelta a cargar las licencias
+                  disponibles de O365*/
+                SessionViewModel.LicenciaDisponibleO365 = null;
+
                 return new JsonResult
                 {
                     Data = new
@@ -144,7 +148,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 }                
             }
 
-            HiloEstadoAsignacionLicencia.ActualizarEstadoLicencia(false, usuarioModificacion);
+            HiloEstadoAsignacionLicencia.ActualizarEstadoLicencia(false, usuarioModificacion);            
         }
     }
 }

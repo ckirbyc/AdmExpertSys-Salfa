@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using CL.AdmExpertSys.WEB.Infrastructure.CompositionRoot;
 using CL.AdmExpertSys.Web.Infrastructure.LogTransaccional;
+using CL.AdmExpertSys.WEB.Infrastructure.CompositionRoot;
 using CL.AdmExpertSys.WEB.Presentation.Mapping.Factories;
 using CL.AdmExpertSys.WEB.Presentation.Mapping.Mapping;
+using CL.AdmExpertSys.WEB.Presentation.Mapping.Thread;
 using CL.AdmExpertSys.WEB.Presentation.Models;
 using System;
 using System.Web;
@@ -10,7 +11,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using CL.AdmExpertSys.WEB.Presentation.ViewModel;
 
 namespace CL.AdmExpertSys.WEB.Presentation
 {
@@ -37,7 +37,9 @@ namespace CL.AdmExpertSys.WEB.Presentation
             {
                 HttpContext.Current.Session["AdmExpertSys"] = "AdmExpertSys";                
                 var estructura = HomeSysWebFactory.GetArquitecturaArbolAd();
-                SessionViewModel.EstructuraArbolAd = estructura;                
+                SessionViewModel.EstructuraArbolAd = estructura;
+                /*Pobla sesion de licencias O365 disponibles*/
+                SessionViewModel.LicenciaDisponibleO365 = HiloEstadoCuentaUsuario.GetLicenciasDisponibles();
             }
             catch (Exception ex)
             {

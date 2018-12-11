@@ -72,9 +72,19 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     var estructura = HomeSysWebFactory.GetArquitecturaArbolAd();
                     SessionViewModel.EstructuraArbolAd = estructura;
                     ViewBag.EstructuraArbolAd = SessionViewModel.EstructuraArbolAd;
-                }                
+                }
 
-                return View(HomeSysWebFactory.ObtenerVistaHomeSysWeb());
+                var objVista = HomeSysWebFactory.ObtenerVistaHomeSysWeb();
+
+                if (SessionViewModel.LicenciaDisponibleO365 == null)
+                {
+                    /*Pobla sesion de licencias O365 disponibles*/
+                    SessionViewModel.LicenciaDisponibleO365 = HiloEstadoCuentaUsuario.GetLicenciasDisponibles();
+                }
+
+                objVista.ListaAccountSkus = SessionViewModel.LicenciaDisponibleO365;
+
+                return View(objVista);
             }
             catch (Exception ex)
             {
@@ -98,8 +108,19 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     SessionViewModel.EstructuraArbolAd = estructura;
                     ViewBag.EstructuraArbolAd = SessionViewModel.EstructuraArbolAd;
                 }
+
+                var objVista = HomeSysWebFactory.ObtenerVistaHomeSysWeb();
+
+                if (SessionViewModel.LicenciaDisponibleO365 == null)
+                {
+                    /*Pobla sesion de licencias O365 disponibles*/
+                    SessionViewModel.LicenciaDisponibleO365 = HiloEstadoCuentaUsuario.GetLicenciasDisponibles();
+                }
+
+                objVista.ListaAccountSkus = SessionViewModel.LicenciaDisponibleO365;
                 ViewBag.EstadoSync = HiloEstadoSincronizacion.EsSincronizacion();
-                return View(HomeSysWebFactory.ObtenerVistaHomeSysWeb());
+
+                return View(objVista);
             }
             catch (Exception ex)
             {
@@ -922,14 +943,18 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
-
+                                        
                     _hiloEjecucion = new Thread(InciarProcesoHiloSincronizarCuenta)
                     {
                         IsBackground = true,
-                        Priority = ThreadPriority.Highest
+                        Priority = ThreadPriority.Highest                        
                     };
                     _hiloEjecucion.Start(listaEstCuentaVmHilo);
                 }
+
+                /*Despues de ejecutar sincronizacion deja nulo la session para que vuelta a cargar las licencias
+                  disponibles de O365*/
+                SessionViewModel.LicenciaDisponibleO365 = null;
 
                 return new JsonResult
                 {
@@ -956,7 +981,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 };
             }
         }
-
+        
         [SoapDocumentMethod(OneWay = true)]
         public void InciarProcesoHiloSincronizarCuenta(object estadoCuentaHilo)
         {
@@ -973,7 +998,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 {
                     HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
                     Utils.LogErrores(ex);
-                }
+                }                
             }
             catch (Exception ex)
             {
@@ -982,7 +1007,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                 var exNew = new Exception(msgError);
                 Utils.LogErrores(exNew);
             }
-        }
+        }        
 
         /// <summary>
         /// Buscar el grupo ingresado en el AD 

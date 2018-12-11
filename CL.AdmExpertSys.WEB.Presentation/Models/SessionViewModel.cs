@@ -2,6 +2,7 @@
 using CL.AdmExpertSys.WEB.Core.Domain.Dto;
 using CL.AdmExpertSys.WEB.Presentation.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Web;
 
 namespace CL.AdmExpertSys.WEB.Presentation.Models
@@ -33,6 +34,18 @@ namespace CL.AdmExpertSys.WEB.Presentation.Models
             set
             {
                 HttpContext.Current.Session["EstructuraArbol"] = value;
+            }
+        }
+
+        public static List<MsolAccountSku> LicenciaDisponibleO365
+        {
+            get
+            {                              
+                return (List<MsolAccountSku>)HttpContext.Current.Session["MsolAccountSku"];
+            }
+            set
+            {
+                HttpContext.Current.Session["MsolAccountSku"] = value;
             }
         }
     }

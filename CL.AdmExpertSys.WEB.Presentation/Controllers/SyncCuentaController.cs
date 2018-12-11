@@ -99,7 +99,10 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                     Priority = ThreadPriority.Highest
                 };
                 _hiloEjecucion.Start(listaEstCuentaVmHilo);
-                //HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
+
+                /*Despues de ejecutar asignacion de licencias deja nulo la session para que vuelta a cargar las licencias
+                  disponibles de O365*/
+                SessionViewModel.LicenciaDisponibleO365 = null;
 
                 return new JsonResult
                 {
@@ -168,7 +171,7 @@ namespace CL.AdmExpertSys.WEB.Presentation.Controllers
                         }
                     }
                 }
-                HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");
+                HiloEstadoSincronizacion.ActualizarEstadoSync(false, usuarioModificacion, "S");                
             }
             catch (Exception ex)
             {
