@@ -25,3 +25,9 @@ F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastruc
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.csproj.CoreCompileInputs.cache
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.csprojAssemblyReference.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.csproj.CoreCompileInputs.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Release\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb

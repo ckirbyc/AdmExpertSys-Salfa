@@ -9,7 +9,6 @@ using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CL.AdmExpertSys.WEB.Application.ADClassLib
 {
@@ -557,6 +556,11 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             return GetUser(sUserName);
         }
 
+        /// <summary>
+        /// Metodo que permite crear una cuenta en el AD
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public UserPrincipal CreateNewUser(HomeSysWebAd model)
         {
             CommonServices = new Common();
@@ -709,36 +713,20 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
             return GetUser(sUserName);
         }
 
+        /// <summary>
+        /// Metodo que permite actualizar los datos de una cuenta en el AD 
+        /// </summary>
+        /// <param name="usrData"></param>
+        /// <returns></returns>
         public bool UpdateUser(HomeSysWebVm usrData)
         {                        
             using (UserPrincipal oUserPrincipalAux = GetUser(usrData.NombreUsuario))
-            {
+            {                
                 string dn = oUserPrincipalAux.DistinguishedName;
                 var sLdapAsAux = _sLdapServer + dn;                
 
                 using (var eUserActual = new DirectoryEntry(sLdapAsAux, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
-                {
-                    //if (usrData.CambioPatchOu)
-                    //{
-                    //    //Elimina los grupos asociados a la cuenta de usuario
-                    //    var contMember = eUserActual.Properties["memberOf"].Count;
-                    //    int equalsIndex, commaIndex;
-                    //    for (int val = 0; val < contMember; val++)
-                    //    {
-                    //        var valMember = eUserActual.Properties["memberOf"][val].ToString();
-
-                    //        equalsIndex = valMember.IndexOf("=", 1);
-                    //        commaIndex = valMember.IndexOf(",", 1);
-
-                    //        var groupName = valMember.Substring((equalsIndex + 1), (commaIndex - equalsIndex) - 1);
-
-                    //        if (!string.IsNullOrEmpty(groupName))
-                    //        {
-                    //            RemoveUserFromGroup(usrData.NombreUsuario.Trim().ToLower(), groupName);
-                    //        }
-                    //    }
-                    //}                    
-
+                {                                       
                     //Actualiza propiedades de la cuenta
                     CommonServices = new Common();
                     var sGivenName = CommonServices.UppercaseWords(usrData.Nombres.Trim().ToLower());
@@ -853,11 +841,17 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                     eUserActual.CommitChanges();
                     eUserActual.Close();
 
+                    //Actualiza las propiedades de la clave
+                    oUserPrincipalAux.PasswordNeverExpires = usrData.ClaveNoExpira;
+                    oUserPrincipalAux.UserCannotChangePassword = usrData.UsrNoCambiaClave;
+                    oUserPrincipalAux.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
+                    oUserPrincipalAux.Save();
+
                     //Mueve cuenta de ubicacion
                     if (usrData.CambioPatchOu)
                     {
                         if (oUserPrincipalAux != null)
-                        {
+                        {                            
                             using (var eLocation = new DirectoryEntry(sLdapAsAux, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
                             {
                                 using (var nLocation = new DirectoryEntry(usrData.PatchOu, _sUserAdDomain, _sPassAdDomain, AuthenticationTypes.Secure))
@@ -866,26 +860,9 @@ namespace CL.AdmExpertSys.WEB.Application.ADClassLib
                                     nLocation.Close();
                                 }
                                 eLocation.Close();
-                            }
-                            Task.Delay(TimeSpan.FromSeconds(15)).Wait();
-
-                            //Actualiza los parametros de la clave cuando cuenta cambia de ubicacion
-                            using (UserPrincipal oUserPrincipalNew = GetUser(usrData.NombreUsuario))
-                            {
-                                oUserPrincipalNew.PasswordNeverExpires = usrData.ClaveNoExpira;
-                                oUserPrincipalNew.UserCannotChangePassword = usrData.UsrNoCambiaClave;
-                                oUserPrincipalNew.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
-                                oUserPrincipalNew.Save();
-                            }
+                            }                            
                         }
-                    }
-                    else
-                    {
-                        oUserPrincipalAux.PasswordNeverExpires = usrData.ClaveNoExpira;
-                        oUserPrincipalAux.UserCannotChangePassword = usrData.UsrNoCambiaClave;
-                        oUserPrincipalAux.AllowReversiblePasswordEncryption = usrData.AlmacenarClave;
-                        oUserPrincipalAux.Save();
-                    }                    
+                    }                                        
                 }
             }
 

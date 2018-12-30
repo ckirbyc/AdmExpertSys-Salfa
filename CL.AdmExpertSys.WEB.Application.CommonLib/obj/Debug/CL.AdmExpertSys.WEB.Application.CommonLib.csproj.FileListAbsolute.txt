@@ -24,7 +24,6 @@ C:\Users\mauricio.gonzalez\Documents\AdmExpertSys\CL.AdmExpertSys.WEB.Applicatio
 C:\Users\mauricio.gonzalez\Documents\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\bin\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.dll
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\bin\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb
-E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.csprojAssemblyReference.cache
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.csproj.CoreCompileInputs.cache
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.dll
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb
@@ -34,3 +33,9 @@ F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Applicatio
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.csproj.CoreCompileInputs.cache
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.dll
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\bin\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\bin\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.csprojAssemblyReference.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.csproj.CoreCompileInputs.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.WEB.Application.CommonLib\obj\Debug\CL.AdmExpertSys.WEB.Application.CommonLib.pdb

@@ -53,3 +53,12 @@ F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastruc
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.csproj.CopyComplete
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.dll
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.csprojAssemblyReference.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.csproj.CoreCompileInputs.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.csproj.CopyComplete
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.LogTransaccional.pdb

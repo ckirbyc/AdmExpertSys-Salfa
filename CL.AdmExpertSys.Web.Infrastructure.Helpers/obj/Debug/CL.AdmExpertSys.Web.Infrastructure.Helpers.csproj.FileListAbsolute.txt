@@ -24,7 +24,6 @@ C:\Users\mauricio.gonzalez\Documents\AdmExpertSys\CL.AdmExpertSys.Web.Infrastruc
 C:\Users\mauricio.gonzalez\Documents\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
-E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.csprojAssemblyReference.cache
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.csproj.CoreCompileInputs.cache
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
 E:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
@@ -34,3 +33,9 @@ F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastruc
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.csproj.CoreCompileInputs.cache
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
 F:\Proyectos\IngenieriaInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\bin\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.csprojAssemblyReference.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.csproj.CoreCompileInputs.cache
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.dll
+C:\IngInversa\Salfa\AdmExpertSys\CL.AdmExpertSys.Web.Infrastructure.Helpers\obj\Debug\CL.AdmExpertSys.Web.Infrastructure.Helpers.pdb

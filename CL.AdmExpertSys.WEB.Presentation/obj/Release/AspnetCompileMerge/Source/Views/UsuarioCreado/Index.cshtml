@@ -1,7 +1,7 @@
 ﻿@using CL.AdmExpertSys.WEB.Presentation.ViewModel
 @model IEnumerable<EstadoCuentaUsuarioVm>
     @{
-        ViewBag.Title = "Usuarios Creados";
+        ViewBag.Title = "Usuarios Creados";        
         Layout = "~/Views/_Main.cshtml";
         bool esSync = ViewBag.EstadoSync;
         bool esLicencia = ViewBag.EstadoLicencia;
@@ -39,6 +39,8 @@
             <thead>
                 <tr>
                     <th>Nombre</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Creación</th>
                     <th>Usuario Creado AD</th>
                     <th>Usuario Sincronizado</th>
                     <th>Licencia O365</th>
@@ -50,7 +52,8 @@
                 string classUsrCreado = "glyphicon glyphicon-remove colorOrange";
                 string classSincronizado = "glyphicon glyphicon-remove colorOrange";
                 string classLicencia = "glyphicon glyphicon-remove colorOrange";
-
+                string cuentaAd = item1.CuentaAd;
+                var fechaCreacionFormat = item1.FechaCreacion != null ? Convert.ToDateTime(item1.FechaCreacion).ToString("dd-MM-yyyy HH:mm") : string.Empty;
                 var nombreCompleto = item1.Nombres + ' ' + item1.Apellidos;
 
                 if (item1.CreadoAd)
@@ -67,6 +70,8 @@
                 }
                 <tr>
                     <td class="textCenter">@nombreCompleto</td>
+                    <td class="textCenter">@cuentaAd</td>
+                    <td class="textCenter">@fechaCreacionFormat</td>
                     <td class="textCenter"><a class="@classUsrCreado" href="#" title=""></a></td>
                     <td class="textCenter"><a class="@classSincronizado" href="#" title=""></a></td>
                     <td class="textCenter"><a class="@classLicencia" href="#" title=""></a></td>
